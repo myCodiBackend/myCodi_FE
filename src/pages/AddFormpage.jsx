@@ -1,10 +1,11 @@
 import React from "react";
+import Addform from "../components/addform/Addform";
 import GlobalLayout from "../global/GlobalLayout";
 
 const AddFormpage = () => {
   return (
     <GlobalLayout>
-      <h1>add페이지</h1>
+      <Addform />
     </GlobalLayout>
   );
 };
