@@ -1,11 +1,22 @@
-import React from "react";
+import AddCommentForm from "../components/detail/AddCommentForm";
+import CommentsList from "../components/detail/CommentsList";
+import DetailPostCard from "../components/detail/DetailPostCard";
 
-const DetailPage = () => {
-  return (
-    <div>
-      <h1>detail페이지</h1>
-    </div>
-  );
-};
 
-export default DetailPage;
+
+
+function DetailPage() {
+
+
+    return (
+      <div>
+        <DetailPostCard/>
+        <AddCommentForm/>
+        <CommentsList/>
+        
+      </div>
+    );
+  }
+  
+  export default DetailPage;
+  

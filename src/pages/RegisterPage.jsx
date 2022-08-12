@@ -1,11 +1,13 @@
-import React from "react";
+import RegisterForm from "../components/login/RegisterForm";
 
-const RegisterPage = () => {
-  return (
-    <div>
-      <h1>회원가입 페이지</h1>
-    </div>
-  );
-};
 
-export default RegisterPage;
+function RegisterPage() {
+    return (
+      <div>
+        <RegisterForm/>
+      </div>
+    );
+  }
+  
+  export default RegisterPage;
+  
