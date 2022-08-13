@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 // import DeleteIcon from '@mui/icons-material/Delete';
 // import EditIcon from '@mui/icons-material/Edit';
-import TextField from '@mui/material/TextField';
+import TextField from "@mui/material/TextField";
 
 import Button from "../../elements/Button";
 // import {
@@ -17,14 +17,12 @@ import Button from "../../elements/Button";
 // } from "../../redux/modules/commentSlice";
 import { Wrapper } from "../../elements/Wrapper";
 
-
 const Comment = ({ comment }) => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const [isEdit, setIsEdit] = useState(false);
   // const [updatedComment, setUpdatedComment] = useState("");
   // const { content } = useSelector((state) => state.comment.data);
-
 
   // const onDeleteButtonHandler = () => {
   //   const result = window.confirm("삭제하시겠습니까?");
@@ -36,17 +34,16 @@ const Comment = ({ comment }) => {
   // };
 
   const onUpdateButtonHandler = () => {
-  //   dispatch(
-  //     __updateComment({
-  //       id: comment.id,
-  //       content: updatedComment,
-  //       username: comment.username,
-  //       todo_id: id,
-  //     })
-  //   );
+    //   dispatch(
+    //     __updateComment({
+    //       id: comment.id,
+    //       content: updatedComment,
+    //       username: comment.username,
+    //       todo_id: id,
+    //     })
+    //   );
     setIsEdit(false);
   };
-
 
   // const onChangeEditButtonHandler = () => {
   //   setIsEdit(true);
@@ -62,38 +59,35 @@ const Comment = ({ comment }) => {
   //   setUpdatedComment(content);
   // }, [content]);
 
-
   return (
     <div>
       {isEdit ? (
         <Wrapper>
           <p>작성자 : {comment.author}</p>
-          <TextField id="outlined-basic" label="내용" variant="outlined" 
-           type="text"
+          <TextField
+            id="outlined-basic"
+            label="내용"
+            variant="outlined"
+            type="text"
             // value={updatedComment}
             // onChange={(event) => {
             //   setUpdatedComment(event.target.value);
             // }}
-          
           />
           <ButtonSet>
             <Button
               // onClick={onCancelButtonHandler}
               style={{
                 marginRight: "10px",
-              
-            }}  
+              }}
             >
               <p>취소</p>
             </Button>
-            <Button
-              onClick={onUpdateButtonHandler}
-            >
-              <p >저장</p>
+            <Button onClick={onUpdateButtonHandler}>
+              <p>저장</p>
             </Button>
           </ButtonSet>
         </Wrapper>
-
       ) : (
         <>
           <Wrapper>
@@ -102,24 +96,26 @@ const Comment = ({ comment }) => {
 
             <ButtonSet>
               <button
-              style={{marginRight:"10px"}}
+                style={{ marginRight: "10px" }}
                 // onClick={onChangeEditButtonHandler}
-              >수정</button>
+              >
+                수정
+              </button>
               <button
-                // onClick={onDeleteButtonHandler}
-              >삭제</button>
+              // onClick={onDeleteButtonHandler}
+              >
+                삭제
+              </button>
             </ButtonSet>
-
           </Wrapper>
         </>
       )}
     </div>
   );
-}
-  
-  export default Comment;
+};
 
+export default Comment;
 
-  const ButtonSet = styled.div`
+const ButtonSet = styled.div`
   float: right;
 `;

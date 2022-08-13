@@ -25,11 +25,9 @@ const StPostCard = styled.div`
   display: flex;
   transition: all 0.5s;
   margin-right: 5px;
-  /* border-radius: 5px; */
   .itembox {
     width: 300px;
     height: 310px;
-    /* border-radius: 15px; */
     .img {
       width: 100%;
       height: 88%;
@@ -39,7 +37,7 @@ const StPostCard = styled.div`
       position: relative;
       border-radius: 15px 15px 0 0;
       .icon {
-        opacity: 0.5;
+        opacity: 0.3;
         font-size: 24px;
         transition: all 0.5s;
         cursor: pointer;
@@ -48,7 +46,7 @@ const StPostCard = styled.div`
         right: 40px;
         fill: none;
       }
-      &:hover .icon {
+      .icon:hover {
         opacity: 1;
         font-size: 35px;
         fill: red;
