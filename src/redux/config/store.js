@@ -1,12 +1,16 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-// import commentsSlice from "../modules/commentsSlice";
-// import postSlice from "../modules/postSlice";
-//로거 각자
+import comments from "../modules/commentsSlice";
+import comment from "../modules/commentSlice";
+import posts from "../modules/postSlice";
+import post from '../modules/posttSlice';
+
 // import logger from "redux-logger";
 // 리듀서 통합
 const rootReducer = combineReducers({
-  // postSlice,
-  // commentsSlice,
+  post,
+  posts,
+  comments,
+  comment
 });
 
 // 스토어 연결

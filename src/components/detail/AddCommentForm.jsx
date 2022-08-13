@@ -21,15 +21,14 @@ const AddCommentForm = () => {
   const onAddCommentButtonHandler = (data) => {
     dispatch(
       __addComment({
-        todoId: id,
-        username: data.username,
+        todoId: Number(id),
+        
         content: data.content,
       })
     );
-    setUsername("");
     setContent("");
   };
-  const [username, setUsername, onChangeUsernameHandler] = useInput();
+
   const [content, setContent, onChangeContentHandler] = useInput();
 
   return (
