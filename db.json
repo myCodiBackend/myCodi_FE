@@ -3,8 +3,28 @@
     {
       "id": 1,
       "author": "",
-      "title": "수정한 제목",
-      "content": "수정한 내용"
+      "title": "파리에서 유행중인 룩",
+      "content": "모자와 힙한 바지",
+      "imgUrl": "/img/네이버.png"
+    },
+    {
+      "id": 2,
+      "author": "",
+      "title": "강남클럽룩",
+      "content": "셔츠와 검정슬랙스",
+      "imgUrl": "/img/네이버.png"
+    },
+    {
+      "id": 3,
+      "author": "",
+      "title": "청순 데이트룩",
+      "content": "흰셔츠에 베이지 조끼",
+      "imgUrl": "/img/네이버.png"
+    },
+    {
+      "title": "나는 누구",
+      "content": "내용내용",
+      "id": 4
     }
   ],
   "comments": [

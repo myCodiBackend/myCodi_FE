@@ -1,19 +1,40 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PostCard from "./PostCard";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-
+import {useSelector, useDispatch } from "react-redux";
+import {__getPostList} from "../../redux/modules/postSlice";
 const PostsList = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(__getPostList());
+  }, []);
+
+
+  const posts = useSelector((state)=>state.posts.data);
+console.log(posts)
+console.log(typeof(posts[0].id))
+
   return (
     <StPostsList>
       <div className="postWrap">
-        <PostCard onClick={() => navigate("/detail")} />
-        <PostCard />
-        <PostCard />
-        <PostCard />
-        <PostCard />
-        <PostCard />
+      {posts.map((post) => {
+          return (
+            <div
+            key={post.id}
+            onClick={() => navigate("/detail/"+post.id)}
+            >
+              <PostCard 
+              post={post}
+              />
+        
+            </div>
+          );
+        })}
+      
+      
       </div>
     </StPostsList>
   );

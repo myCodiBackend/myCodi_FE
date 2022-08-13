@@ -2,16 +2,16 @@ import React from "react";
 import styled from "styled-components";
 import { FiHeart } from "react-icons/fi";
 
-const PostCard = () => {
+const PostCard = ({post}) => {
   return (
     <StPostCard className="item">
       <div className="itembox">
         <div className="img">
-          <div>이미지</div>
+          <img src= {post.imgUrl} alt="이미지" />
           <FiHeart className="icon" />
         </div>
         <div className="title">
-          <div>제목</div>
+          <div>{post.title}</div>
         </div>
       </div>
     </StPostCard>
