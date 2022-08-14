@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 // import DeleteIcon from '@mui/icons-material/Delete';
 // import EditIcon from '@mui/icons-material/Edit';
-import TextField from '@mui/material/TextField';
+import TextField from "@mui/material/TextField";
 
 import Button from "../../elements/Button";
 import {
@@ -17,13 +17,13 @@ import {
 } from "../../redux/modules/commentSlice";
 import { Wrapper } from "../../elements/Wrapper";
 
-
 const Comment = ({ comment }) => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const [isEdit, setIsEdit] = useState(false);
   const [updatedComment, setUpdatedComment] = useState("");
   const { content } = useSelector((state) => state.comment.data);
+
 
 
   const onDeleteButtonHandler = () => {
@@ -53,6 +53,7 @@ const Comment = ({ comment }) => {
     dispatch(__getComment(comment.id));
   };
 
+
   const onCancelButtonHandler = () => {
     setIsEdit(false);
     dispatch(clearComment());
@@ -62,12 +63,12 @@ const Comment = ({ comment }) => {
     setUpdatedComment(content);
   }, [content]);
 
-
   return (
     <div>
       {isEdit ? (
         <Wrapper>
           <p>작성자 : {comment.author}</p>
+
           <TextField id="outlined-basic" label="내용" variant="outlined" 
            type="text"
             value={updatedComment}
@@ -75,25 +76,22 @@ const Comment = ({ comment }) => {
               setUpdatedComment(event.target.value);
             }}
           
+
           />
           <ButtonSet>
             <Button
               onClick={onCancelButtonHandler}
               style={{
                 marginRight: "10px",
-              
-            }}  
+              }}
             >
               <p>취소</p>
             </Button>
-            <Button
-              onClick={onUpdateButtonHandler}
-            >
-              <p >저장</p>
+            <Button onClick={onUpdateButtonHandler}>
+              <p>저장</p>
             </Button>
           </ButtonSet>
         </Wrapper>
-
       ) : (
         <>
           <Wrapper>
@@ -102,6 +100,7 @@ const Comment = ({ comment }) => {
             <p>{comment.modifiedAt}</p>
 
             <ButtonSet>
+
               <Button
               style={{marginRight:"10px"}}
                 onClick={onChangeEditButtonHandler}
@@ -109,18 +108,17 @@ const Comment = ({ comment }) => {
               <Button
                 onClick={onDeleteButtonHandler}
               >삭제</Button>
-            </ButtonSet>
 
+            </ButtonSet>
           </Wrapper>
         </>
       )}
     </div>
   );
-}
-  
-  export default Comment;
+};
 
+export default Comment;
 
-  const ButtonSet = styled.div`
+const ButtonSet = styled.div`
   float: right;
 `;

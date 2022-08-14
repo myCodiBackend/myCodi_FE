@@ -4,19 +4,30 @@ import styled from "styled-components";
 import PostsList from "../components/home/PostsList";
 import GlobalLayout from "../global/GlobalLayout";
 import { useNavigate } from "react-router-dom";
+// import { __getPostList } from "../redux/modules/postSlice";
+// import { useSelector, useDispatch } from "react-redux";
+// import { useEffect } from "react";
 
 const HomePage = () => {
   const navigate = useNavigate();
+  // const cards = useSelector((state) => state.postSlice.card);
+  // const dispatch = useDispatch();
+
+  // useEffect(() => {
+  //   dispatch(__getPostList());
+  // }, []);
+
   return (
     <GlobalLayout>
       <StContainer>
         <h1>NEW</h1>
         <PostsList />
       </StContainer>
+      <hr />
       <Btn onClick={() => navigate("/add")}>내꺼 등록하기</Btn>
       <StContainer>
         <h1>HOT</h1>
-        <PostsList />
+        {/* <PostsList /> */}
       </StContainer>
     </GlobalLayout>
   );

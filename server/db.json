@@ -1,0 +1,40 @@
+{
+  "card": [
+    {
+      "id": 1,
+      "user": "채운",
+      "title": "데이트룩입니다.",
+      "content": "데이트룩입니다. 그녀와의 첫만남",
+      "imgUrl": "https://images.mypetlife.co.kr/content/uploads/2018/07/09155937/KakaoTalk_20180720_165306472.jpg"
+    },
+    {
+      "id": 2,
+      "user": "채운",
+      "title": "평소룩입니다.",
+      "content": "평소룩입니다. 그녀와의 첫만남",
+      "imgUrl": "http://image.dongascience.com/Photo/2020/03/5bddba7b6574b95d37b6079c199d7101.jpg"
+    },
+    {
+      "id": 3,
+      "user": "채운",
+      "title": "결혼식룩입니다.",
+      "content": "결혼식룩입니다. 그녀와의 첫만남",
+      "imgUrl": "https://cdn.pixabay.com/photo/2017/09/25/13/12/cocker-spaniel-2785074__480.jpg"
+    },
+    {
+      "id": 4,
+      "user": "채운",
+      "title": "장례식룩입니다.",
+      "content": "장례식룩입니다. 그녀와의 첫만남",
+      "imgUrl": "https://newsimg.hankookilbo.com/cms/articlerelease/2020/09/13/c22a51dd-d1f8-48d2-82ad-f18a671078be.jpg"
+    },
+    {
+      "id": 5,
+      "user": "채운",
+      "title": "장례식룩입니다.",
+      "content": "장례식룩입니다. 그녀와의 첫만남",
+      "imgUrl": "https://newsimg.hankookilbo.com/cms/articlerelease/2020/09/13/c22a51dd-d1f8-48d2-82ad-f18a671078be.jpg"
+    }
+  ],
+  "Heart": [{}]
+}

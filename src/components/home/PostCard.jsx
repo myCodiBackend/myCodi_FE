@@ -1,35 +1,47 @@
 import React from "react";
 import styled from "styled-components";
 import { FiHeart } from "react-icons/fi";
+import { useDispatch } from "react-redux/es/exports";
+import { useNavigate, useParams } from "react-router-dom";
+import { css } from "@emotion/react";
+
+const PostCard = ({ card }) => {
+  const dispatch = useDispatch();
+  console.log(card.imgUrl);
+
+  const navigate = useNavigate();
+  // const { id } = useParams();
+
+  // useEffect(() => {});
+
 
 const PostCard = ({post}) => {
+
   return (
-    <StPostCard className="item">
+    <StPostCard className="item" onClick={() => navigate(`detail/${card.id}`)}>
       <div className="itembox">
+
         <div className="img">
           <img src= {post.imgUrl} alt="이미지" />
           <FiHeart className="icon" />
         </div>
         <div className="title">
           <div>{post.title}</div>
+
         </div>
       </div>
     </StPostCard>
   );
 };
 
-export default PostCard;
-
 const StPostCard = styled.div`
   text-align: center;
   display: flex;
   transition: all 0.5s;
   margin-right: 5px;
-  /* border-radius: 5px; */
   .itembox {
     width: 300px;
     height: 310px;
-    /* border-radius: 15px; */
     .img {
       width: 100%;
       height: 88%;
@@ -38,8 +50,16 @@ const StPostCard = styled.div`
       box-sizing: border-box;
       position: relative;
       border-radius: 15px 15px 0 0;
+      /* background: url(); */
+      /* ${(url) => {
+        return css`
+          background: url(url);
+        `;
+      }} */
+      background-position: center;
+      background-size: cover;
       .icon {
-        opacity: 0.5;
+        opacity: 0.3;
         font-size: 24px;
         transition: all 0.5s;
         cursor: pointer;
@@ -48,7 +68,7 @@ const StPostCard = styled.div`
         right: 40px;
         fill: none;
       }
-      &:hover .icon {
+      .icon:hover {
         opacity: 1;
         font-size: 35px;
         fill: red;
@@ -76,3 +96,5 @@ const StPostCard = styled.div`
     transform: scale(1.05);
   }
 `;
+
+export default PostCard;
