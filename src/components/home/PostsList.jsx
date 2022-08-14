@@ -14,8 +14,7 @@ const PostsList = () => {
 
 
   const posts = useSelector((state)=>state.posts.data);
-console.log(posts)
-console.log(typeof(posts[0].id))
+
 
   return (
     <StPostsList>

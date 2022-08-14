@@ -27,7 +27,7 @@ function DetailPostCard() {
   const [updatedPost, setUpdatedPost] = useState();
 
   const todo_list = useSelector((state)=>state.posts.data);
-  console.log(todo_list);
+ 
   const todo = todo_list.find(cur=>cur.id == id)
   const dispatch=useDispatch();
   const navigate=useNavigate();
@@ -41,7 +41,7 @@ function DetailPostCard() {
   
   const onChangeImg = async  (event) => {
     const file = event.target.files[0];
-    console.log(file);
+
     setUploadFile(file)
     const formData = new FormData()
     formData.append('files',uploadFile)
