@@ -5,29 +5,27 @@ import { useDispatch } from "react-redux/es/exports";
 import { useNavigate, useParams } from "react-router-dom";
 import { css } from "@emotion/react";
 
-const PostCard = ({ card }) => {
+// const PostCard = ({ card }) => {
+
+//   // const { id } = useParams();
+
+//   // useEffect(() => {});
+// }
+
+const PostCard = ({ post }) => {
   const dispatch = useDispatch();
-  console.log(card.imgUrl);
-
+  console.log(post.imgUrl);
   const navigate = useNavigate();
-  // const { id } = useParams();
-
-  // useEffect(() => {});
-
-
-const PostCard = ({post}) => {
 
   return (
     <StPostCard className="item" onClick={() => navigate(`detail/${card.id}`)}>
       <div className="itembox">
-
         <div className="img">
-          <img src= {post.imgUrl} alt="이미지" />
+          <img src={post.imgUrl} alt="이미지" />
           <FiHeart className="icon" />
         </div>
         <div className="title">
           <div>{post.title}</div>
-
         </div>
       </div>
     </StPostCard>
