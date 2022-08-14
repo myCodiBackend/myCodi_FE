@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import TextField from '@mui/material/TextField';
 import {useSelector, useDispatch } from "react-redux";
-import {useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Wrapper2 } from "../../elements/Wrapper";
 import {__getPostList} from "../../redux/modules/postSlice";
 import {__getPost, clearPost}from "../../redux/modules/posttSlice";
@@ -30,7 +30,7 @@ function DetailPostCard() {
   console.log(todo_list);
   const todo = todo_list.find(cur=>cur.id == id)
   const dispatch=useDispatch();
-
+  const navigate=useNavigate();
  
 
  
@@ -101,6 +101,17 @@ function DetailPostCard() {
       })
     );
     setIsEdit(false);
+  };
+
+  const onDeleteButtonHandler = () => {
+    const result = window.confirm("삭제하시겠습니까?");
+    if (result) {
+      dispatch(__deletePost(id));
+      navigate("/");
+    } else {
+      return;
+    }
+    
   };
 
 
@@ -205,7 +216,9 @@ function DetailPostCard() {
                marginRight: "10px"}}
                onClick={onChangeEditButtonHandler}  
              >수정</button>
-           <button>삭제</button>
+           <button
+           onClick={onDeleteButtonHandler}
+           >삭제</button>
            </div>
        </Wrapper2>
           )}

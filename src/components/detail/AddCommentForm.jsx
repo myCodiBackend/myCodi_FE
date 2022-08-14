@@ -3,7 +3,9 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import TextField from '@mui/material/TextField';
 
+import Button from "../../elements/Button";
 import useInput from "../hooks/useinput";
 import { __addComment } from "../../redux/modules/commentsSlice";
 // import Button from "../common/Button";
@@ -35,7 +37,7 @@ const AddCommentForm = () => {
     <WrapperForm onSubmit={handleSubmit(onAddCommentButtonHandler)}>
       
 
-      <input
+      <TextField
         required
         id="outlined-required"
         label="댓글내용"
@@ -54,7 +56,7 @@ const AddCommentForm = () => {
         onChange={onChangeContentHandler}
       />
       {errors.content && <small role="alert">{errors.content.message}</small>}
-      <button type="submit">추가하기</button>
+      <Button type="submit">추가하기</Button>
     </WrapperForm>
   );
 };
