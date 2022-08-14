@@ -6,7 +6,7 @@ const Header = (props) => {
   const navigate = useNavigate();
   return (
     <StHeaderWrap className="header">
-      <h1>MY CODY</h1>
+      <h1 onClick={()=> navigate("/")}>MY CODY</h1>
       <div className="loginFlexBox">
         <p onClick={() => navigate("/login")}>로그인</p>
         <p>/</p>

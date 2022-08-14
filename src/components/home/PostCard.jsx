@@ -14,14 +14,20 @@ const PostCard = ({ card }) => {
 
   // useEffect(() => {});
 
+
+const PostCard = ({post}) => {
+
   return (
     <StPostCard className="item" onClick={() => navigate(`detail/${card.id}`)}>
       <div className="itembox">
-        <div className="img" style={{ backgroundImage: `url(${card.imgUrl})` }}>
+
+        <div className="img">
+          <img src= {post.imgUrl} alt="이미지" />
           <FiHeart className="icon" />
         </div>
         <div className="title">
-          <div>{card.title}</div>
+          <div>{post.title}</div>
+
         </div>
       </div>
     </StPostCard>

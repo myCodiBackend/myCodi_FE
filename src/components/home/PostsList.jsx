@@ -1,31 +1,43 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PostCard from "./PostCard";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { __getPostList } from "../../redux/modules/postSlice";
-import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
 
+import {useSelector, useDispatch } from "react-redux";
+import {__getPostList} from "../../redux/modules/postSlice";
 const PostsList = () => {
   const navigate = useNavigate();
-  const cards = useSelector((state) => state.postSlice.card);
   const dispatch = useDispatch();
+
+
   useEffect(() => {
     dispatch(__getPostList());
   }, []);
 
-  // console.log(cards);
+
+
+  const posts = useSelector((state)=>state.posts.data);
+
+
   return (
     <StPostsList>
       <div className="postWrap">
-        {cards.length === 0 ? (
-          <p>목록이 없어요.</p>
-        ) : (
-          cards.map((card) => {
-            return <PostCard key={card.id} card={card} />;
-          })
-        )}
-        {/* <PostCard onClick={() => navigate("/detail")} /> */}
+      {posts.map((post) => {
+          return (
+            <div
+            key={post.id}
+            onClick={() => navigate("/detail/"+post.id)}
+            >
+              <PostCard 
+              post={post}
+              />
+        
+            </div>
+          );
+        })}
+      
+      
+
       </div>
     </StPostsList>
   );
