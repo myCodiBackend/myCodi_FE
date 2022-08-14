@@ -104,7 +104,7 @@ const postSlice = createSlice({
       })
       .addCase(__updatePost.fulfilled, (state, action) => {
         const target = state.data.findIndex((post) => {
-          return post.id == action.payload.id;
+          return (post.id = action.payload.id);
         });
         state.data.splice(target, 1, action.payload);
       })

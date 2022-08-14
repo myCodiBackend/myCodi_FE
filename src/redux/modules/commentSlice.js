@@ -1,9 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const URI = {
-  BASE: process.env.REACT_APP_BASE_URI,
-};
+// const URI = {
+//   BASE: process.env.REACT_APP_BASE_URI,
+// };
 
 export const __getComment = createAsyncThunk(
   "GET_COMMENT",

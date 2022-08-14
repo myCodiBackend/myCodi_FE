@@ -5,42 +5,24 @@
       "author": "",
       "title": "파리에서 유행중인 룩",
       "content": "모자와 힙한 바지",
-      "imgUrl": "/img/네이버.png"
+      "imgUrl": "http://image.dongascience.com/Photo/2020/03/5bddba7b6574b95d37b6079c199d7101.jpg"
     },
     {
       "id": 2,
       "author": "",
       "title": "강남클럽룩",
       "content": "셔츠와 검정슬랙스",
-      "imgUrl": "/img/네이버.png"
+      "imgUrl": "http://image.dongascience.com/Photo/2020/03/5bddba7b6574b95d37b6079c199d7101.jpg"
     },
     {
       "id": 3,
       "author": "",
       "title": "멋진 데이트룩",
-      "content": "흰셔츠에 베이지 조끼"
+      "content": "흰셔츠에 베이지 조끼",
+      "imgUrl": "https://cdn.pixabay.com/photo/2017/09/25/13/12/cocker-spaniel-2785074__480.jpg"
     }
   ],
-  "comments": [
-    {
-      "todoId": 1,
-      "author": "sfsdf",
-      "content": "가나다",
-      "id": 2,
-      "createdAt": "2022-08-12 12:00",
-      "modifiedAt": "2022-08-12 12:00"
-    },
-    {
-      "todoId": 1,
-      "content": "ㅇㄹㅇㄹㅇㄹ",
-      "id": 5
-    },
-    {
-      "todoId": 1,
-      "content": "추가추가하",
-      "id": 6
-    }
-  ],
+  "comments": [],
   "members": [
     {
       "id": 1,
@@ -48,14 +30,6 @@
       "nickname": "멋쟁이",
       "createdAt": "2022-08-12T12:00:00,123456",
       "modifiedAt": "2022-08-12T12:00:00,123456"
-    }
-  ],
-  "images": [
-    {
-      "id": 1
-    },
-    {
-      "id": 2
     }
   ]
 }
