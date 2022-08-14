@@ -11,7 +11,7 @@ const GlobalRouter = () => {
     <>
       <Routes>
         <Route path="/" element={<HomePage />}></Route>
-        <Route path="/detail" element={<DetailPage />}></Route>
+        <Route path="/detail/:id" element={<DetailPage />}></Route>
         <Route path="/add" element={<AddFormpage />}></Route>
         <Route path="/login" element={<LoginPage />}></Route>
         <Route path="/register" element={<RegisterPage />}></Route>

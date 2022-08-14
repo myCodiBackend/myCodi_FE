@@ -1,21 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 // import GlobalLayout from "../../global/GlobalLayout";
 import styled from "styled-components";
 import { BsArrowLeftCircleFill } from "react-icons/bs";
+import { useNavigate } from "react-router-dom";
 
 const Addform = () => {
+  const navigate = useNavigate();
+
+  // const [desc, setDesc] = useState("")
+  const goBack = () => {
+    navigate(-1);
+  };
+
+  // const onChange = (e)=>{
+  //   setDesc(e.target.value)
+  // }
+
   return (
     <FormWrap>
       <label>작성자</label>
-      <input type="text" />
+      <input type="text" placeholder="작성자" />
       {/* img넣을 것 추후 수정 심채운 */}
       {/* <img></img> */}
-      <label>이미지</label>
+      <input type="file" />
       <div className="img"></div>
       <label>내용</label>
-      <textarea></textarea>
+      <textarea placeholder="내용을 적어주세요"></textarea>
       <button>등록하기</button>
-      <BsArrowLeftCircleFill className="icon" />
+      <BsArrowLeftCircleFill className="icon" onClick={goBack} />
     </FormWrap>
   );
 };
@@ -42,7 +54,7 @@ const FormWrap = styled.form`
   input {
     width: 100%;
     height: 40px;
-    padding: 10px;
+    padding: 7px;
     border-radius: 10px;
     box-sizing: border-box;
     font-size: 20px;
@@ -56,6 +68,7 @@ const FormWrap = styled.form`
     margin: 0 auto;
   }
   textarea {
+    width: 800px;
     height: 80px;
     border-radius: 10px;
     font-size: 20px;
