@@ -151,9 +151,12 @@ function DetailPostCard() {
                 height: "300px",
                 width: "300px",
                 border: "1px solid",
+                backgroundImage: `url(${todo.imgUrl})`,
+                backgroundPosition: "center",
+                backgroundSize: "cover",
               }}
             >
-              <img src="/img/네이버.png" alt="네이버" />
+               
             </div>
 
             <div

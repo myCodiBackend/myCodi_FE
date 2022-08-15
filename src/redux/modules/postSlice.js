@@ -1,6 +1,20 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
+
+
+const userToken = localStorage.getItem('userToken')
+  ? localStorage.getItem('userToken')
+  : null
+
+
+  let config = {
+    headers: {
+        "access-token": userToken
+    }
+  }
+
+
 // 게시글 리스트
 export const __getPostList = createAsyncThunk("GET_POSTS", async () => {
   const response = await axios.get(` http://localhost:5001/posts`);
@@ -12,7 +26,7 @@ export const __getPostList = createAsyncThunk("GET_POSTS", async () => {
 export const __addPost = createAsyncThunk("ADD_POST", async (new_post_list) => {
   const response = await axios.post(
     ` http://localhost:5001/posts`,
-    new_post_list
+    new_post_list, config
   );
   // 전체 포스트 리스트
   return response.data;
@@ -30,12 +44,14 @@ export const __deletePost = createAsyncThunk("DELETE_POST", async (postId) => {
 export const __updatePost = createAsyncThunk(
   "UPDATE_POST",
   async ({ id, author, title, content }) => {
-    await axios.put(` http://localhost:5001/posts/${id}`, {
+    await axios.put(` http://localhost:5001/posts/${id}`,
+     {
       id: id,
       author: author,
       title: title,
       content: content,
-    });
+    },
+    config);
 
     return { id, author, title, content };
   }

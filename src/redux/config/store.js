@@ -1,5 +1,5 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-
+import user from"../modules/userSlice"
 import comments from "../modules/commentsSlice";
 import comment from "../modules/commentSlice";
 import posts from "../modules/postSlice";
@@ -12,6 +12,7 @@ const rootReducer = combineReducers({
   posts,
   comments,
   comment,
+  user
 });
 
 // 스토어 연결

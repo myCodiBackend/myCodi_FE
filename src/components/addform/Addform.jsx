@@ -1,5 +1,6 @@
 
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import axios from 'axios';
 
 // import GlobalLayout from "../../global/GlobalLayout";
 import styled from "styled-components";
@@ -12,16 +13,18 @@ import { __addPost } from '../../redux/modules/postSlice';
 
 
 const Addform = () => {
+  const userToken = localStorage.getItem('userToken')
   const dispatch = useDispatch();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [img,setImg] = useState('')
 
   const navigate = useNavigate();
 
   const onChangeTitle = (e) => {
     setTitle(e.target.value);
   };
-
+ 
   
 
   const onChangeContent = (e) => {
@@ -29,9 +32,23 @@ const Addform = () => {
   };
 
   const onAddPosttButtonHandler = () => {
+
+    const formdata = new FormData();
+    formdata.append('imgUrl', img[0]);
+    const config = {
+      Headers: {
+        'content-type': 'multipart/form-data',
+        'Authentication': userToken
+
+      },
+    };
+
+    axios.post('/mycodi/images', formdata, config);
+
     dispatch(
       __addPost({
         title: title,
+        imgUrl: imageSrc,
         content: content,
       })
     );
@@ -42,14 +59,32 @@ const Addform = () => {
 
 
 
+  const [imageSrc, setImageSrc] = useState('');         
+  const encodeFileToBase64 = (fileBlob) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(fileBlob);
+    return new Promise((resolve) => {
+      reader.onload = () => {
+        setImageSrc(reader.result);
+        resolve();
+      };
+    });
+  };
+console.log(imageSrc)
+
   return (
     <FormWrap>
       
       <label>제목</label>
       <input type="text" value={title} onChange={onChangeTitle}/>
       <label>이미지</label>
-      <input type='file'/>
-      <div className="img"></div>
+      <input type="file" onChange={(e) => {
+        encodeFileToBase64(e.target.files[0]);
+      }} />
+      <div className="preview">
+        {imageSrc && <img src={imageSrc} alt="preview-img" />}
+      </div>
+
       <label>내용</label>
       <input type="textarea" value={content} onChange={onChangeContent}/>
       <button
@@ -93,8 +128,8 @@ const FormWrap = styled.form`
     font-weight: 700;
   }
   .img {
-    width: 50%;
-    height: 350px;
+    width: auto;
+    height: auto;
     background-color: rosybrown;
     margin: 0 auto;
   }
