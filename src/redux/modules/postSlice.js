@@ -79,7 +79,7 @@ const postSlice = createSlice({
         state.loading = true;
       })
       .addCase(__addPost.fulfilled, (state, action) => {
-        state.data = [...state.list, action.payload];
+        state.data = [...state.data, action.payload];
         state.success = true;
       })
       .addCase(__addPost.rejected, (state, action) => {
@@ -91,7 +91,7 @@ const postSlice = createSlice({
         state.loading = true;
       })
       .addCase(__deletePost.fulfilled, (state, action) => {
-        state.data = state.list.filter((post) => post.id !== action.payload);
+        state.data = state.data.filter((post) => post.id !== action.payload);
         state.success = true;
       })
       .addCase(__deletePost.rejected, (state, action) => {
@@ -106,7 +106,7 @@ const postSlice = createSlice({
         const target = state.data.findIndex((post) => {
           return (post.id = action.payload.id);
         });
-        state.data.splice(target, 1, action.payload);
+        state.data = state.data.splice(target, 1, action.payload);
       })
       .addCase(__updatePost.rejected, (state, action) => {
         state.loading = false;
