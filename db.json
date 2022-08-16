@@ -28,7 +28,38 @@
       "id": 4
     }
   ],
-  "comments": [],
+  "comments": [
+    {
+      "todoId": 1,
+      "content": "하나",
+      "id": 1
+    },
+    {
+      "todoId": 1,
+      "content": "둘",
+      "id": 2
+    },
+    {
+      "todoId": 1,
+      "content": "둘",
+      "id": 3
+    },
+    {
+      "todoId": 1,
+      "content": "넷",
+      "id": 4
+    },
+    {
+      "todoId": 1,
+      "content": "다섯",
+      "id": 5
+    },
+    {
+      "todoId": 1,
+      "content": "여섯",
+      "id": 6
+    }
+  ],
   "members": [
     {
       "id": 1,

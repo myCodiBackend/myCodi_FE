@@ -171,7 +171,11 @@ function DetailPostCard() {
               내용 : {todo.content}
             </div>
           </div>
-          <div style={{ float: "right" }}>
+          <div 
+          style={{ 
+            float: "right",
+            marginTop: "10px"
+            }}>
             <button
               style={{
                 marginRight: "10px",
@@ -180,7 +184,12 @@ function DetailPostCard() {
             >
               수정
             </button>
-            <button onClick={onDeleteButtonHandler}>삭제</button>
+            <button 
+             style={{
+              marginRight: "10px",
+            }}
+            onClick={onDeleteButtonHandler}>삭제</button>
+            <button>좋아요</button>
           </div>
         </Wrapper2>
       )}

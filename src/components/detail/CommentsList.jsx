@@ -4,10 +4,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import { __getCommnetsByTodoId } from '../../redux/modules/commentsSlice';
 
 import Comment from "./Comment";
-
+import Pagination from "./Pagination";
 
 
 function CommentsList() {
+  //페이지네이션
+  const [limit, setLimit] = useState(5);
+  const [page, setPage] = useState(1);
+  const offset = (page - 1) * limit;
 
 
   const { id } = useParams();
@@ -29,9 +33,17 @@ useEffect(() => {
 
     return (
       <div>
-            {data.map((comment) => (
+            {data.slice(offset, offset + limit).map((comment) => (
             <Comment key={comment.id} comment={comment} />
           ))}
+          <footer>
+            <Pagination
+              total={data.length}
+              limit={limit}
+              page={page}
+              setPage={setPage}
+            />
+          </footer>
       </div>
     );
   }
