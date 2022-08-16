@@ -3,9 +3,19 @@ import PostCard from "./PostCard";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
+
 import { __getPostList } from "../../redux/modules/postsSlice";
-const PostsList = () => {
+
+// ----------------------------
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/pagination";
+import "./swiperstyles.css";
+import { Pagination } from "swiper";
+// --------------------------------
+const PostsList = ({ posts }) => {
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -13,18 +23,36 @@ const PostsList = () => {
     dispatch(__getPostList());
   }, [dispatch]);
 
-  const posts = useSelector((state) => state.posts.data);
-
   return (
     <StPostsList>
       <div className="postWrap">
-        {posts.map((post) => {
+        <Swiper
+          slidesPerView={4}
+          spaceBetween={30}
+          modules={[Pagination]}
+          className="mySwiper"
+        >
+          {posts.map((post) => {
+            return (
+              <SwiperSlide
+                key={post.id}
+                onClick={() => navigate("/detail/" + post.id)}
+              >
+                <PostCard post={post} />
+              </SwiperSlide>
+            );
+          })}
+        </Swiper>
+        {/* {posts.map((post) => {
           return (
-            <div key={post.id} onClick={() => navigate("/detail/" + post.id)}>
+            <div
+              key={post.id}
+              onClick={() => navigate("/detail/" + post.id)}
+            >
               <PostCard post={post} />
             </div>
           );
-        })}
+        })} */}
       </div>
     </StPostsList>
   );
@@ -33,12 +61,11 @@ const PostsList = () => {
 export default PostsList;
 
 const StPostsList = styled.div`
-  /* background-color: powderblue; */
   .postWrap {
     display: flex;
     flex-wrap: wrap;
     align-content: center;
-    gap: 80px;
-    /* background-color: pink; */
+    gap: 40px;
+    margin-bottom: 40px;
   }
 `;

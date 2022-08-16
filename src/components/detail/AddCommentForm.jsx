@@ -3,13 +3,12 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import TextField from '@mui/material/TextField';
-
-import Button from "../../elements/Button";
+import TextField from "@mui/material/TextField";
 import useInput from "../hooks/useinput";
 import { __addComment } from "../../redux/modules/commentsSlice";
-// import Button from "../common/Button";
-import { WrapperForm } from "../../elements/Wrapper";;
+// import { WrapperForm } from "../../elements/Wrapper";
+import styled from "styled-components";
+import { FaPlusSquare } from "react-icons/fa";
 
 const AddCommentForm = () => {
   const dispatch = useDispatch();
@@ -33,9 +32,7 @@ const AddCommentForm = () => {
   const [content, setContent, onChangeContentHandler] = useInput();
 
   return (
-    <WrapperForm onSubmit={handleSubmit(onAddCommentButtonHandler)}>
-      
-
+    <CommentForm onSubmit={handleSubmit(onAddCommentButtonHandler)}>
       <TextField
         required
         id="outlined-required"
@@ -55,9 +52,21 @@ const AddCommentForm = () => {
         onChange={onChangeContentHandler}
       />
       {errors.content && <small role="alert">{errors.content.message}</small>}
-      <Button type="submit">추가하기</Button>
-    </WrapperForm>
+      <FaPlusSquare className="icon" type="submit">
+        추가하기
+      </FaPlusSquare>
+    </CommentForm>
   );
 };
 
 export default AddCommentForm;
+
+const CommentForm = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  .icon {
+    font-size: 30px;
+  }
+`;

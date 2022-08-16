@@ -10,11 +10,13 @@ const GlobalLayout = ({ children }) => {
 };
 
 const StGlobalLayout = styled.div`
-  width: 100%;
-  border: 1px solid red;
+  max-width: 1400px;
+  min-width: 800px;
+  margin: 0 auto;
   padding: 24px;
   box-sizing: border-box;
   position: relative;
+  background-color: #d8eefe;
 `;
 
 export default GlobalLayout;

@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { __getCommnetsByPostId } from '../../redux/modules/commentsSlice';
 
 import Comment from "./Comment";
 import Pagination from "./Pagination";
+import styled from "styled-components";
 
 
 function CommentsList() {
@@ -13,9 +14,10 @@ function CommentsList() {
   const [page, setPage] = useState(1);
   const offset = (page - 1) * limit;
 
-
   const { id } = useParams();
   const dispatch = useDispatch();
+
+ 
 
 
 const { data } = useSelector((state) => state.comments.commentsByPostId);
@@ -26,8 +28,9 @@ useEffect(() => {
 }, []);
 
 
+
     return (
-      <div>
+      <StCommentsList className="StCommentsList">
             {data.slice(offset, offset + limit).map((comment) => (
             <Comment key={comment.id} comment={comment} />
           ))}
@@ -39,8 +42,11 @@ useEffect(() => {
               setPage={setPage}
             />
           </footer>
-      </div>
+          </StCommentsList>
     );
   }
   
   export default CommentsList;
+
+const StCommentsList = styled.div``;
+

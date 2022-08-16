@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { FiHeart } from "react-icons/fi";
 // import { useDispatch } from "react-redux/es/exports";
 import { useNavigate } from "react-router-dom";
-import { css } from "@emotion/react";
 
 const PostCard = ({ post }) => {
   const navigate = useNavigate();
@@ -13,9 +12,10 @@ const PostCard = ({ post }) => {
         <div className="img" style={{ backgroundImage: `url(${post.imgUrl})` }}>
         
           <FiHeart className="icon" />
+          {/* <div className="number">51</div> */}
         </div>
         <div className="title">
-          <div>{post.title}</div>
+          <span>{post.title}</span>
         </div>
       </div>
     </StPostCard>
@@ -30,22 +30,22 @@ const StPostCard = styled.div`
   .itembox {
     width: 300px;
     height: 310px;
+    color: #90b4ce;
     .img {
       width: 100%;
-      height: 88%;
+      height: 260px;
       background-color: #f6f4f5;
-      border: 1px solid;
       box-sizing: border-box;
       position: relative;
       border-radius: 15px 15px 0 0;
-      /* background: url(); */
-      /* ${(url) => {
-        return css`
-          background: url(url);
-        `;
-      }} */
       background-position: center;
       background-size: cover;
+      .number {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        color: #ddd;
+      }
       .icon {
         opacity: 0.3;
         font-size: 24px;
@@ -55,6 +55,7 @@ const StPostCard = styled.div`
         top: 30px;
         right: 40px;
         fill: none;
+        stroke: #000;
       }
       .icon:hover {
         opacity: 1;
@@ -63,21 +64,30 @@ const StPostCard = styled.div`
       }
     }
     .title {
+      padding: 0 12px;
+      box-sizing: border-box;
       width: 100%;
-      height: 12%;
-      border: 1px solid;
+      height: 50px;
       border-top: none;
       box-sizing: border-box;
-      background-color: yellowgreen;
+      background-color: #fff;
       opacity: 0.7;
       border-radius: 0 0 15px 15px;
-      line-height: 37px;
+      line-height: 50px;
       font-weight: 700;
       transition: all 0.5s;
+      font-size: 18px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      :hover {
+        font-size: 21px;
+      }
     }
     &:hover {
-      font-size: 21px;
+      font-size: 22px;
       text-decoration: underline;
+      color: #094067;
     }
   }
   &:hover {

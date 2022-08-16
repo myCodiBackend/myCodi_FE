@@ -4,27 +4,27 @@ import styled from "styled-components";
 import PostsList from "../components/home/PostsList";
 import GlobalLayout from "../global/GlobalLayout";
 import { useNavigate } from "react-router-dom";
-// import { __getPostList } from "../redux/modules/postSlice";
-// import { useSelector, useDispatch } from "react-redux";
-// import { useEffect } from "react";
+import { useSelector } from "react-redux";
 
 const HomePage = () => {
   const navigate = useNavigate();
-  // const cards = useSelector((state) => state.postSlice.card);
-  // const dispatch = useDispatch();
-
-  // useEffect(() => {
-  //   dispatch(__getPostList());
-  // }, []);
+  const posts = useSelector((state) => state.posts.data);
 
   return (
     <GlobalLayout>
       <StContainer>
         <h1>NEW</h1>
-        <PostsList />
+        {/* {posts.length > 8 ? (
+          <>
+            <PostsList posts={posts} />
+            <button>더 보기</button>
+          </>
+        ) : (
+          <PostsList posts={posts} />
+        )} */}
+        <PostsList posts={posts} />
       </StContainer>
-      <hr />
-      <Btn onClick={() => navigate("/add")}>내꺼 등록하기</Btn>
+      <hr style={{ borderColor: "#094067" }} />
       <StContainer>
         <h1>HOT</h1>
         {/* <PostsList /> */}
@@ -37,28 +37,6 @@ export default HomePage;
 
 const StContainer = styled.div`
   width: 100%;
-  position: relative;
-  h1 {
-    box-shadow: 0 0 0;
-  }
+  /* background-color: #fff; */
+  color: #094067;
 `;
-
-const Btn = styled.button`
-  position: absolute;
-  top: 10px;
-  right: 30px;
-  width: 150px;
-  height: 50px;
-  padding: 10px 20px;
-`;
-
-// const StRank = styled.div`
-//   width: 100%;
-//   height: 45%;
-// `;
-
-// const StHot = styled.div`
-//   /* background-color: peru; */
-//   width: 100%;
-//   height: 45%;
-// `;
