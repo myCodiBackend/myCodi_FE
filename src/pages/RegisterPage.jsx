@@ -1,13 +1,11 @@
-import RegisterForm from "../components/login/RegisterForm";
-
+import RegisterForm from "../modal/login/RegisterForm";
 
 function RegisterPage() {
-    return (
-      <div>
-        <RegisterForm/>
-      </div>
-    );
-  }
-  
-  export default RegisterPage;
-  
+  return (
+    <div>
+      <RegisterForm />
+    </div>
+  );
+}
+
+export default RegisterPage;
