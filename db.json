@@ -3,8 +3,9 @@
     {
       "id": 1,
       "author": "",
-      "title": "파리에서 유행중인 룩ㄴㅇㄹㄴㅇ",
-      "content": "ㄴㅇㄹㄴㄹ"
+      "title": "test1",
+      "content": "test1",
+      "imgUrl": "http://image.dongascience.com/Photo/2020/03/5bddba7b6574b95d37b6079c199d7101.jpg"
     },
     {
       "id": 2,
@@ -61,12 +62,6 @@
       "title": "멋진 데이트룩멋진 데이트룩멋진 데이트룩",
       "content": "흰셔츠에 베이지 조끼",
       "imgUrl": "http://image.dongascience.com/Photo/2022/06/6982fdc1054c503af88bdefeeb7c8fa8.jpg"
-    },
-    {
-      "title": "",
-      "content": "",
-      "imgUrl": "blob:http://localhost:3000/5ee562ab-c0d7-4635-902d-43c5d4fef02e",
-      "id": 10
     }
   ],
   "comments": [
