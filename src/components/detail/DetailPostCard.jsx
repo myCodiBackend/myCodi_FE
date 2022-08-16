@@ -4,10 +4,11 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { Wrapper2 } from "../../elements/Wrapper";
-import { __getPostList } from "../../redux/modules/postSlice";
-import { __getPost, clearPost } from "../../redux/modules/postsSlice";
+import { __getPostList } from "../../redux/modules/postsSlice";
+import { __getPost, clearPost } from "../../redux/modules/postSlice";
 import axios from "axios";
-import { __deletePost, __updatePost } from "../../redux/modules/postSlice";
+import { __deletePost, __updatePost } from "../../redux/modules/postsSlice";
+
 import styled, { css } from "styled-components";
 import {
   FaEdit,
@@ -17,11 +18,11 @@ import {
 } from "react-icons/fa";
 import { BiDownload } from "react-icons/bi";
 import { GoX } from "react-icons/go";
-// import CommentSection from "./CommentSection";
 import CommentsList from "./CommentsList";
 import AddCommentForm from "./AddCommentForm";
 
-// import { IconName } from "react-icons/fa";
+
+
 
 function DetailPostCard() {
   useEffect(() => {
@@ -34,35 +35,30 @@ function DetailPostCard() {
   const [updatedContent, setUpdatedContent] = useState();
   const [updatedImg, setUpdatedImg] = useState();
 
-  const [updatedPost, setUpdatedPost] = useState();
 
-  const posts = useSelector((state) => state.posts.data);
 
-  const todo = posts.find((cur) => cur.id == id);
+  const postList = useSelector((state) => state.posts.data);
+
+  const post = postList.find((cur) => cur.id == id);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const { title } = useSelector((state) => state.post.data);
   const { content } = useSelector((state) => state.post.data);
   const { imgUrl } = useSelector((state) => state.post.data);
-  const [uploadFile, setUploadFile] = useState();
+  
 
-  // const onChangeImg = async (event) => {
-  //   const file = event.target.files[0];
 
-  //   setUploadFile(file);
-  //   const formData = new FormData();
-  //   formData.append("files", uploadFile);
+  const onChangeImg = (event) => {
+    const file = event.target.files[0];
 
-  //   await axios({
-  //     method: "post",
-  //     url: "http://localhost:5001/images",
-  //     data: formData,
-  //     headers: {
-  //       "Content-Type": "multipart/form-data",
-  //     },
-  //   });
-  // };
+    setUpdatedImg(file);
+  };
+  const showFileImage = (e) => {
+    setUpdatedImg(URL.createObjectURL(e.target.files[0]));
+  };
+  //위에 두 함수 중 뭘 쓸지 고민해야함
 
   const onChangeEditButtonHandler = () => {
     setIsEdit(true);
@@ -80,14 +76,26 @@ function DetailPostCard() {
     dispatch(clearPost());
   };
 
-  const onUpdateButtonHandler = () => {
+  const onUpdateButtonHandler = async () => {
+
+    const formData = new FormData();
+    formData.append("imgUrl", updatedImg);  
+    formData.append("title", updatedTitle);
+    formData.append("content", updatedContent);
+
+    await axios({
+      method: "post",
+      url: `/api/posts/${id}`,
+      data: formData,
+      headers: {
+        "Content-Type": "multipart/form-data",
+        
+      },
+    });
     dispatch(
       __updatePost({
-        id,
-        title: updatedTitle,
-        content: updatedContent,
-        imgUrl: "",
-        author: "",
+        id: id,
+        formData
       })
     );
     setIsEdit(false);
@@ -109,10 +117,8 @@ function DetailPostCard() {
     setCommentUp(!commentUp);
   };
 
-  const [fileImage, setFileImage] = useState("");
-  const showFileImage = (e) => {
-    setFileImage(URL.createObjectURL(e.target.files[0]));
-  };
+  
+ 
   return (
     <StDetailPostCard className="postcard">
       {isEdit ? (
@@ -138,7 +144,7 @@ function DetailPostCard() {
               onChange={showFileImage}
             />
             <div className="imgbox">
-              <img className="img" src={fileImage} alt="" />
+              <img className="img" src={updatedImg} alt="" />
             </div>
           </div>
 
@@ -164,7 +170,8 @@ function DetailPostCard() {
       ) : (
         <Wrap className="wrap">
           <div className="title">
-            <span>{todo.title}</span>
+            <span>{post.title}</span>
+            <button>좋아요</button>
             <div className="iconbox">
               <FaEdit
                 className="icon"
@@ -181,12 +188,13 @@ function DetailPostCard() {
           <div
             className="imagebox"
             style={{
-              backgroundImage: `url(${todo.imgUrl})`,
+              backgroundImage: `url(${post.imgUrl})`,
             }}
           ></div>
 
           <div className="descbox">
-            <div className="desc">{todo.content}</div>
+            <div className="desc">{post.content}</div>
+
           </div>
         </Wrap>
       )}

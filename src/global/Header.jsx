@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
@@ -21,7 +22,9 @@ const Header = (props) => {
           로그인 / 회원가입
         </p>
         {IsModalOpen && <LoginPage showModal={showModal} />}
+
       </div>
+ 
     </StHeaderWrap>
   );
 };

@@ -1,10 +1,52 @@
 import styled from "styled-components";
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import Error from "../../components/Error";
+import { registerUser } from '../../redux/modules/userActions';
 
 import React from "react";
 
 function RegisterForm({ loginToggle, goRegister }) {
+
+  const [customError, setCustomError] = useState(null)
+
+  const { loading, userInfo, error, success } = useSelector(
+    (state) => state.user
+  )
+  const dispatch = useDispatch()
+
+  const { register, handleSubmit } = useForm()
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    // redirect authenticated user to profile screen
+    if (userInfo) navigate('/user-profile')
+    // redirect user to login page if registration was successful
+    if (success) navigate('/login')
+  }, [navigate, userInfo, success])
+
+  const submitForm = (data) => {
+    // check if passwords match
+    if (data.password !== data.confirmPassword) {
+      setCustomError('Password mismatch')
+      return
+    }
+    // transform email string to lowercase to avoid case sensitivity issues in login
+    data.username = data.username.toLowerCase()
+
+    dispatch(registerUser(data))
+  }
+
+
+
+
+
   return (
-    <StRegisterBox className="Register">
+    <StRegisterBox className="Register"  onSubmit={handleSubmit(submitForm)}>
+      {error && <Error>{error}</Error>}
+      {customError && <Error>{customError}</Error>}
       <div className="registerBox">
         <span className="login" onClick={loginToggle}>
           로그인
@@ -22,17 +64,31 @@ function RegisterForm({ loginToggle, goRegister }) {
       </div>
       <div className="inputbox">
         <p>아이디</p>
-        <input />
+        <input  
+        type='text'
+         {...register('username')}
+         required
+         />
       </div>
       <div className="inputbox">
         <p>비밀번호</p>
-        <input />
+        <input 
+         type='password'
+         className='form-input'
+         {...register('password')}
+         required
+         />
       </div>
       <div className="inputbox">
         <p>비밀번호재확인</p>
-        <input />
+        <input 
+         type='password'
+         className='form-input'
+         {...register('confirmPassword')}
+         required
+         />
       </div>
-      <button>가입하기</button>
+      <button type='submit' disabled={loading}>가입하기</button>
     </StRegisterBox>
   );
 }

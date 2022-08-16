@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import TextField from "@mui/material/TextField";
 import useInput from "../hooks/useinput";
 import { __addComment } from "../../redux/modules/commentsSlice";
-import { WrapperForm } from "../../elements/Wrapper";
+// import { WrapperForm } from "../../elements/Wrapper";
 import styled from "styled-components";
 import { FaPlusSquare } from "react-icons/fa";
 
@@ -22,9 +22,8 @@ const AddCommentForm = () => {
   const onAddCommentButtonHandler = (data) => {
     dispatch(
       __addComment({
-        todoId: Number(id),
-
-        content: data.content,
+        postId: Number(id),
+        content: data.content
       })
     );
     setContent("");

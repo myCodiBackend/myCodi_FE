@@ -2,17 +2,16 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-// import DeleteIcon from '@mui/icons-material/Delete';
-// import EditIcon from '@mui/icons-material/Edit';
 import TextField from "@mui/material/TextField";
 
-import Button from "../../elements/Button";
+
 import {
   __deleteComment,
   __updateComment,
 } from "../../redux/modules/commentsSlice";
 import { clearComment, __getComment } from "../../redux/modules/commentSlice";
-import { Wrapper } from "../../elements/Wrapper";
+// import { Wrapper } from "../../elements/Wrapper";
+// import Button from "../../elements/Button";
 
 const Comment = ({ comment }) => {
   const { id } = useParams();
@@ -35,8 +34,7 @@ const Comment = ({ comment }) => {
       __updateComment({
         id: comment.id,
         content: updatedComment,
-        author: comment.author,
-        todoId: Number(id),
+        postId: Number(id),
       })
     );
     setIsEdit(false);

@@ -29,4 +29,5 @@ margin: 0 auto;
 padding: 10px 10px;
 margin-top: 1rem;
 width: 700px;
+height: 400px;
 `;

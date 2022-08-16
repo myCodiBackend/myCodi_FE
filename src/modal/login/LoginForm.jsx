@@ -1,8 +1,35 @@
 import styled from "styled-components";
+import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { userLogin } from '../../redux/modules/userActions';
+import { useEffect } from 'react';
+import Error from "../../components/Error";
 
 function LoginPage({ loginToggle, goRegister }) {
+  const { loading, userInfo, error } = useSelector((state) => state.user)
+  const dispatch = useDispatch()
+
+  const { register, handleSubmit } = useForm()
+
+  const navigate = useNavigate()
+
+  // redirect authenticated user to profile screen
+  useEffect(() => {
+    if (userInfo) {
+      navigate('/user-profile')
+    }
+  }, [navigate, userInfo])
+
+  const submitForm = (data) => {
+    dispatch(userLogin(data))
+  }
+
+
+
   return (
-    <StLoginBox className="login">
+    <StLoginFormBox className="login" onSubmit={handleSubmit(submitForm)}>
+         {error && <Error>{error}</Error>}
       <div className="signBox">
         {goRegister === false ? (
           <span
@@ -20,20 +47,27 @@ function LoginPage({ loginToggle, goRegister }) {
       </div>
       <div className="inputbox">
         <p>아이디</p>
-        <input type="text" />
+        <input 
+          type="text"
+          {...register('username')}
+          required
+          />
       </div>
       <div className="inputbox">
         <p>비밀번호</p>
-        <input type="password" />
+        <input type="password"
+         {...register('password')}
+         required
+        />
       </div>
-      <button>로그인</button>
-    </StLoginBox>
+      <button type='submit' disabled={loading}>로그인</button>
+    </StLoginFormBox>
   );
 }
 
 export default LoginPage;
 
-const StLoginBox = styled.form`
+const StLoginFormBox = styled.form`
   .signBox {
     width: 100%;
     margin-bottom: 100px;

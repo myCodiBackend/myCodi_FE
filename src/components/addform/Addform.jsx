@@ -1,17 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from 'react';
+import axios from 'axios';
+
 
 // import GlobalLayout from "../../global/GlobalLayout";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { BsArrowLeftCircleFill } from "react-icons/bs";
 
-import { useNavigate } from "react-router-dom";
-import { __addPost } from "../../redux/modules/postSlice";
+
+import {  useNavigate } from 'react-router-dom';
+import { __addPost } from '../../redux/modules/postsSlice';
+
+
 
 const Addform = () => {
+  const userToken = localStorage.getItem('userToken')
   const dispatch = useDispatch();
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
+
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+  const [img,setImg] = useState('')
+ const [uploadFile, setUploadFile]=useState();
 
   const navigate = useNavigate();
 
@@ -23,7 +32,27 @@ const Addform = () => {
     setContent(e.target.value);
   };
 
-  const onAddPosttButtonHandler = () => {
+
+
+
+  const onAddPosttButtonHandler = async (e) => {
+    e.preventDefault();
+  
+       const formData = new FormData();
+       formData.append('imgUrl', uploadFile);
+       formData.append("title", title);
+       formData.append("content", content);
+
+    await axios({
+      method: 'post',
+      url: '/api/files/images',
+      data: formData,
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        'Authentication': userToken
+      },
+    });
+    
     dispatch(
       __addPost({
         title: title,
@@ -40,11 +69,38 @@ const Addform = () => {
   };
 
   const [fileImage, setFileImage] = useState("");
+
+  
   const showFileImage = (e) => {
     setFileImage(URL.createObjectURL(e.target.files[0]));
   };
 
-  console.log(fileImage);
+  const onChangeImg = (e) => {
+    e.preventDefault();
+    
+    if(e.target.files){
+      setUploadFile(e.target.files[0]);
+      console.log(uploadFile)
+    }
+  }
+//위 두 함수 중 골라서 고민해봐야됨
+
+
+//이미지 미리보기
+//   const [imageSrc, setImageSrc] = useState('');         
+//   const encodeFileToBase64 = (fileBlob) => {
+//     const reader = new FileReader();
+//     reader.readAsDataURL(fileBlob);
+//     return new Promise((resolve) => {
+//       reader.onload = () => {
+//         setImageSrc(reader.result);
+//         resolve();
+//       };
+//     });
+//   };
+// console.log(imageSrc)
+
+
   return (
     <FormWrap>
       <label>제목</label>
@@ -55,14 +111,17 @@ const Addform = () => {
         placeholder="제목을 작성해주세요."
       />
       <label>이미지</label>
+
       <input
         type="file"
         name="imgUpload"
         className="imginput"
         accept="image/*" // accept속성은 서버로 업로드할 수 있는 파일의 타입을 명시, input type="file" 에서만 사용가능
         onChange={showFileImage}
+        // onChange={onChangeImg}
       />
       <img className="img" alt="" src={fileImage}></img>
+
       <label>내용</label>
       <input
         type="textarea"
