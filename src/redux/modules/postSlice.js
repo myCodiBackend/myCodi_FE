@@ -57,7 +57,7 @@ const initialState = {
   error: null,
 };
 
-export const PostsSlice = createSlice({
+export const PostSlice = createSlice({
   name: "post",
   initialState,
   reducers: {
@@ -82,5 +82,5 @@ export const PostsSlice = createSlice({
   },
 });
 
-export const { clearPost } = PostsSlice.actions;
-export default PostsSlice.reducer;
+export const { clearPost } = PostSlice.actions;
+export default PostSlice.reducer;

@@ -12,12 +12,15 @@ export const userLogin = createAsyncThunk(
           },
         }
         const res = await axios.post(
-          '/api/user/login',
+          'http://13.125.217.64/api/members/login',
           { username, password },
           config
         )
         // store user's token in local storage
-        localStorage.setItem('userToken', res.headers.Authentication )
+        console.log(res.headers);
+        localStorage.setItem('Authorization', res.headers.Authorization)
+        localStorage.setItem('RefreshToken', res.headers.RefreshToken)
+
         return res
       } catch (error) {
         // return custom error message from API if any
@@ -34,7 +37,7 @@ export const registerUser = createAsyncThunk(
     // action type string
     'user/register',
     // callback function
-    async ({  username, password }, { rejectWithValue }) => {
+    async ({  username, password, passwordConfirm }, { rejectWithValue }) => {
     try {
     // configure header's Content-Type as JSON
     const config = {
@@ -44,8 +47,8 @@ export const registerUser = createAsyncThunk(
     }
     // make request to backend
     await axios.post(
-    '/api/user/register',
-    { username, password },
+    'http://13.125.217.64/api/members/signup',
+    { username, password, passwordConfirm },
     config
     )
     } catch (error) {
