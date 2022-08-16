@@ -8,6 +8,21 @@ import { __getPostList } from "../../redux/modules/postSlice";
 import { __getPost, clearPost } from "../../redux/modules/postsSlice";
 import axios from "axios";
 import { __deletePost, __updatePost } from "../../redux/modules/postSlice";
+import styled, { css } from "styled-components";
+import {
+  FaEdit,
+  FaTrashAlt,
+  FaCommentAlt,
+  FaWindowClose,
+} from "react-icons/fa";
+import { BiDownload } from "react-icons/bi";
+import { GoX } from "react-icons/go";
+// import CommentSection from "./CommentSection";
+import CommentsList from "./CommentsList";
+import AddCommentForm from "./AddCommentForm";
+
+// import { IconName } from "react-icons/fa";
+
 function DetailPostCard() {
   useEffect(() => {
     dispatch(__getPostList());
@@ -21,9 +36,9 @@ function DetailPostCard() {
 
   const [updatedPost, setUpdatedPost] = useState();
 
-  const todo_list = useSelector((state) => state.posts.data);
+  const posts = useSelector((state) => state.posts.data);
 
-  const todo = todo_list.find((cur) => cur.id == id);
+  const todo = posts.find((cur) => cur.id == id);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -32,22 +47,22 @@ function DetailPostCard() {
   const { imgUrl } = useSelector((state) => state.post.data);
   const [uploadFile, setUploadFile] = useState();
 
-  const onChangeImg = async (event) => {
-    const file = event.target.files[0];
+  // const onChangeImg = async (event) => {
+  //   const file = event.target.files[0];
 
-    setUploadFile(file);
-    const formData = new FormData();
-    formData.append("files", uploadFile);
+  //   setUploadFile(file);
+  //   const formData = new FormData();
+  //   formData.append("files", uploadFile);
 
-    await axios({
-      method: "post",
-      url: "http://localhost:5001/images",
-      data: formData,
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
-  };
+  //   await axios({
+  //     method: "post",
+  //     url: "http://localhost:5001/images",
+  //     data: formData,
+  //     headers: {
+  //       "Content-Type": "multipart/form-data",
+  //     },
+  //   });
+  // };
 
   const onChangeEditButtonHandler = () => {
     setIsEdit(true);
@@ -68,7 +83,7 @@ function DetailPostCard() {
   const onUpdateButtonHandler = () => {
     dispatch(
       __updatePost({
-        id: id,
+        id,
         title: updatedTitle,
         content: updatedContent,
         imgUrl: "",
@@ -88,101 +103,298 @@ function DetailPostCard() {
     }
   };
 
+  // console.log(isEdit);
+  const [commentUp, setCommentUp] = useState(false);
+  const onToggle = () => {
+    setCommentUp(!commentUp);
+  };
+
+  const [fileImage, setFileImage] = useState("");
+  const showFileImage = (e) => {
+    setFileImage(URL.createObjectURL(e.target.files[0]));
+  };
   return (
-    <div>
+    <StDetailPostCard className="postcard">
       {isEdit ? (
-        <Wrapper2>
-          <div style={{ display: "flex" }}>
+        <Wrap>
+          <div className="edittitle">
+            <p>제목 수정</p>
+
             <input
-              style={{ width: "600px" }}
               value={updatedTitle}
+              className="editinput"
               onChange={(event) => {
                 setUpdatedTitle(event.target.value);
               }}
             ></input>
           </div>
-          <div style={{ display: "flex" }}>
+
+          <p>사진 수정</p>
+          <div className="editimgbox">
             <input
               className="imageInputBox"
               type="file"
               accept="image/*"
-              onChange={onChangeImg}
-              style={{
-                height: "300px",
-                width: "300px",
-                border: "1px solid",
-              }}
+              onChange={showFileImage}
             />
+            <div className="imgbox">
+              <img className="img" src={fileImage} alt="" />
+            </div>
+          </div>
+
+          <p>내용 수정</p>
+          <div>
             <input
               className="contentInputbox"
-              style={{
-                height: "300px",
-                width: "300px",
-                border: "1px solid",
-                marginLeft: "20px",
-              }}
               value={updatedContent}
               onChange={(event) => {
                 setUpdatedContent(event.target.value);
               }}
             />
           </div>
-          <div style={{ float: "right" }}>
-            <button
-              onClick={onCancelButtonHandler}
-              style={{
-                marginRight: "10px",
-              }}
-            >
-              취소
-            </button>
-            <button onClick={onUpdateButtonHandler}>저장</button>
-          </div>
-        </Wrapper2>
-      ) : (
-        <Wrapper2>
-          <div style={{ display: "flex" }}>
-            <div style={{ width: "600px" }}>제목: {todo.title}</div>
-          </div>
-          <div style={{ display: "flex" }}>
-            <div
-              className="imagebox"
-              style={{
-                height: "300px",
-                width: "300px",
-                border: "1px solid",
-              }}
-            >
-              <img src="/img/네이버.png" alt="네이버" />
-            </div>
 
-            <div
-              className="contentbox"
-              style={{
-                height: "300px",
-                width: "300px",
-                border: "1px solid",
-                marginLeft: "20px",
-              }}
-            >
-              내용 : {todo.content}
+          <div className="editiconbox">
+            <GoX className="icon" onClick={onCancelButtonHandler}></GoX>
+            <BiDownload
+              className="icon"
+              onClick={onUpdateButtonHandler}
+            ></BiDownload>
+          </div>
+        </Wrap>
+      ) : (
+        <Wrap className="wrap">
+          <div className="title">
+            <span>{todo.title}</span>
+            <div className="iconbox">
+              <FaEdit
+                className="icon"
+                onClick={onChangeEditButtonHandler}
+              ></FaEdit>
+              <FaTrashAlt
+                className="icon"
+                onClick={onDeleteButtonHandler}
+              ></FaTrashAlt>
+              <FaCommentAlt className="icon" onClick={onToggle}></FaCommentAlt>
             </div>
           </div>
-          <div style={{ float: "right" }}>
-            <button
-              style={{
-                marginRight: "10px",
-              }}
-              onClick={onChangeEditButtonHandler}
-            >
-              수정
-            </button>
-            <button onClick={onDeleteButtonHandler}>삭제</button>
+
+          <div
+            className="imagebox"
+            style={{
+              backgroundImage: `url(${todo.imgUrl})`,
+            }}
+          ></div>
+
+          <div className="descbox">
+            <div className="desc">{todo.content}</div>
           </div>
-        </Wrapper2>
+        </Wrap>
       )}
-    </div>
+      <CommentUpContainer commentUp={commentUp}>
+        {/* 댓글 늘리고 줄이는 기능 */}
+        <div className="commentToggle" onClick={onToggle}>
+          {commentUp === true ? <FaWindowClose className="icon" /> : ""}
+        </div>
+        <div className="commentUpDetail">
+          <AddCommentForm />
+          <hr style={{ color: "#094067" }} />
+          <CommentsList />
+        </div>
+      </CommentUpContainer>
+    </StDetailPostCard>
   );
 }
 
 export default DetailPostCard;
+
+const StDetailPostCard = styled.div`
+  font-weight: bold;
+  color: #094067;
+  max-width: 1400px;
+  min-width: 800px;
+  margin: 0 auto;
+  padding: 24px 24px 40px 24px;
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+  p {
+    font-size: 23px;
+    font-weight: bold;
+    margin: 0;
+    margin-bottom: 8px;
+  }
+`;
+
+const Wrap = styled.div`
+  position: relative;
+  width: 90%;
+  margin: 0 auto;
+  padding: 0 30px;
+  border-radius: 15px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  padding-bottom: 50px;
+  overflow: hidden;
+  .edittitle {
+    width: 100%;
+    margin: 20px 0;
+    .editinput {
+      font-weight: bold;
+      border-radius: 15px;
+      outline: none;
+      border: none;
+      font-size: 20px;
+      width: 100%;
+      height: 80px;
+      padding: 0 15px;
+      box-sizing: border-box;
+    }
+  }
+  .title {
+    height: 100px;
+    line-height: 100px;
+    font-size: 25px;
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    .iconbox {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 30px;
+      gap: 30px;
+      .icon {
+        transform: scale(1);
+        transition: all 0.4s;
+        cursor: pointer;
+        fill: #ef4565;
+      }
+      .icon:hover {
+        transform: scale(1.3);
+      }
+    }
+  }
+  .imagebox {
+    margin: 0 auto;
+    width: 80%;
+    height: 500px;
+    border-radius: 12px;
+    background-position: center;
+    background-size: cover;
+    margin-bottom: 20px;
+  }
+  .descbox {
+    width: 100%;
+    margin: 0 auto;
+    .desc {
+      color: #000;
+      font-weight: bold;
+      padding: 10px 20px;
+      box-sizing: border-box;
+      font-size: 20px;
+      border-radius: 20px;
+      background-color: #fff;
+      width: 80%;
+      height: 80px;
+      margin: 0 auto;
+    }
+  }
+  .editimgbox {
+    width: 100%;
+    .imageInputBox {
+      width: 100%;
+      font-weight: bold;
+      padding: 5px 10px;
+      box-sizing: border-box;
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+    .imgbox {
+      text-align: center;
+      img {
+        width: 650px;
+        height: 650px;
+      }
+    }
+  }
+  .contentInputbox {
+    width: 100%;
+    height: 100px;
+    border: none;
+    border-radius: 15px;
+    outline: none;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 0 15px;
+    box-sizing: border-box;
+  }
+  .editiconbox {
+    margin-top: 25px;
+    font-size: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 200px;
+    .icon {
+      fill: #ef4565;
+      box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+        rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+        rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+      border-radius: 12px;
+      padding: 5px 10px;
+      transform: scale(1);
+      transition: all 0.4s;
+      cursor: pointer;
+    }
+    .icon:hover {
+      transform: scale(1.3);
+    }
+  }
+`;
+
+const CommentUpContainer = styled.div`
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  right: 0px;
+  height: 100%;
+  background-color: rgba(225, 225, 225, 0.95);
+  box-shadow: rgb(225 225 255 / 13%) 0px 6px 15px 7px;
+  padding: 0 10px;
+  box-sizing: border-box;
+  transition: all 0.6s ease-in-out;
+  box-sizing: border-box;
+  ${({ commentUp }) => {
+    // eslint-disable-next-line default-case
+    switch (commentUp) {
+      case true: {
+        return css`
+          width: 400px;
+          opacity: 1;
+        `;
+      }
+      case false: {
+        return css`
+          width: 0;
+          opacity: 0;
+        `;
+      }
+    }
+  }}
+  .commentToggle {
+    cursor: pointer;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    flex-direction: row;
+    padding: 10px 0px 15px 12px;
+    .icon {
+      font-size: 25px;
+    }
+  }
+  .commentUpDetail {
+    height: 100%;
+  }
+`;
