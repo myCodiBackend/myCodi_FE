@@ -40,8 +40,7 @@ const Comment = ({ comment }) => {
       __updateComment({
         id: comment.id,
         content: updatedComment,
-       author: comment.author,
-        todoId: Number(id),
+        postId: Number(id),
       })
     );
     setIsEdit(false);

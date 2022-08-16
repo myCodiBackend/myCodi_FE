@@ -23,9 +23,8 @@ const AddCommentForm = () => {
   const onAddCommentButtonHandler = (data) => {
     dispatch(
       __addComment({
-        todoId: Number(id),
-        
-        content: data.content,
+        postId: Number(id),
+        content: data.content
       })
     );
     setContent("");

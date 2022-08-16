@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { __getCommnetsByTodoId } from '../../redux/modules/commentsSlice';
+import { __getCommnetsByPostId } from '../../redux/modules/commentsSlice';
 
 import Comment from "./Comment";
 import Pagination from "./Pagination";
@@ -9,7 +9,7 @@ import Pagination from "./Pagination";
 
 function CommentsList() {
   //페이지네이션
-  const [limit, setLimit] = useState(5);
+  const [limit, setLimit] = useState(7);
   const [page, setPage] = useState(1);
   const offset = (page - 1) * limit;
 
@@ -18,16 +18,11 @@ function CommentsList() {
   const dispatch = useDispatch();
 
 
-const { data } = useSelector((state) => state.comments.commentsByTodoId);
+const { data } = useSelector((state) => state.comments.commentsByPostId);
 useEffect(() => {
-  // if (id) {
-  //   axios
-  //     .get(`http://localhost:5001/post_data?id=${id}`)
-  //     .then((response) => setPost(response.data[0]));
-  // }
-  dispatch(__getCommnetsByTodoId(id));
+  dispatch(__getCommnetsByPostId(id));
  
-  return () => dispatch(__getCommnetsByTodoId('a'));
+  // return () => dispatch(__getCommnetsByPostId('a'));
 }, []);
 
 

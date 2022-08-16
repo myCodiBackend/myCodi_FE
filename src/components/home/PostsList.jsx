@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
-import { __getPostList } from "../../redux/modules/postSlice";
+import { __getPostList } from "../../redux/modules/postsSlice";
 const PostsList = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();

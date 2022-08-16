@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 import { BsArrowLeftCircleFill } from "react-icons/bs";
 
 import {  useNavigate } from 'react-router-dom';
-import { __addPost } from '../../redux/modules/postSlice';
+import { __addPost } from '../../redux/modules/postsSlice';
 
 
 
@@ -18,37 +18,50 @@ const Addform = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [img,setImg] = useState('')
-
+ const [uploadFile, setUploadFile]=useState();
   const navigate = useNavigate();
 
   const onChangeTitle = (e) => {
     setTitle(e.target.value);
   };
- 
+
   
 
   const onChangeContent = (e) => {
     setContent(e.target.value);
   };
 
-  const onAddPosttButtonHandler = () => {
 
-    const formdata = new FormData();
-    formdata.append('imgUrl', img[0]);
-    const config = {
-      Headers: {
-        'content-type': 'multipart/form-data',
+  const onChangeImg = (e) => {
+    e.preventDefault();
+    
+    if(e.target.files){
+      setUploadFile(e.target.files[0]);
+      console.log(uploadFile)
+    }
+  }
+
+  const onAddPosttButtonHandler = async (e) => {
+    e.preventDefault();
+  
+       const formData = new FormData();
+       formData.append('imgUrl', uploadFile);
+       formData.append("title", title);
+       formData.append("content", content);
+
+    await axios({
+      method: 'post',
+      url: '/api/files/images',
+      data: formData,
+      headers: {
+        'Content-Type': 'multipart/form-data',
         'Authentication': userToken
-
       },
-    };
-
-    axios.post('/mycodi/images', formdata, config);
-
+    });
+    
     dispatch(
       __addPost({
         title: title,
-        imgUrl: imageSrc,
         content: content,
       })
     );
@@ -81,6 +94,7 @@ console.log(imageSrc)
       <input type="file" onChange={(e) => {
         encodeFileToBase64(e.target.files[0]);
       }} />
+      <input type="file" id="profile-upload" accept="image/*" onChange={onChangeImg}/>
       <div className="preview">
         {imageSrc && <img src={imageSrc} alt="preview-img" />}
       </div>

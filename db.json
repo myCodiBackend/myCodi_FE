@@ -30,34 +30,54 @@
   ],
   "comments": [
     {
-      "todoId": 1,
+      "postId": 1,
       "content": "하나",
       "id": 1
     },
     {
-      "todoId": 1,
+      "postId": 1,
       "content": "둘",
       "id": 2
     },
     {
-      "todoId": 1,
+      "postId": 1,
       "content": "둘",
       "id": 3
     },
     {
-      "todoId": 1,
+      "postId": 1,
       "content": "넷",
       "id": 4
     },
     {
-      "todoId": 1,
+      "postId": 1,
       "content": "다섯",
       "id": 5
     },
     {
-      "todoId": 1,
+      "postId": 1,
       "content": "여섯",
       "id": 6
+    },
+    {
+      "postId": 4,
+      "content": "넷",
+      "id": 7
+    },
+    {
+      "postId": 2,
+      "content": "둘둘",
+      "id": 8
+    },
+    {
+      "postId": 1,
+      "content": "enf",
+      "id": 9
+    },
+    {
+      "postId": 1,
+      "content": "sdfasfd",
+      "id": 10
     }
   ],
   "members": [

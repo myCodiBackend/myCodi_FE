@@ -1,11 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-
+import instance from "../../shared/Request";
 
 
 const userToken = localStorage.getItem('userToken')
   ? localStorage.getItem('userToken')
-  : null
+  : null;
 
 
   let config = {
@@ -15,120 +15,72 @@ const userToken = localStorage.getItem('userToken')
   }
 
 
-// 게시글 리스트
-export const __getPostList = createAsyncThunk("GET_POSTS", async () => {
-  const response = await axios.get(` http://localhost:5001/posts`);
-  // 전체 포스트 리스트
-  return response.data;
-});
-
-//게시글 등록
-export const __addPost = createAsyncThunk("ADD_POST", async (new_post_list) => {
-  const response = await axios.post(
-    ` http://localhost:5001/posts`,
-    new_post_list, config
-  );
-  // 전체 포스트 리스트
-  return response.data;
-});
-
-// 게시글 삭제
-export const __deletePost = createAsyncThunk("DELETE_POST", async (postId) => {
-  await axios.delete(` http://localhost:5001/posts/${postId}`);
-
-  // 포스트 아이디
-  return postId;
-});
-
-//게시글 수정
-export const __updatePost = createAsyncThunk(
-  "UPDATE_POST",
-  async ({ id, author, title, content }) => {
-    await axios.put(` http://localhost:5001/posts/${id}`,
-     {
-      id: id,
-      author: author,
-      title: title,
-      content: content,
-    },
-    config);
-
-    return { id, author, title, content };
+// 게시글 현재 내용
+export const __getPost = createAsyncThunk(
+  "GET_POST",
+  async (arg, thunkAPI) => {
+    try {
+      const { data } = await axios.get(`http://localhost:5001/posts/${arg}`);
+      return thunkAPI.fulfillWithValue(data);
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e);
+    }
   }
 );
 
-// slice
-const postSlice = createSlice({
-  name: "list",
-  initialState: {
-    data: [
-      {
-        author: "",
-        content: "",
-        id: 1,
-        title: "",
-      },
-    ],
-    success: false,
-    loading: false,
-    error: null,
+// // 게시글 현재 내용 백엔드쪽
+// export const __getPost = createAsyncThunk(
+//   "GET_POST",
+//   async (arg, thunkAPI) => {
+//     try {
+//       const { data } = await instance.get(`/api/posts/${arg}`);
+//       return thunkAPI.fulfillWithValue(data);
+//     } catch (e) {
+//       return thunkAPI.rejectWithValue(e);
+//     }
+//   }
+// );
+
+
+
+
+
+
+const initialState = {
+  data: {
+    content: "",
+    username: "",
+    id: 0,
+
   },
-  reducers: {},
-  extraReducers: (builder) => {
-    builder
-      // 게시글 리스트(R)
-      .addCase(__getPostList.pending, (state, action) => {
-        state.loading = true;
-      })
-      .addCase(__getPostList.fulfilled, (state, action) => {
-        state.loading = false;
-        // 리스트 전체 저장
-        state.data = action.payload;
-        state.success = true;
-      })
-      .addCase(__getPostList.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
-      })
-      // 게시글 등록(C)
-      .addCase(__addPost.pending, (state, action) => {
-        state.loading = true;
-      })
-      .addCase(__addPost.fulfilled, (state, action) => {
-        state.data = [...state.data, action.payload];
-        state.success = true;
-      })
-      .addCase(__addPost.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
-      })
-      // 게시글 삭제 (D)
-      .addCase(__deletePost.pending, (state, action) => {
-        state.loading = true;
-      })
-      .addCase(__deletePost.fulfilled, (state, action) => {
-        state.data = state.data.filter((post) => post.id !== action.payload);
-        state.success = true;
-      })
-      .addCase(__deletePost.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
-      })
-      // 게시글 수정(U)
-      .addCase(__updatePost.pending, (state, action) => {
-        state.loading = true;
-      })
-      .addCase(__updatePost.fulfilled, (state, action) => {
-        const target = state.data.findIndex((post) => {
-          return (post.id = action.payload.id);
-        });
-        state.data = state.data.splice(target, 1, action.payload);
-      })
-      .addCase(__updatePost.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
-      });
+  isLoading: false,
+  error: null,
+};
+
+export const PostsSlice = createSlice({
+  name: "post",
+  initialState,
+  reducers: {
+    clearPost: (state) => {
+      state.data.title = "";
+      state.data.content = "";
+      state.data.imgUrl = "";
+    },
+  },
+  extraReducers: {
+    [__getPost.pending]: (state) => {
+      state.data.isLoading = true;
+    },
+    [__getPost.fulfilled]: (state, action) => {
+      state.data.isLoading = false;
+      state.data = action.payload;
+    },
+    [__getPost.rejected]: (state, action) => {
+      state.data.isLoading = false;
+      state.data.error = action.payload;
+    },
   },
 });
 
-export default postSlice.reducer;
+export const { clearPost } = PostsSlice.actions;
+export default PostsSlice.reducer;

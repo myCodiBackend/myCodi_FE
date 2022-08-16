@@ -4,10 +4,10 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { Wrapper2 } from "../../elements/Wrapper";
-import { __getPostList } from "../../redux/modules/postSlice";
-import { __getPost, clearPost } from "../../redux/modules/postsSlice";
+import { __getPostList } from "../../redux/modules/postsSlice";
+import { __getPost, clearPost } from "../../redux/modules/postSlice";
 import axios from "axios";
-import { __deletePost, __updatePost } from "../../redux/modules/postSlice";
+import { __deletePost, __updatePost } from "../../redux/modules/postsSlice";
 function DetailPostCard() {
   useEffect(() => {
     dispatch(__getPostList());
@@ -19,34 +19,23 @@ function DetailPostCard() {
   const [updatedContent, setUpdatedContent] = useState();
   const [updatedImg, setUpdatedImg] = useState();
 
-  const [updatedPost, setUpdatedPost] = useState();
 
-  const todo_list = useSelector((state) => state.posts.data);
+  const postList = useSelector((state) => state.posts.data);
 
-  const todo = todo_list.find((cur) => cur.id == id);
+  const post = postList.find((cur) => cur.id == id);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const { title } = useSelector((state) => state.post.data);
   const { content } = useSelector((state) => state.post.data);
   const { imgUrl } = useSelector((state) => state.post.data);
-  const [uploadFile, setUploadFile] = useState();
+  
 
-  const onChangeImg = async (event) => {
+  const onChangeImg = (event) => {
     const file = event.target.files[0];
 
-    setUploadFile(file);
-    const formData = new FormData();
-    formData.append("files", uploadFile);
-
-    await axios({
-      method: "post",
-      url: "http://localhost:5001/images",
-      data: formData,
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
+    setUpdatedImg(file);
+   
   };
 
   const onChangeEditButtonHandler = () => {
@@ -65,14 +54,26 @@ function DetailPostCard() {
     dispatch(clearPost());
   };
 
-  const onUpdateButtonHandler = () => {
+  const onUpdateButtonHandler = async () => {
+
+    const formData = new FormData();
+    formData.append("imgUrl", updatedImg);  
+    formData.append("title", updatedTitle);
+    formData.append("content", updatedContent);
+
+    await axios({
+      method: "post",
+      url: `/api/posts/${id}`,
+      data: formData,
+      headers: {
+        "Content-Type": "multipart/form-data",
+        
+      },
+    });
     dispatch(
       __updatePost({
         id: id,
-        title: updatedTitle,
-        content: updatedContent,
-        imgUrl: "",
-        author: "",
+        formData
       })
     );
     setIsEdit(false);
@@ -142,7 +143,7 @@ function DetailPostCard() {
       ) : (
         <Wrapper2>
           <div style={{ display: "flex" }}>
-            <div style={{ width: "600px" }}>제목: {todo.title}</div>
+            <div style={{ width: "600px" }}>제목: {post.title}</div>
           </div>
           <div style={{ display: "flex" }}>
             <div
@@ -151,7 +152,7 @@ function DetailPostCard() {
                 height: "300px",
                 width: "300px",
                 border: "1px solid",
-                backgroundImage: `url(${todo.imgUrl})`,
+                backgroundImage: `url(${post.imgUrl})`,
                 backgroundPosition: "center",
                 backgroundSize: "cover",
               }}
@@ -168,7 +169,7 @@ function DetailPostCard() {
                 marginLeft: "20px",
               }}
             >
-              내용 : {todo.content}
+              내용 : {post.content}
             </div>
           </div>
           <div 
