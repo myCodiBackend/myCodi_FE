@@ -5,7 +5,7 @@ import comment from "../modules/commentSlice";
 import posts from "../modules/postsSlice";
 import post from "../modules/postSlice";
 
-// import logger from "redux-logger";
+import logger from "redux-logger";
 // 리듀서 통합
 const rootReducer = combineReducers({
   post,

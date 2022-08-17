@@ -15,7 +15,6 @@ import "./swiperstyles.css";
 import { Pagination } from "swiper";
 // --------------------------------
 const PostsList = ({ posts }) => {
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -26,33 +25,27 @@ const PostsList = ({ posts }) => {
   return (
     <StPostsList>
       <div className="postWrap">
-        <Swiper
-          slidesPerView={4}
-          spaceBetween={30}
-          modules={[Pagination]}
-          className="mySwiper"
-        >
-          {posts.map((post) => {
-            return (
-              <SwiperSlide
-                key={post.id}
-                onClick={() => navigate("/detail/" + post.id)}
-              >
-                <PostCard post={post} />
-              </SwiperSlide>
-            );
-          })}
-        </Swiper>
-        {/* {posts.map((post) => {
-          return (
-            <div
-              key={post.id}
-              onClick={() => navigate("/detail/" + post.id)}
-            >
-              <PostCard post={post} />
-            </div>
-          );
-        })} */}
+        {posts.length === 0 ? (
+          <p>게시글이 없어요.</p>
+        ) : (
+          <Swiper
+            slidesPerView={4}
+            spaceBetween={30}
+            modules={[Pagination]}
+            className="mySwiper"
+          >
+            {posts.map((post) => {
+              return (
+                <SwiperSlide
+                  key={post.id}
+                  onClick={() => navigate("/detail/" + post.id)}
+                >
+                  <PostCard post={post} />
+                </SwiperSlide>
+              );
+            })}
+          </Swiper>
+        )}
       </div>
     </StPostsList>
   );

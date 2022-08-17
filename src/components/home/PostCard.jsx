@@ -9,8 +9,10 @@ const PostCard = ({ post }) => {
   return (
     <StPostCard className="item" onClick={() => navigate(`detail/${post.id}`)}>
       <div className="itembox">
-        <div className="img" style={{ backgroundImage: `url(${post.imgUrl})` }}>
-        
+        <div
+          className="img"
+          style={{ backgroundImage: `url(${post.imageUrl})` }}
+        >
           <FiHeart className="icon" />
           {/* <div className="number">51</div> */}
         </div>

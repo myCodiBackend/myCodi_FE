@@ -10,13 +10,15 @@ import { useNavigate } from "react-router-dom";
 import { __addPost } from "../../redux/modules/postsSlice";
 
 const Addform = () => {
+  const accesstoken = localStorage.getItem("Authorization");
+  const refreshtoken = localStorage.getItem("RefreshToken");
+
   const userToken = localStorage.getItem("userToken");
   const dispatch = useDispatch();
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-
-  const [uploadFile, setUploadFile] = useState();
+  const [imageUrl, setImageUrl] = useState();
 
   const navigate = useNavigate();
 
@@ -28,69 +30,70 @@ const Addform = () => {
     setContent(e.target.value);
   };
 
-  const onAddPosttButtonHandler = (e) => {
+  const onAddPosttButtonHandler = async (e) => {
     e.preventDefault();
+    const form = document.getElementById("addform");
+    const formData = new FormData(form);
 
-    const formData = new FormData();
-    formData.append("imgUrl", uploadFile);
-    formData.append("title", title);
-    formData.append("content", content);
+    console.log([...formData]);
+    await axios.post(
+      "http://13.125.217.64/api/posts",
 
-    // await axios({
-    //   method: 'post',
-    //   url: '/api/files/images',
-    //   data: formData,
-    //   headers: {
-    //     'Content-Type': 'multipart/form-data',
-    //     'Authentication': userToken
-    //   },
-    // });
-    console.log(formData);
-    dispatch(__addPost(formData));
+      formData,
+      {
+        headers: {
+          Authorization: accesstoken,
+          RefreshToken: refreshtoken,
+        },
+      }
+    );
+
+    // dispatch(
+    // __addPost(
+    // formData
+    // )
+    // );
     setTitle("");
     setContent("");
     navigate("/");
   };
-
   const goBack = () => {
     navigate(-1);
   };
 
-  const [fileImage, setFileImage] = useState("");
+  // const [fileImage, setFileImage] = useState("");
 
-  const showFileImage = (e) => {
-    setFileImage(URL.createObjectURL(e.target.files[0]));
-  };
+  // const showFileImage = (e) => {
+  // setImageUrl(URL.createObjectURL(e.target.files[0]));
+  // };
 
   const onChangeImg = (e) => {
-    e.preventDefault();
-
-    if (e.target.files) {
-      setUploadFile(e.target.files[0]);
-    }
+    console.log(e.target.files);
+    setImageUrl(e.target.files[0]);
   };
-  console.log(uploadFile);
+
   //위 두 함수 중 골라서 고민해봐야됨
 
   //이미지 미리보기
-  //   const [imageSrc, setImageSrc] = useState('');
-  //   const encodeFileToBase64 = (fileBlob) => {
-  //     const reader = new FileReader();
-  //     reader.readAsDataURL(fileBlob);
-  //     return new Promise((resolve) => {
-  //       reader.onload = () => {
-  //         setImageSrc(reader.result);
-  //         resolve();
-  //       };
-  //     });
-  //   };
-  // console.log(imageSrc)
+  // const [imageSrc, setImageSrc] = useState("");
+  // const encodeFileToBase64 = (fileBlob) => {
+  //   const reader = new FileReader();
+  //   reader.readAsDataURL(fileBlob);
+  //   return new Promise((resolve) => {
+  //     reader.onload = () => {
+  //       setImageSrc(reader.result);
+  //       resolve();
+  //     };
+  //   });
+  // };
+  // console.log(imageSrc);
 
   return (
-    <FormWrap onSubmit={onAddPosttButtonHandler}>
+    <FormWrap id="addform" onSubmit={onAddPosttButtonHandler}>
       <label>제목</label>
       <input
         type="text"
+        name="title"
         value={title}
         onChange={onChangeTitle}
         placeholder="제목을 작성해주세요."
@@ -99,16 +102,17 @@ const Addform = () => {
 
       <input
         type="file"
-        name="imgUpload"
+        name="imageUrl"
         className="imginput"
         accept="image/*" // accept속성은 서버로 업로드할 수 있는 파일의 타입을 명시, input type="file" 에서만 사용가능
         // onChange={showFileImage}
-        onChange={onChangeImg}
+        // onChange={onChangeImg}
       />
-      <img className="img" alt="" src={fileImage}></img>
+      <img className="img" alt="" src={imageUrl}></img>
 
       <label>내용</label>
       <input
+        name="content"
         type="textarea"
         placeholder="내용을 작성해주세요."
         value={content}

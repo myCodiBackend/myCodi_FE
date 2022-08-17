@@ -7,8 +7,9 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const HomePage = () => {
-  const navigate = useNavigate();
-  const posts = useSelector((state) => state.posts);
+  // const navigate = useNavigate();
+  const posts = useSelector((state) => state.posts.data);
+  // .posts.data
   console.log(posts);
 
   return (
