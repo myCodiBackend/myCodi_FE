@@ -1,73 +1,73 @@
-import { createSlice } from '@reduxjs/toolkit'
-import {  getUserDetails, registerUser, userLogin } from './userActions'
+import { createSlice } from "@reduxjs/toolkit";
+import { getUserDetails, registerUser, userLogin } from "./userActions";
 
 // initialize userToken from local storage
-const userToken = localStorage.getItem('Authorization')
-  ? localStorage.getItem('Authorization')
-  : null
+const userToken = localStorage.getItem("Authorization")
+  ? localStorage.getItem("Authorization")
+  : null;
 
-console.log(userToken);
+// console.log(userToken);
 
 const initialState = {
   loading: false,
-  userInfo: null, 
+  userInfo: null,
   userToken,
   error: null,
   success: false, // for monitoring the registration process.
-}
+};
 
 const userSlice = createSlice({
-  name: 'user',
+  name: "user",
   initialState,
   reducers: {
-	logout: (state) => {
-		localStorage.removeItem('userToken') // deletes token from storage
-		state.loading = false
-		state.userInfo = null
-		state.userToken = null
-		state.error = null
+    logout: (state) => {
+      localStorage.removeItem("userToken"); // deletes token from storage
+      state.loading = false;
+      state.userInfo = null;
+      state.userToken = null;
+      state.error = null;
+    },
   },
-},
   extraReducers: {
-	 // login user
-	 [userLogin.pending]: (state) => {
-		state.loading = true
-		state.error = null
-	  },
-	  [userLogin.fulfilled]: (state, { payload }) => {
-		state.loading = false
-		state.userInfo = payload
-		state.userToken = payload.Authoirzation
-	  },
-	  [userLogin.rejected]: (state, { payload }) => {
-		state.loading = false
-		state.error = payload
-	  },
+    // login user
+    [userLogin.pending]: (state) => {
+      state.loading = true;
+      state.error = null;
+    },
+    [userLogin.fulfilled]: (state, { payload }) => {
+      state.loading = false;
+      state.userInfo = payload;
+      state.userToken = payload.Authoirzation;
+    },
+    [userLogin.rejected]: (state, { payload }) => {
+      state.loading = false;
+      state.error = payload;
+    },
     // register user
     [registerUser.pending]: (state) => {
-      state.loading = true
-      state.error = null
+      state.loading = true;
+      state.error = null;
     },
     [registerUser.fulfilled]: (state, { payload }) => {
-      state.loading = false
-      state.success = true // registration successful
+      state.loading = false;
+      state.success = true; // registration successful
     },
     [registerUser.rejected]: (state, { payload }) => {
-      state.loading = false
-      state.error = payload
+      state.loading = false;
+      state.error = payload;
     },
-	[getUserDetails.pending]: (state) => {
-		state.loading = true
-	  },
-	  [getUserDetails.fulfilled]: (state, { payload }) => {
-		state.loading = false
-		state.userInfo = payload
-	  },
-	  [getUserDetails.rejected]: (state, { payload }) => {
-		state.loading = false
-	  },
+    [getUserDetails.pending]: (state) => {
+      state.loading = true;
+    },
+    [getUserDetails.fulfilled]: (state, { payload }) => {
+      state.loading = false;
+      state.userInfo = payload;
+    },
+    [getUserDetails.rejected]: (state, { payload }) => {
+      state.loading = false;
+    },
   },
-})
+});
 
-export const { logout } = userSlice.actions
-export default userSlice.reducer
+export const { logout } = userSlice.actions;
+export default userSlice.reducer;

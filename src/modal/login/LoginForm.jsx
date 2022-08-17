@@ -8,6 +8,7 @@ import Error from "../../components/Error";
 
 function LoginPage({ loginToggle, goRegister }) {
   const { loading, userInfo, error } = useSelector((state) => state.user);
+  console.log("login :", loading);
   const dispatch = useDispatch();
 
   const { register, handleSubmit } = useForm();

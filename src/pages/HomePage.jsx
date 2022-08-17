@@ -8,20 +8,13 @@ import { useSelector } from "react-redux";
 
 const HomePage = () => {
   const navigate = useNavigate();
-  const posts = useSelector((state) => state.posts.data);
+  const posts = useSelector((state) => state.posts);
+  console.log(posts);
 
   return (
     <GlobalLayout>
       <StContainer>
         <h1>NEW</h1>
-        {/* {posts.length > 8 ? (
-          <>
-            <PostsList posts={posts} />
-            <button>더 보기</button>
-          </>
-        ) : (
-          <PostsList posts={posts} />
-        )} */}
         <PostsList posts={posts} />
       </StContainer>
       <hr style={{ borderColor: "#094067" }} />
