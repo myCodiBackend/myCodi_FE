@@ -6,7 +6,7 @@ import axios from 'axios';
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { BsArrowLeftCircleFill } from "react-icons/bs";
-
+// import { diaryApi } from '../../redux/modules/postsSlice';
 
 import {  useNavigate } from 'react-router-dom';
 import { __addPost } from '../../redux/modules/postsSlice';
@@ -37,29 +37,26 @@ const Addform = () => {
 
 
 
-  const onAddPosttButtonHandler = async (e) => {
-    e.preventDefault();
-    const form = document.getElementById("addform");
-       const formData = new FormData(form);
-      
-        console.log([...formData])
-        const res = await axios.post(
-          "http://13.125.217.64/api/posts",
-        
-          formData,
-          {
-            headers: {
-              Authorization: accesstoken,
-              RefreshToken : refreshtoken
-            }
-          }
-        );
+  const onAddPosttButtonHandler = async () => {
+    let req = {
+      title:title,
+      content: content,
+      imageUrl: imageUrl
+  };
+     let json = JSON.stringify(req); 
+       const form = new FormData();
 
-    // dispatch(
-    //   __addPost(
-    //     formData
-    //   )
-    // );
+        const titleblob = new Blob([json], { type: "application/json" });
+        form.append("title", titleblob);
+        const contentblob = new Blob([json], { type: "application/json" });
+        form.append("content", contentblob);
+        form.append("imageUrl", imageUrl);
+      
+    dispatch(
+      __addPost(
+       form
+      )
+    );
     setTitle("");
     setContent("");
     navigate("/");
@@ -79,7 +76,7 @@ const Addform = () => {
     console.log(e.target.files);
       setImageUrl(e.target.files[0]);
   }
- 
+ console.log(imageUrl);
 //위 두 함수 중 골라서 고민해봐야됨
 
 
@@ -99,7 +96,7 @@ const Addform = () => {
 
 
   return (
-    <FormWrap id="addform" onSubmit={onAddPosttButtonHandler} enctype="multipart/form-data">
+    <FormWrap id="addform" enctype="multipart/form-data">
       <label>제목</label>
       <input
         type="text"
@@ -128,7 +125,7 @@ const Addform = () => {
         value={content}
         onChange={onChangeContent}
       />
-      <button >게시하기</button>
+      <button onClick={onAddPosttButtonHandler} >게시하기</button>
       <BsArrowLeftCircleFill className="icon" onClick={goBack} />
     </FormWrap>
   );
@@ -136,7 +133,7 @@ const Addform = () => {
 
 export default Addform;
 
-const FormWrap = styled.form`
+const FormWrap = styled.div`
   margin: 0 auto;
   margin-top: 40px;
   width: 90%;
