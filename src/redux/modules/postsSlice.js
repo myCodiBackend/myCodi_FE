@@ -26,10 +26,10 @@ console.log(accesstoken)
 
 // 게시글 리스트 조회 백서버쪽
 export const __getPostList = createAsyncThunk("GET_POSTS", async () => {
-  const response = await axios.get("http://13.125.217.64/api/posts");
+  const res = await axios.get("http://13.125.217.64/api/posts");
   // 전체 포스트 리스트
-
-  return response.data.data;
+console.log( res)
+  return res.data.data;
 });
 
 
@@ -53,19 +53,18 @@ export const __getPostList = createAsyncThunk("GET_POSTS", async () => {
 // });
 
 // 게시글 등록 백엔드쪽
-export const __addPost = createAsyncThunk("ADD_POST", async (frm) => {
+export const __addPost = createAsyncThunk("ADD_POST", async (data) => {
   const res = await axios.post(
     "http://13.125.217.64/api/posts",
-    frm,
+    data,
     {
       headers: {
-        'Content-Type': 'multipart/form-data',
+         "Content-Type": "multipart/form-data",
         Authorization: accesstoken,
-        RefreshToken :refreshtoken
+        RefreshToken : refreshtoken
       }
     }
   );
- console.log(res.data)
   return res.data;
 });
 
@@ -83,7 +82,7 @@ export const __deletePost = createAsyncThunk("DELETE_POST", async (postId) => {
 
 // // 게시글 삭제 백엔드쪽
 // export const __deletePost = createAsyncThunk("DELETE_POST", async (postId) => {
-//   await instance.delete(`/api/posts/${postId}`);
+//   await axios.delete(`http://13.125.217.64/api/posts/${postId}`);
 //   // 포스트 아이디
 //   return postId;
 // });
@@ -112,7 +111,7 @@ export const __updatePost = createAsyncThunk(
 // export const __updatePost = createAsyncThunk(
 //   "UPDATE_POST",
 //   async ({id,formdata}) => {
-//     await instance.put(`/api/posts/${id}`,
+//     await axios.put(`http://13.125.217.64/api/posts/${id}`,
 //     formdata,
 //     {
 //       headers: {
@@ -121,7 +120,7 @@ export const __updatePost = createAsyncThunk(
 //       }
 //     });
 
-//     return { id, author, title, content };
+//     return { id, title, content };
 //   }
 // );
 

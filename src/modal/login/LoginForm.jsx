@@ -7,7 +7,7 @@ import { useEffect } from 'react';
 import Error from "../../components/Error";
 
 function LoginPage({ loginToggle, goRegister }) {
-  const { loading, userInfo, error } = useSelector((state) => state.user)
+  const { loading, userInfo, error, userToken } = useSelector((state) => state.user)
   const dispatch = useDispatch()
 
   const { register, handleSubmit } = useForm()
@@ -16,10 +16,10 @@ function LoginPage({ loginToggle, goRegister }) {
 
   // redirect authenticated user to profile screen
   useEffect(() => {
-    if (userInfo) {
+    if (userToken) {
       navigate('/')
     }
-  }, [navigate, userInfo])
+  }, [navigate, userToken])
 
   const submitForm = (data) => {
     dispatch(userLogin(data))

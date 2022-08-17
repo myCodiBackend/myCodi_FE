@@ -1,37 +1,25 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import instance from "../../shared/Request";
+// import instance from "../../shared/Request";
 
-  const userToken = localStorage.getItem('userToken')
+  const accessToken = localStorage.getItem("Authorization")
   ? localStorage.getItem('userToken')
   : null;
-
+  const refreshToken = localStorage.getItem("RefreshToken")
 
   let config = {
     headers: {
-        "access-token": userToken
+        Authorization: accessToken,
+        RefreshToken: refreshToken
     }
   }
 
-//댓글리스트 조회
-export const __getCommnetsByPostId = createAsyncThunk(
-  "GET_COMMENT_BY_TODO_ID",
-  async (arg, thunkAPI) => {
-    try {
-      const { data } = await axios.get(`http://localhost:5001/comments?postId=${arg}`);
-      return thunkAPI.fulfillWithValue(data);
-    } catch (e) {
-      return thunkAPI.rejectWithValue(e.code);
-    }
-  }
-);
-
-// //댓글리스트 조회 백엔드쪽
-// export const __getCommnetsByTodoId = createAsyncThunk(
+// //댓글리스트 조회
+// export const __getCommnetsByPostId = createAsyncThunk(
 //   "GET_COMMENT_BY_TODO_ID",
 //   async (arg, thunkAPI) => {
 //     try {
-//       const { data } = await instance.get(``);
+//       const { data } = await axios.get(`http://localhost:5001/comments?postId=${arg}`);
 //       return thunkAPI.fulfillWithValue(data);
 //     } catch (e) {
 //       return thunkAPI.rejectWithValue(e.code);
@@ -39,33 +27,46 @@ export const __getCommnetsByPostId = createAsyncThunk(
 //   }
 // );
 
-
-//댓글 추가
-export const __addComment = createAsyncThunk(
-  "ADD_COMMENT",
+//댓글리스트 조회 백엔드쪽
+export const __getCommnetsByPostId = createAsyncThunk(
+  "GET_COMMENT_BY_TODO_ID",
   async (arg, thunkAPI) => {
     try {
-      const { data } = await axios.post(`http://localhost:5001/comments`, arg);
+      const { data } = await axios.get(`http://13.125.217.64/api/comments?postId=${arg}`);
       return thunkAPI.fulfillWithValue(data);
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error);
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.code);
     }
   }
 );
 
 
-// //댓글 추가 백엔드쪽
+// //댓글 추가
 // export const __addComment = createAsyncThunk(
 //   "ADD_COMMENT",
 //   async (arg, thunkAPI) => {
 //     try {
-//       const { data } = await instance.post(`/api/comments`, arg, config);
+//       const { data } = await axios.post(`http://localhost:5001/comments`, arg);
 //       return thunkAPI.fulfillWithValue(data);
 //     } catch (error) {
 //       return thunkAPI.rejectWithValue(error);
 //     }
 //   }
 // );
+
+
+// //댓글 추가 백엔드쪽
+export const __addComment = createAsyncThunk(
+  "ADD_COMMENT",
+  async (arg, thunkAPI) => {
+    try {
+      const { data } = await axios.post(`http://13.125.217.64/api/comments`, arg, config);
+      return thunkAPI.fulfillWithValue(data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
 
 
 //댓글 삭제
@@ -87,7 +88,7 @@ export const __deleteComment = createAsyncThunk(
 //   "DELETE_COMMENT",
 //   async (arg, thunkAPI) => {
 //     try {
-//       await instance.delete(`/api/comments/${arg}`, config);
+//       await axios.delete(`http://13.125.217.64/api/comments/${arg}`, config);
 //       return thunkAPI.fulfillWithValue(arg);
 //     } catch (e) {
 //       return thunkAPI.rejectWithValue(e.code);
@@ -115,7 +116,7 @@ export const __updateComment = createAsyncThunk(
 //   "UPDATE_COMMENT",
 //   async (arg, thunkAPI) => {
 //     try {
-//       axios.patch(`/api/comments/${arg.id}`, arg);
+//       axios.put(`http://13.125.217.64/api/comments/${arg.id}`, arg);
 //       return thunkAPI.fulfillWithValue(arg);
 //     } catch (e) {
 //       return thunkAPI.rejectWithValue(e);

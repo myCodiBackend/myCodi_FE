@@ -40,13 +40,13 @@ function DetailPostCard() {
   const postList = useSelector((state) => state.posts.data);
 
   const post = postList.find((cur) => cur.id == id);
-
+  console.log(post);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const { title } = useSelector((state) => state.post.data);
   const { content } = useSelector((state) => state.post.data);
-  const { imgUrl } = useSelector((state) => state.post.data);
+  const { imageUrl } = useSelector((state) => state.post.data);
   
 
 
@@ -68,8 +68,8 @@ function DetailPostCard() {
   useEffect(() => {
     setUpdatedTitle(title);
     setUpdatedContent(content);
-    setUpdatedImg(imgUrl);
-  }, [title, content, imgUrl]);
+    setUpdatedImg(imageUrl);
+  }, [title, content, imageUrl]);
 
   const onCancelButtonHandler = () => {
     setIsEdit(false);
@@ -192,7 +192,7 @@ function DetailPostCard() {
           <div
             className="imagebox"
             style={{
-              backgroundImage: `url(${post.imgUrl})`,
+              backgroundImage: `url(${post.imageUrl})`,
             }}
           ></div>
 
