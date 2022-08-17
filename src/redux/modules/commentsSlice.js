@@ -2,23 +2,24 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import instance from "../../shared/Request";
 
-  const userToken = localStorage.getItem('userToken')
-  ? localStorage.getItem('userToken')
+const userToken = localStorage.getItem("userToken")
+  ? localStorage.getItem("userToken")
   : null;
 
-
-  let config = {
-    headers: {
-        "access-token": userToken
-    }
-  }
+let config = {
+  headers: {
+    "access-token": userToken,
+  },
+};
 
 //댓글리스트 조회
 export const __getCommnetsByPostId = createAsyncThunk(
   "GET_COMMENT_BY_TODO_ID",
   async (arg, thunkAPI) => {
     try {
-      const { data } = await axios.get(`http://localhost:5001/comments?postId=${arg}`);
+      const { data } = await axios.get(
+        `http://localhost:5001/comments?postId=${arg}`
+      );
       return thunkAPI.fulfillWithValue(data);
     } catch (e) {
       return thunkAPI.rejectWithValue(e.code);
@@ -39,7 +40,6 @@ export const __getCommnetsByPostId = createAsyncThunk(
 //   }
 // );
 
-
 //댓글 추가
 export const __addComment = createAsyncThunk(
   "ADD_COMMENT",
@@ -52,7 +52,6 @@ export const __addComment = createAsyncThunk(
     }
   }
 );
-
 
 // //댓글 추가 백엔드쪽
 // export const __addComment = createAsyncThunk(
@@ -67,7 +66,6 @@ export const __addComment = createAsyncThunk(
 //   }
 // );
 
-
 //댓글 삭제
 export const __deleteComment = createAsyncThunk(
   "DELETE_COMMENT",
@@ -80,7 +78,6 @@ export const __deleteComment = createAsyncThunk(
     }
   }
 );
-
 
 // //댓글 삭제 백엔드쪽
 // export const __deleteComment = createAsyncThunk(
@@ -107,8 +104,6 @@ export const __updateComment = createAsyncThunk(
     }
   }
 );
-
-
 
 // //댓글 수정 백엔드쪽
 // export const __updateComment = createAsyncThunk(

@@ -1,26 +1,22 @@
-import React, { useState, useRef, useEffect } from 'react';
-import axios from 'axios';
-
+import React, { useState, useRef, useEffect } from "react";
+import axios from "axios";
 
 // import GlobalLayout from "../../global/GlobalLayout";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { BsArrowLeftCircleFill } from "react-icons/bs";
 
-
-import {  useNavigate } from 'react-router-dom';
-import { __addPost } from '../../redux/modules/postsSlice';
-
-
+import { useNavigate } from "react-router-dom";
+import { __addPost } from "../../redux/modules/postsSlice";
 
 const Addform = () => {
-  const userToken = localStorage.getItem('userToken')
+  const userToken = localStorage.getItem("userToken");
   const dispatch = useDispatch();
 
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
-  const [img,setImg] = useState('')
- const [uploadFile, setUploadFile]=useState();
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [img, setImg] = useState("");
+  const [uploadFile, setUploadFile] = useState();
 
   const navigate = useNavigate();
 
@@ -32,31 +28,28 @@ const Addform = () => {
     setContent(e.target.value);
   };
 
-
-
-
-  const onAddPosttButtonHandler = async (e) => {
+  const onAddPosttButtonHandler = (e) => {
     e.preventDefault();
-  
-       const formData = new FormData();
-       formData.append('imgUrl', uploadFile);
-       formData.append("title", title);
-       formData.append("content", content);
 
-    await axios({
-      method: 'post',
-      url: '/api/files/images',
-      data: formData,
-      headers: {
-        'Content-Type': 'multipart/form-data',
-        'Authentication': userToken
-      },
-    });
-    
+    // const formData = new FormData();
+    // formData.append("imgUrl", uploadFile);
+    // formData.append("title", title);
+    // formData.append("content", content);
+
+    // await axios({
+    //   method: "post",
+    //   url: "/api/files/images",
+    //   data: formData,
+    //   headers: {
+    //     "Content-Type": "multipart/form-data",
+    //     Authentication: userToken,
+    //   },
+    // });
+
     dispatch(
       __addPost({
-        title: title,
-        content: content,
+        title,
+        content,
         imgUrl: fileImage,
       })
     );
@@ -64,45 +57,43 @@ const Addform = () => {
     setContent("");
     navigate("/");
   };
+
   const goBack = () => {
     navigate(-1);
   };
 
   const [fileImage, setFileImage] = useState("");
 
-  
   const showFileImage = (e) => {
     setFileImage(URL.createObjectURL(e.target.files[0]));
   };
 
   const onChangeImg = (e) => {
     e.preventDefault();
-    
-    if(e.target.files){
+
+    if (e.target.files) {
       setUploadFile(e.target.files[0]);
-      console.log(uploadFile)
+      console.log(uploadFile);
     }
-  }
-//위 두 함수 중 골라서 고민해봐야됨
+  };
+  //위 두 함수 중 골라서 고민해봐야됨
 
-
-//이미지 미리보기
-//   const [imageSrc, setImageSrc] = useState('');         
-//   const encodeFileToBase64 = (fileBlob) => {
-//     const reader = new FileReader();
-//     reader.readAsDataURL(fileBlob);
-//     return new Promise((resolve) => {
-//       reader.onload = () => {
-//         setImageSrc(reader.result);
-//         resolve();
-//       };
-//     });
-//   };
-// console.log(imageSrc)
-
+  //이미지 미리보기
+  //   const [imageSrc, setImageSrc] = useState('');
+  //   const encodeFileToBase64 = (fileBlob) => {
+  //     const reader = new FileReader();
+  //     reader.readAsDataURL(fileBlob);
+  //     return new Promise((resolve) => {
+  //       reader.onload = () => {
+  //         setImageSrc(reader.result);
+  //         resolve();
+  //       };
+  //     });
+  //   };
+  // console.log(imageSrc)
 
   return (
-    <FormWrap>
+    <FormWrap onSubmit={onAddPosttButtonHandler}>
       <label>제목</label>
       <input
         type="text"
@@ -129,7 +120,7 @@ const Addform = () => {
         value={content}
         onChange={onChangeContent}
       />
-      <button onClick={onAddPosttButtonHandler}>게시하기</button>
+      <button>게시하기</button>
       <BsArrowLeftCircleFill className="icon" onClick={goBack} />
     </FormWrap>
   );

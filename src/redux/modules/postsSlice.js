@@ -2,18 +2,15 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import instance from "../../shared/Request";
 
-
-const userToken = localStorage.getItem('userToken')
-  ? localStorage.getItem('userToken')
+const userToken = localStorage.getItem("userToken")
+  ? localStorage.getItem("userToken")
   : null;
 
-
-  let config = {
-    headers: {
-        "Authorization": userToken
-    }
-  }
-
+let config = {
+  headers: {
+    Authorization: userToken,
+  },
+};
 
 // 게시글 리스트
 export const __getPostList = createAsyncThunk("GET_POSTS", async () => {
@@ -22,7 +19,6 @@ export const __getPostList = createAsyncThunk("GET_POSTS", async () => {
   return response.data;
 });
 
-
 // // 게시글 리스트 백서버쪽
 // export const __getPostList = createAsyncThunk("GET_POSTS", async () => {
 //   const response = await instance.get("/post");
@@ -30,15 +26,11 @@ export const __getPostList = createAsyncThunk("GET_POSTS", async () => {
 //   return response.data;
 // });
 
-
 //게시글 단건 조회 백엔드쪽
-export const __getPost =createAsyncThunk("GET_POST", async (postId)=> {
+export const __getPost = createAsyncThunk("GET_POST", async (postId) => {
   const response = await instance.get(`/api/posts/${postId}`);
   return response.data;
 });
-
-
-
 
 //게시글 등록
 export const __addPost = createAsyncThunk("ADD_POST", async (new_post_list) => {
@@ -60,9 +52,6 @@ export const __addPost = createAsyncThunk("ADD_POST", async (new_post_list) => {
 //   return response.data;
 // });
 
-
-
-
 // 게시글 삭제
 export const __deletePost = createAsyncThunk("DELETE_POST", async (postId) => {
   await axios.delete(` http://localhost:5001/posts/${postId}`);
@@ -71,7 +60,6 @@ export const __deletePost = createAsyncThunk("DELETE_POST", async (postId) => {
   return postId;
 });
 
-
 // // 게시글 삭제 백엔드쪽
 // export const __deletePost = createAsyncThunk("DELETE_POST", async (postId) => {
 //   await instance.delete(`/api/posts/${postId}`);
@@ -79,26 +67,24 @@ export const __deletePost = createAsyncThunk("DELETE_POST", async (postId) => {
 //   return postId;
 // });
 
-
-
 //게시글 수정
 export const __updatePost = createAsyncThunk(
   "UPDATE_POST",
-  async ({ id, author, title, content }) => {
-    await axios.put(` http://localhost:5001/posts/${id}`,
-     {
-      id: id,
-      author: author,
-      title: title,
-      content: content,
-    },
-    config);
+  async ({ id, img, title, content }) => {
+    await axios.put(
+      ` http://localhost:5001/posts/${id}`,
+      {
+        id,
+        img,
+        title,
+        content,
+      },
+      config
+    );
 
-    return { id, author, title, content };
+    return { id, img, title, content };
   }
 );
-
-
 
 // //게시글 수정 백엔드쪽
 // export const __updatePost = createAsyncThunk(
@@ -116,10 +102,6 @@ export const __updatePost = createAsyncThunk(
 //     return { id, author, title, content };
 //   }
 // );
-
-
-
-
 
 // slice
 const postSlice = createSlice({

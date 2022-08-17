@@ -21,21 +21,17 @@ import { GoX } from "react-icons/go";
 import CommentsList from "./CommentsList";
 import AddCommentForm from "./AddCommentForm";
 
-
-
-
 function DetailPostCard() {
   useEffect(() => {
     dispatch(__getPostList());
     dispatch(__getPost(id));
   }, []);
+
   const { id } = useParams();
   const [isEdit, setIsEdit] = useState(false);
   const [updatedTitle, setUpdatedTitle] = useState();
   const [updatedContent, setUpdatedContent] = useState();
   const [updatedImg, setUpdatedImg] = useState();
-
-
 
   const postList = useSelector((state) => state.posts.data);
 
@@ -47,8 +43,6 @@ function DetailPostCard() {
   const { title } = useSelector((state) => state.post.data);
   const { content } = useSelector((state) => state.post.data);
   const { imgUrl } = useSelector((state) => state.post.data);
-  
-
 
   const onChangeImg = (event) => {
     const file = event.target.files[0];
@@ -77,27 +71,29 @@ function DetailPostCard() {
   };
 
   const onUpdateButtonHandler = async () => {
+    // const formData = new FormData();
+    // formData.append("imgUrl", updatedImg);
+    // formData.append("title", updatedTitle);
+    // formData.append("content", updatedContent);
 
-    const formData = new FormData();
-    formData.append("imgUrl", updatedImg);  
-    formData.append("title", updatedTitle);
-    formData.append("content", updatedContent);
+    // await axios({
+    //   method: "post",
+    //   url: `/api/posts/${id}`,
+    //   data: formData,
+    //   headers: {
+    //     "Content-Type": "multipart/form-data",
 
-    await axios({
-      method: "post",
-      url: `/api/posts/${id}`,
-      data: formData,
-      headers: {
-        "Content-Type": "multipart/form-data",
-        
-      },
-    });
+    //   },
+    // });
     dispatch(
       __updatePost({
-        id: id,
-        formData
+        id,
+        title: updatedTitle,
+        content: updatedContent,
+        // formData
       })
     );
+    // navigate()
     setIsEdit(false);
   };
 
@@ -117,8 +113,6 @@ function DetailPostCard() {
     setCommentUp(!commentUp);
   };
 
-  
- 
   return (
     <StDetailPostCard className="postcard">
       {isEdit ? (
@@ -194,7 +188,6 @@ function DetailPostCard() {
 
           <div className="descbox">
             <div className="desc">{post.content}</div>
-
           </div>
         </Wrap>
       )}
