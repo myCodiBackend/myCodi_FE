@@ -3,11 +3,9 @@ import styled from "styled-components";
 // import PostCard from "../components/home/PostCard";
 import PostsList from "../components/home/PostsList";
 import GlobalLayout from "../global/GlobalLayout";
-import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const HomePage = () => {
-  // const navigate = useNavigate();
   const posts = useSelector((state) => state.posts.data);
   // .posts.data
   console.log(posts);

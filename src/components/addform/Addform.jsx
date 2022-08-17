@@ -5,6 +5,7 @@ import axios from "axios";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { BsArrowLeftCircleFill } from "react-icons/bs";
+// import { diaryApi } from '../../redux/modules/postsSlice';
 
 import { useNavigate } from "react-router-dom";
 import { __addPost } from "../../redux/modules/postsSlice";
@@ -30,29 +31,22 @@ const Addform = () => {
     setContent(e.target.value);
   };
 
-  const onAddPosttButtonHandler = async (e) => {
-    e.preventDefault();
-    const form = document.getElementById("addform");
-    const formData = new FormData(form);
+  const onAddPosttButtonHandler = async () => {
+    let req = {
+      title: title,
+      content: content,
+      imageUrl: imageUrl,
+    };
+    let json = JSON.stringify(req);
+    const form = new FormData();
 
-    console.log([...formData]);
-    const res = await axios.post(
-      "http://13.125.217.64/api/posts",
+    const titleblob = new Blob([json], { type: "application/json" });
+    form.append("title", titleblob);
+    const contentblob = new Blob([json], { type: "application/json" });
+    form.append("content", contentblob);
+    form.append("imageUrl", imageUrl);
 
-      formData,
-      {
-        headers: {
-          Authorization: accesstoken,
-          RefreshToken: refreshtoken,
-        },
-      }
-    );
-
-    // dispatch(
-    //   __addPost(
-    //     formData
-    //   )
-    // );
+    dispatch(__addPost(form));
     setTitle("");
     setContent("");
     navigate("/");
@@ -61,18 +55,17 @@ const Addform = () => {
     navigate(-1);
   };
 
-  const [fileImage, setFileImage] = useState("");
+  // const [fileImage, setFileImage] = useState("");
 
-  const showFileImage = (e) => {
-    setFileImage(URL.createObjectURL(e.target.files[0]));
-  };
+  // const showFileImage = (e) => {
+  //   setImageUrl(URL.createObjectURL(e.target.files[0]));
+  // };
 
   const onChangeImg = (e) => {
     console.log(e.target.files);
-    setFileImage(URL.createObjectURL(e.target.files[0]));
     setImageUrl(e.target.files[0]);
   };
-
+  console.log(imageUrl);
   //위 두 함수 중 골라서 고민해봐야됨
 
   //이미지 미리보기
@@ -90,11 +83,7 @@ const Addform = () => {
   // console.log(imageSrc);
 
   return (
-    <FormWrap
-      id="addform"
-      onSubmit={onAddPosttButtonHandler}
-      enctype="multipart/form-data"
-    >
+    <FormWrap id="addform" enctype="multipart/form-data">
       <label>제목</label>
       <input
         type="text"
@@ -123,7 +112,7 @@ const Addform = () => {
         value={content}
         onChange={onChangeContent}
       />
-      <button>게시하기</button>
+      <button onClick={onAddPosttButtonHandler}>게시하기</button>
       <BsArrowLeftCircleFill className="icon" onClick={goBack} />
     </FormWrap>
   );
@@ -131,7 +120,7 @@ const Addform = () => {
 
 export default Addform;
 
-const FormWrap = styled.form`
+const FormWrap = styled.div`
   margin: 0 auto;
   margin-top: 40px;
   width: 90%;

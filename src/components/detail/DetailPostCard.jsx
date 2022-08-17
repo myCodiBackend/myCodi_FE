@@ -8,7 +8,7 @@ import { __getPostList } from "../../redux/modules/postsSlice";
 import { __getPost, clearPost } from "../../redux/modules/postSlice";
 // import axios from "axios";
 import { __deletePost, __updatePost } from "../../redux/modules/postsSlice";
-
+import axios from "axios";
 import styled, { css } from "styled-components";
 import {
   FaEdit,
@@ -22,6 +22,8 @@ import CommentsList from "./CommentsList";
 import AddCommentForm from "./AddCommentForm";
 
 function DetailPostCard() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   useEffect(() => {
     dispatch(__getPostList());
     dispatch(__getPost(id));
@@ -37,8 +39,6 @@ function DetailPostCard() {
 
   const post = postList.find((cur) => cur.id == id);
   console.log(post);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const { title } = useSelector((state) => state.post.data);
   const { content } = useSelector((state) => state.post.data);
@@ -46,7 +46,6 @@ function DetailPostCard() {
 
   const onChangeImg = (event) => {
     const file = event.target.files[0];
-
     setUpdatedImg(file);
   };
   const showFileImage = (e) => {
@@ -70,31 +69,28 @@ function DetailPostCard() {
     dispatch(clearPost());
   };
 
-  const onUpdateButtonHandler = () => {
-    // const formData = new FormData();
-    // formData.append("imgUrl", updatedImg);
-    // formData.append("title", updatedTitle);
-    // formData.append("content", updatedContent);
+  const onUpdateButtonHandler = async (e) => {
+    e.preventDefault();
+    const form = document.getElementById("form");
+    const formData = new FormData(form);
 
-    // await axios({
-    //   method: "post",
-    //   url: `/api/posts/${id}`,
-    //   data: formData,
-    //   headers: {
-    //     "Content-Type": "multipart/form-data",
+    await axios({
+      method: "post",
+      url: `/api/posts/${id}`,
+      data: formData,
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }).then((res) => {});
+    // dispatch(
+    //   __updatePost({
+    //     id: id,
+    //     title:updatedTitle,
+    //     content:updatedContent,
+    //     imgUrl: updatedImg
 
-    //   },
-    // });
-    dispatch(
-      __updatePost({
-        id: id,
-        title: updatedTitle,
-        content: updatedContent,
-        imgUrl: updatedImg,
-        // formData
-      })
-    );
-    // navigate()
+    //   })
+    // );
     setIsEdit(false);
   };
 
@@ -115,13 +111,14 @@ function DetailPostCard() {
   };
 
   return (
-    <StDetailPostCard className="postcard">
+    <StDetailPostCard id="form" className="postcard">
       {isEdit ? (
         <Wrap>
           <div className="edittitle">
             <p>제목 수정</p>
 
             <input
+              name="title"
               value={updatedTitle}
               className="editinput"
               onChange={(event) => {
@@ -133,11 +130,12 @@ function DetailPostCard() {
           <p>사진 수정</p>
           <div className="editimgbox">
             <input
+              name="imageUrl"
               className="imageInputBox"
               type="file"
               accept="image/*"
               value={updatedImg}
-              onChange={showFileImage}
+              onChange={onChangeImg}
             />
             <div className="imgbox">
               <img className="img" src={updatedImg} alt="" />
@@ -147,6 +145,7 @@ function DetailPostCard() {
           <p>내용 수정</p>
           <div>
             <input
+              name="content"
               className="contentInputbox"
               value={updatedContent}
               onChange={(event) => {

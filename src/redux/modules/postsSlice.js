@@ -1,12 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 // import instance from "../../shared/Request";
-
-const accesstoken = localStorage.getItem("Authorization")
-  ? localStorage.getItem("Authorization")
-  : null;
+const accesstoken = localStorage.getItem("Authorization");
 const refreshtoken = localStorage.getItem("RefreshToken");
-// console.log(accesstoken);
 
 let config = {
   headers: {
@@ -14,10 +10,35 @@ let config = {
   },
 };
 
-// -------------------- 개발용
+// export const diaryApi = {
+//   createPost: async (title, content, imageUrl) => {
+//       let req = {
+//           title: title,
+//           content: content,
+//           imageUrl: imageUrl,
+//       };
+//       let json = JSON.stringify(req);
+//       const form = new FormData();
+//       // 블롭 생성. Blob 객체는 파일류의 불변하는 미가공 데이터를 나타냄.
+//       const title = new Blob([json], { type: "application/json" });
+//       form.append("requestDto", title);
+//         const content = new Blob([json], { type: "application/json" });
+//       form.append("requestDto", content);
+//      form.append("file", imageUrl);
+//       let headerConfig = {
+//           headers: {
+//               "Content-Type": "multipart/form-data",
+//               Authorization: accesstoken,
+//             RefreshToken : refreshtoken
+//           },
+//       };
+//       const data = await axios.post("http://13.125.217.64/api/posts", form, headerConfig);
+//       return data;
+//   },
 
-// ---------------------------------------------------게시글 조회
+// }
 
+// // 게시글 리스트
 // export const __getPostList = createAsyncThunk("GET_POSTS", async () => {
 //   const response = await axios.get(` http://localhost:5001/posts`);
 //   // 전체 포스트 리스트
@@ -30,7 +51,7 @@ let config = {
 export const __getPostList = createAsyncThunk("GET_POSTS", async () => {
   const res = await axios.get("http://13.125.217.64/api/posts");
   // 전체 포스트 리스트
-  console.log(res);
+
   return res.data.data;
 });
 
@@ -51,8 +72,8 @@ export const __getPostList = createAsyncThunk("GET_POSTS", async () => {
 // });
 
 // 게시글 등록 백엔드쪽
-export const __addPost = createAsyncThunk("ADD_POST", async (data) => {
-  const res = await axios.post("http://13.125.217.64/api/posts", data, {
+export const __addPost = createAsyncThunk("ADD_POST", async (form) => {
+  const res = await axios.post("http://13.125.217.64/api/posts", form, {
     headers: {
       "Content-Type": "multipart/form-data",
       Authorization: accesstoken,
