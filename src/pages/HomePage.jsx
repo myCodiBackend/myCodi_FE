@@ -3,18 +3,13 @@ import styled from "styled-components";
 // import PostCard from "../components/home/PostCard";
 import PostsList from "../components/home/PostsList";
 import GlobalLayout from "../global/GlobalLayout";
-import { useSelector } from "react-redux";
 
 const HomePage = () => {
-  const posts = useSelector((state) => state.posts.data);
-  // .posts.data
-  console.log(posts);
-
   return (
     <GlobalLayout>
       <StContainer>
         <h1>NEW</h1>
-        <PostsList posts={posts} />
+        <PostsList />
       </StContainer>
       <hr style={{ borderColor: "#094067" }} />
       <StContainer>

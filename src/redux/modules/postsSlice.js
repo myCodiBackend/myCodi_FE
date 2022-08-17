@@ -50,7 +50,6 @@ let config = {
 // 게시글 리스트 조회 백서버쪽
 export const __getPostList = createAsyncThunk("GET_POSTS", async () => {
   const res = await axios.get("http://13.125.217.64/api/posts");
-  // 전체 포스트 리스트
 
   return res.data.data;
 });

@@ -46,6 +46,9 @@ const Addform = () => {
     form.append("content", contentblob);
     form.append("imageUrl", imageUrl);
 
+    // useEffect(()=>{
+
+    // })
     dispatch(__addPost(form));
     setTitle("");
     setContent("");
@@ -55,14 +58,19 @@ const Addform = () => {
     navigate(-1);
   };
 
-  // const [fileImage, setFileImage] = useState("");
+  // useEffect(() => {
+  //   dispatch(__addPost());
+  // }, []);
+
+  const [fileImage, setFileImage] = useState("");
 
   // const showFileImage = (e) => {
-  //   setImageUrl(URL.createObjectURL(e.target.files[0]));
+  //   setFileImage(URL.createObjectURL(e.target.files[0]));
   // };
 
   const onChangeImg = (e) => {
     console.log(e.target.files);
+    setFileImage(URL.createObjectURL(e.target.files[0]));
     setImageUrl(e.target.files[0]);
   };
   console.log(imageUrl);
