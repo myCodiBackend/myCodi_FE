@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 // import TextField from '@mui/material/TextField';
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import useInput from "../hooks/useinput";
 // import { Wrapper2 } from "../../elements/Wrapper";
 import { __getPostList } from "../../redux/modules/postsSlice";
 import { __getPost, clearPost } from "../../redux/modules/postSlice";
@@ -36,14 +37,14 @@ function DetailPostCard() {
   const [updatedTitle, setUpdatedTitle] = useState("");
   const [updatedContent, setUpdatedContent] = useState("");
   const [updatedImg, setUpdatedImg] = useState();
-  const [prevImg, setPrevImg] =useState();
+  const [prevImg, setPrevImg] = useState();
 
 
   // const postList = useSelector((state) => state.posts.data);
- 
+
   // const post = postList.find((cur) => cur.id == id);
   // console.log(post);
- 
+
 
   const { title } = useSelector((state) => state.post.data);
   const { content } = useSelector((state) => state.post.data);
@@ -73,28 +74,26 @@ function DetailPostCard() {
     dispatch(clearPost());
   };
 
-  const onUpdateButtonHandler =  async () => {
+  const onUpdateButtonHandler = async () => {
 
     let req = {
-      title:title,
-      content: content,
-      imageUrl: imageUrl
-  };
-     let json = JSON.stringify(req); 
+      title: updatedTitle,
+      content: updatedContent,
+      imageUrl: updatedImg
+    };
+    let json = JSON.stringify(req);
     const updateform = new FormData();
 
-        const titleblob = new Blob([json], { type: "application/json" });
-        updateform.append("title", titleblob);
-        const contentblob = new Blob([json], { type: "application/json" });
-        updateform.append("content", contentblob);
-        updateform.append("imageUrl", imageUrl);
-   
+    const titleblob = new Blob([json], { type: "application/json" });
+    updateform.append("title", titleblob);
+    const contentblob = new Blob([json], { type: "application/json" });
+    updateform.append("content", contentblob);
+    updateform.append("imageUrl", imageUrl);
+console.log([...updateform], id)
     dispatch(
-      __updatePost({
-        updateform,
-        id
-      }
-      )
+      __updatePost(
+          {updateform, id
+           } )
     );
     // setUpdatedTitle("");
     // setUpdatedContent("");
@@ -118,8 +117,8 @@ function DetailPostCard() {
     setCommentUp(!commentUp);
   };
 
-  
- 
+// const [updatedtitle,setUpdated]
+
   return (
     <StDetailPostCard id="form" className="postcard">
       {isEdit ? (
@@ -128,7 +127,7 @@ function DetailPostCard() {
             <p>제목 수정</p>
 
             <input
-            name="title"
+              name="title"
               value={updatedTitle}
               className="editinput"
               onChange={(event) => {
@@ -140,11 +139,11 @@ function DetailPostCard() {
           <p>사진 수정</p>
           <div className="editimgbox">
             <input
-            name="imageUrl"
+              name="imageUrl"
               className="imageInputBox"
               type="file"
               accept="image/*"
-              
+
               onChange={onChangeImg}
             />
             <div className="imgbox">
@@ -155,7 +154,7 @@ function DetailPostCard() {
           <p>내용 수정</p>
           <div>
             <input
-            name="content"
+              name="content"
               className="contentInputbox"
               value={updatedContent}
               onChange={(event) => {

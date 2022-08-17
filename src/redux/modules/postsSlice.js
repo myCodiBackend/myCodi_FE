@@ -85,7 +85,8 @@ export const __getPostList = createAsyncThunk("GET_POSTS", async () => {
 // });
 
 // 게시글 등록 백엔드쪽
-export const __addPost = createAsyncThunk("ADD_POST", async (form) => {
+export const __addPost = createAsyncThunk("ADD_POST",
+async (form) => {
   const res = await axios.post(
     "http://13.125.217.64/api/posts",
     form,
@@ -103,21 +104,21 @@ export const __addPost = createAsyncThunk("ADD_POST", async (form) => {
 
 
 
-// 게시글 삭제
-export const __deletePost = createAsyncThunk("DELETE_POST", async (postId) => {
-  await axios.delete(` http://localhost:5001/posts/${postId}`);
-
-  // 포스트 아이디
-  return postId;
-});
-
-
-// // 게시글 삭제 백엔드쪽
+// // 게시글 삭제
 // export const __deletePost = createAsyncThunk("DELETE_POST", async (postId) => {
-//   await axios.delete(`http://13.125.217.64/api/posts/${postId}`);
+//   await axios.delete(` http://localhost:5001/posts/${postId}`);
+
 //   // 포스트 아이디
 //   return postId;
 // });
+
+
+// 게시글 삭제 백엔드쪽
+export const __deletePost = createAsyncThunk("DELETE_POST", 
+async (postId) => {
+  await axios.delete(`http://13.125.217.64/api/posts/${postId}`);
+  return postId;
+});
 
 
 
@@ -142,14 +143,15 @@ export const __deletePost = createAsyncThunk("DELETE_POST", async (postId) => {
 //게시글 수정 백엔드쪽
 export const __updatePost = createAsyncThunk(
   "UPDATE_POST",
-  async ({id, formdata}) => {
-    const res = await axios.patch(`http://13.125.217.64/api/posts/${id}`,
-    formdata,
+  async (data) => {
+    const res = await axios.patch(
+      `http://13.125.217.64/api/posts/${data.id}`,
+    data.updateform,
     {
       headers: {
+        "Content-Type": "multipart/form-data",
           Authorization: accesstoken,
-          RefreshToken : refreshtoken,
-          "Content-Type": "multipart/form-data"
+          RefreshToken : refreshtoken
       }
     });
     console.log(res)
