@@ -17,9 +17,9 @@ export const userLogin = createAsyncThunk(
         config
       );
       // store user's token in local storage
-      console.log(res);
-      localStorage.setItem("Authorization", res.headers.authorization); // 키의 이름, valuse
-      localStorage.setItem("RefreshToken", res.headers.refreshtoken); //키 이름, value
+      console.log(res.headers.authorization);
+      localStorage.setItem("Authorization", res.headers.authorization);
+      localStorage.setItem("RefreshToken", res.headers.refreshtoken);
 
       return res;
     } catch (error) {
@@ -76,7 +76,7 @@ export const getUserDetails = createAsyncThunk(
         },
       };
       const { data } = await axios.get(
-        `http://13.125.217.64/api/user/profile`,
+        `http://13.125.217.64/api/members/posts`,
         config
       );
       return data;
