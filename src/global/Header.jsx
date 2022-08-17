@@ -10,12 +10,15 @@ import { getUserDetails } from '../redux/modules/userActions';
 const Header = (props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { userInfo, userToken } = useSelector((state) => state.user)
-  // useEffect(() => {
-  //   if (userToken) {
-  //     dispatch(getUserDetails())
-  //   }
-  // }, [userToken, dispatch])
+  const {  userToken } = useSelector((state) => state.user)
+
+  const userInfo = localStorage.getItem('userInfo')
+  console.log(userInfo);
+  useEffect(() => {
+    if (userToken) {
+      dispatch(getUserDetails())
+    }
+  }, [userToken, dispatch])
 
   // 모달
   const [IsModalOpen, setIsModalOpen] = useState(false);
@@ -29,7 +32,7 @@ const Header = (props) => {
       <button onClick={() => navigate("/add")}>내 거 등록하기</button>
       <div className="loginFlexBox">
       {userInfo ? (<>
-          <p>{userInfo.username}</p>
+          <p>환영합니다! {userInfo}님</p>
             <p className='sign' onClick={() => dispatch(logout())}>
               로그아웃
             </p></>
