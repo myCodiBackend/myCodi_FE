@@ -1,16 +1,17 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import instance from "../../shared/Request";
+// import instance from "../../shared/Request";
 
 
-const userToken = localStorage.getItem('userToken')
-  ? localStorage.getItem('userToken')
+const accesstoken = localStorage.getItem('Authorization')
+  ? localStorage.getItem('Authorization')
   : null;
-
+  const refreshtoken = localStorage.getItem('RefreshToken')
+console.log(accesstoken)
 
   let config = {
     headers: {
-        "Authorization": userToken
+        "Authorization": accesstoken
     }
   }
 
@@ -23,11 +24,12 @@ const userToken = localStorage.getItem('userToken')
 // });
 
 
-// 게시글 리스트 백서버쪽
+// 게시글 리스트 조회 백서버쪽
 export const __getPostList = createAsyncThunk("GET_POSTS", async () => {
-  const response = await instance.get("/api/posts");
+  const response = await axios.get("http://13.125.217.64/api/posts");
   // 전체 포스트 리스트
-  return response.data;
+
+  return response.data.data;
 });
 
 
@@ -46,18 +48,25 @@ export const __getPostList = createAsyncThunk("GET_POSTS", async () => {
 //     ` http://localhost:5001/posts`,
 //     new_post_list
 //   );
-//   // 전체 포스트 리스트
+
 //   return response.data;
 // });
 
 // 게시글 등록 백엔드쪽
-export const __addPost = createAsyncThunk("ADD_POST", async (new_post_list) => {
-  const response = await instance.post(
-    "/api/posts",
-    new_post_list, config
+export const __addPost = createAsyncThunk("ADD_POST", async (frm) => {
+  const res = await axios.post(
+    "http://13.125.217.64/api/posts",
+    frm,
+    {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: accesstoken,
+        RefreshToken :refreshtoken
+      }
+    }
   );
-  // 전체 포스트 리스트
-  return response.data;
+ console.log(res.data)
+  return res.data;
 });
 
 

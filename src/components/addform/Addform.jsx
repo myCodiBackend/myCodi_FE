@@ -19,7 +19,7 @@ const Addform = () => {
 
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [img,setImg] = useState('')
+
  const [uploadFile, setUploadFile]=useState();
 
   const navigate = useNavigate();
@@ -35,30 +35,28 @@ const Addform = () => {
 
 
 
-  const onAddPosttButtonHandler = async (e) => {
+  const onAddPosttButtonHandler = (e) => {
     e.preventDefault();
   
        const formData = new FormData();
-       formData.append('imgUrl', uploadFile);
+       formData.append("imgUrl", uploadFile);
        formData.append("title", title);
        formData.append("content", content);
 
-    await axios({
-      method: 'post',
-      url: '/api/files/images',
-      data: formData,
-      headers: {
-        'Content-Type': 'multipart/form-data',
-        'Authentication': userToken
-      },
-    });
-    
+    // await axios({
+    //   method: 'post',
+    //   url: '/api/files/images',
+    //   data: formData,
+    //   headers: {
+    //     'Content-Type': 'multipart/form-data',
+    //     'Authentication': userToken
+    //   },
+    // });
+    console.log(formData);
     dispatch(
-      __addPost({
-        title: title,
-        content: content,
-        imgUrl: fileImage,
-      })
+      __addPost(
+        formData
+      )
     );
     setTitle("");
     setContent("");
@@ -80,9 +78,9 @@ const Addform = () => {
     
     if(e.target.files){
       setUploadFile(e.target.files[0]);
-      console.log(uploadFile)
     }
   }
+  console.log(uploadFile)
 //위 두 함수 중 골라서 고민해봐야됨
 
 
@@ -117,8 +115,8 @@ const Addform = () => {
         name="imgUpload"
         className="imginput"
         accept="image/*" // accept속성은 서버로 업로드할 수 있는 파일의 타입을 명시, input type="file" 에서만 사용가능
-        onChange={showFileImage}
-        // onChange={onChangeImg}
+        // onChange={showFileImage}
+        onChange={onChangeImg}
       />
       <img className="img" alt="" src={fileImage}></img>
 
