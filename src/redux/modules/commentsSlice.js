@@ -2,14 +2,14 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 // import instance from "../../shared/Request";
 
-  const accessToken = localStorage.getItem("Authorization")
-  ? localStorage.getItem('userToken')
+const accessToken = localStorage.getItem("Authorization")
+  ? localStorage.getItem("userToken")
   : null;
-  const refreshToken = localStorage.getItem("RefreshToken")
+const refreshToken = localStorage.getItem("RefreshToken");
 let config = {
   headers: {
     Authorization: accessToken,
-        RefreshToken: refreshToken,
+    RefreshToken: refreshToken,
   },
 };
 
@@ -41,7 +41,6 @@ export const __getCommnetsByPostId = createAsyncThunk(
   }
 );
 
-
 // //댓글 추가
 // export const __addComment = createAsyncThunk(
 //   "ADD_COMMENT",
@@ -55,25 +54,25 @@ export const __getCommnetsByPostId = createAsyncThunk(
 //   }
 // );
 
-
 // //댓글 추가 백엔드쪽
 export const __addComment = createAsyncThunk(
   "ADD_COMMENT",
-=======
-//댓글리스트 조회 백엔드쪽
-export const __getCommnetsByPostId = createAsyncThunk(
-  "GET_COMMENT_BY_TODO_ID",
->>>>>>> 35125ae0d0dc49b2fe660d6776107732503c453a
+
+  //댓글리스트 조회 백엔드쪽
+
   async (arg, thunkAPI) => {
     try {
-      const { data } = await axios.post(`http://13.125.217.64/api/comments`, arg, config);
+      const { data } = await axios.post(
+        `http://13.125.217.64/api/comments`,
+        arg,
+        config
+      );
       return thunkAPI.fulfillWithValue(data);
     } catch (e) {
       return thunkAPI.rejectWithValue(e.code);
     }
   }
 );
-
 
 //댓글 삭제
 export const __deleteComment = createAsyncThunk(
