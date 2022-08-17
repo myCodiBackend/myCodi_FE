@@ -17,9 +17,9 @@ export const userLogin = createAsyncThunk(
           config
         )
         // store user's token in local storage
-        console.log(res.headers);
-        localStorage.setItem('Authorization', res.headers.Authorization)
-        localStorage.setItem('RefreshToken', res.headers.RefreshToken)
+        console.log(res);
+        localStorage.setItem('Authorization', res.headers.authorization)
+        localStorage.setItem('RefreshToken', res.headers.refreshtoken)
 
         return res
       } catch (error) {
@@ -77,7 +77,8 @@ export const registerUser = createAsyncThunk(
                 Authorization: `Bearer ${user.userToken}`,
               },
             }
-            const { data } = await axios.get(`/api/user/profile`, config)
+            const { data } = await axios.get(
+              `http://13.125.217.64/api/user/profile`, config)
             return data
           } catch (error) {
             if (error.response && error.response.data.message) {

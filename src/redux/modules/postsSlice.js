@@ -15,50 +15,50 @@ const userToken = localStorage.getItem('userToken')
   }
 
 
-// 게시글 리스트
-export const __getPostList = createAsyncThunk("GET_POSTS", async () => {
-  const response = await axios.get(` http://localhost:5001/posts`);
-  // 전체 포스트 리스트
-  return response.data;
-});
-
-
-// // 게시글 리스트 백서버쪽
+// // 게시글 리스트
 // export const __getPostList = createAsyncThunk("GET_POSTS", async () => {
-//   const response = await instance.get("/post");
+//   const response = await axios.get(` http://localhost:5001/posts`);
 //   // 전체 포스트 리스트
 //   return response.data;
 // });
 
 
-//게시글 단건 조회 백엔드쪽
-export const __getPost =createAsyncThunk("GET_POST", async (postId)=> {
-  const response = await instance.get(`/api/posts/${postId}`);
-  return response.data;
-});
-
-
-
-
-//게시글 등록
-export const __addPost = createAsyncThunk("ADD_POST", async (new_post_list) => {
-  const response = await axios.post(
-    ` http://localhost:5001/posts`,
-    new_post_list
-  );
+// 게시글 리스트 백서버쪽
+export const __getPostList = createAsyncThunk("GET_POSTS", async () => {
+  const response = await instance.get("/api/posts");
   // 전체 포스트 리스트
   return response.data;
 });
 
-//게시글 등록 백엔드쪽
+
+// //게시글 단건 조회 백엔드쪽
+// export const __getPost =createAsyncThunk("GET_POST", async (postId)=> {
+//   const response = await instance.get(`/api/posts/${postId}`);
+//   return response.data;
+// });
+
+
+
+
+// //게시글 등록
 // export const __addPost = createAsyncThunk("ADD_POST", async (new_post_list) => {
-//   const response = await instance.post(
-//     "/api/posts",
-//     new_post_list, config
+//   const response = await axios.post(
+//     ` http://localhost:5001/posts`,
+//     new_post_list
 //   );
 //   // 전체 포스트 리스트
 //   return response.data;
 // });
+
+// 게시글 등록 백엔드쪽
+export const __addPost = createAsyncThunk("ADD_POST", async (new_post_list) => {
+  const response = await instance.post(
+    "/api/posts",
+    new_post_list, config
+  );
+  // 전체 포스트 리스트
+  return response.data;
+});
 
 
 
