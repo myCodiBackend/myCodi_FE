@@ -17,10 +17,10 @@ export const userLogin = createAsyncThunk(
           config
         )
         // store user's token in local storage
-        console.log(res);
+        console.log(res.headers.authorization);
         localStorage.setItem('Authorization', res.headers.authorization)
         localStorage.setItem('RefreshToken', res.headers.refreshtoken)
-
+        
         return res
       } catch (error) {
         // return custom error message from API if any
@@ -78,7 +78,7 @@ export const registerUser = createAsyncThunk(
               },
             }
             const { data } = await axios.get(
-              `http://13.125.217.64/api/user/profile`, config)
+              `http://13.125.217.64/api/members/posts`, config)
             return data
           } catch (error) {
             if (error.response && error.response.data.message) {

@@ -11,11 +11,11 @@ const Header = (props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { userInfo, userToken } = useSelector((state) => state.user)
-  useEffect(() => {
-    if (userToken) {
-      dispatch(getUserDetails())
-    }
-  }, [userToken, dispatch])
+  // useEffect(() => {
+  //   if (userToken) {
+  //     dispatch(getUserDetails())
+  //   }
+  // }, [userToken, dispatch])
 
   // 모달
   const [IsModalOpen, setIsModalOpen] = useState(false);
