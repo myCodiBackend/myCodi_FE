@@ -61,14 +61,15 @@ const Addform = () => {
     navigate(-1);
   };
 
-  // const [fileImage, setFileImage] = useState("");
+  const [fileImage, setFileImage] = useState("");
 
-  // const showFileImage = (e) => {
-  //   setImageUrl(URL.createObjectURL(e.target.files[0]));
-  // };
+  const showFileImage = (e) => {
+    setFileImage(URL.createObjectURL(e.target.files[0]));
+  };
 
   const onChangeImg = (e) => {
     console.log(e.target.files);
+    setFileImage(URL.createObjectURL(e.target.files[0]));
     setImageUrl(e.target.files[0]);
   };
 
@@ -110,9 +111,9 @@ const Addform = () => {
         className="imginput"
         accept="image/*" // accept속성은 서버로 업로드할 수 있는 파일의 타입을 명시, input type="file" 에서만 사용가능
         // onChange={showFileImage}
-        // onChange={onChangeImg}
+        onChange={onChangeImg}
       />
-      <img className="img" alt="" src={imageUrl}></img>
+      <img className="img" alt="" src={fileImage}></img>
 
       <label>내용</label>
       <input
