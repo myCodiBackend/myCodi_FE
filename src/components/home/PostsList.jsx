@@ -14,12 +14,13 @@ import "swiper/css/pagination";
 import "./swiperstyles.css";
 import { Pagination } from "swiper";
 // import { __addPost } from "../../redux/modules/postsSlice.js";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 // --------------------------------
 const PostsList = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const posts = useSelector((state) => state.posts.data);
+  console.log("posts :", posts);
   useEffect(() => {
     dispatch(__getPostList());
   }, [dispatch]);
