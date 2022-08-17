@@ -29,13 +29,13 @@ function RegisterForm({ loginToggle, goRegister }) {
 
   const submitForm = (data) => {
     // check if passwords match
-    if (data.password !== data.confirmPassword) {
+    if (data.password !== data.passwordConfirm) {
       setCustomError('Password mismatch')
       return
     }
     // transform email string to lowercase to avoid case sensitivity issues in login
-    data.username = data.username.toLowerCase()
-
+    // data.username = data.username.toLowerCase()
+    console.log(data);
     dispatch(registerUser(data))
   }
 
@@ -84,7 +84,7 @@ function RegisterForm({ loginToggle, goRegister }) {
         <input 
          type='password'
          className='form-input'
-         {...register('confirmPassword')}
+         {...register('passwordConfirm')}
          required
          />
       </div>

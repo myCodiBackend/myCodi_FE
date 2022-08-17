@@ -1,18 +1,9 @@
 {
   "posts": [
     {
-      "id": 1,
-      "author": "",
-      "title": "test1",
-      "content": "test1",
-      "imgUrl": "http://image.dongascience.com/Photo/2020/03/5bddba7b6574b95d37b6079c199d7101.jpg"
-    },
-    {
       "id": 2,
-      "author": "",
-      "title": "강남클럽룩",
-      "content": "셔츠와 검정슬랙스",
-      "imgUrl": "http://image.dongascience.com/Photo/2020/03/5bddba7b6574b95d37b6079c199d7101.jpg"
+      "title": "강남클럽룩3",
+      "content": "셔츠와 검정슬랙스3"
     },
     {
       "id": 3,
@@ -22,7 +13,6 @@
       "imgUrl": "https://cdn.pixabay.com/photo/2017/09/25/13/12/cocker-spaniel-2785074__480.jpg"
     },
     {
-
       "id": 4,
       "author": "",
       "title": "멋진 데이트룩멋진 데이트룩멋진 데이트룩",
@@ -63,20 +53,42 @@
       "title": "멋진 데이트룩멋진 데이트룩멋진 데이트룩",
       "content": "흰셔츠에 베이지 조끼",
       "imgUrl": "http://image.dongascience.com/Photo/2022/06/6982fdc1054c503af88bdefeeb7c8fa8.jpg"
-
     }
   ],
   "comments": [
     {
-
       "postId": 4,
-      "content": "sdfds",
+      "content": "가나다라",
       "id": 2
     },
     {
-      "postId": 1,
-      "content": "dd",
-      "id": 3
+      "postId": 4,
+      "id": 4
+    },
+    {
+      "postId": 4,
+      "content": "ㄴㅇㄻㄹ",
+      "id": 5
+    },
+    {
+      "postId": 4,
+      "content": "ㄴㅇㄻㄹㄴㅇㄹ",
+      "id": 6
+    },
+    {
+      "postId": 4,
+      "content": "ㅁㅁㄹㅇㄴㄹㅇ",
+      "id": 7
+    },
+    {
+      "postId": 4,
+      "content": "ㅁㄴㅇㄻㄴ",
+      "id": 8
+    },
+    {
+      "postId": 4,
+      "content": "ㄴㅇㄹㄴㅇㄹㅇ",
+      "id": 9
     }
   ],
   "members": [

@@ -1,6 +1,7 @@
 {
   "name": "musinsaf",
   "version": "0.1.0",
+  "proxy": "http://13.125.217.64",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.10.0",
@@ -21,6 +22,7 @@
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
     "redux": "^4.2.0",
+    "redux-logger": "^3.0.6",
     "redux-thunk": "^2.4.1",
     "styled-components": "^5.3.5",
     "swiper": "^8.3.2",
