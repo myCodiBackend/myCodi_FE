@@ -1,10 +1,64 @@
 {
   "posts": [
     {
-      "title": "test1",
-      "content": "test1",
-      "imageUrl": "C:\\fakepath\\KakaoTalk_20180720_165306472.jpg",
-      "id": 1
+      "id": 2,
+      "title": "강남클럽룩3",
+      "content": "셔츠와 검정슬랙스3"
+    },
+    {
+      "id": 3,
+      "author": "",
+      "title": "멋진 데이트룩",
+      "content": "흰셔츠에 베이지 조끼",
+      "imgUrl": "https://cdn.pixabay.com/photo/2017/09/25/13/12/cocker-spaniel-2785074__480.jpg"
+    },
+    {
+      "id": 4,
+      "author": "",
+      "title": "멋진 데이트룩멋진 데이트룩멋진 데이트룩",
+      "content": "흰셔츠에 베이지 조끼",
+      "imgUrl": "http://image.dongascience.com/Photo/2022/06/6982fdc1054c503af88bdefeeb7c8fa8.jpg"
+    },
+    {
+      "id": 5,
+      "author": "",
+      "title": "멋진 데이트룩멋진 데이트룩멋진 데이트룩",
+      "content": "흰셔츠에 베이지 조끼",
+      "imgUrl": "http://image.dongascience.com/Photo/2022/06/6982fdc1054c503af88bdefeeb7c8fa8.jpg"
+    },
+    {
+      "id": 6,
+      "author": "",
+      "title": "멋진 데이트룩멋진 데이트룩멋진 데이트룩",
+      "content": "흰셔츠에 베이지 조끼",
+      "imgUrl": "http://image.dongascience.com/Photo/2022/06/6982fdc1054c503af88bdefeeb7c8fa8.jpg"
+    },
+    {
+      "id": 7,
+      "author": "",
+      "title": "멋진 데이트룩멋진 데이트룩멋진 데이트룩",
+      "content": "흰셔츠에 베이지 조끼",
+      "imgUrl": "http://image.dongascience.com/Photo/2022/06/6982fdc1054c503af88bdefeeb7c8fa8.jpg"
+    },
+    {
+      "id": 8,
+      "author": "",
+      "title": "멋진 데이트룩멋진 데이트룩멋진 데이트룩",
+      "content": "흰셔츠에 베이지 조끼",
+      "imgUrl": "http://image.dongascience.com/Photo/2022/06/6982fdc1054c503af88bdefeeb7c8fa8.jpg"
+    },
+    {
+      "id": 9,
+      "author": "",
+      "title": "멋진 데이트룩멋진 데이트룩멋진 데이트룩",
+      "content": "흰셔츠에 베이지 조끼",
+      "imgUrl": "http://image.dongascience.com/Photo/2022/06/6982fdc1054c503af88bdefeeb7c8fa8.jpg"
+    },
+    {
+      "id": 10
+    },
+    {
+      "id": 11
     }
   ],
   "comments": [

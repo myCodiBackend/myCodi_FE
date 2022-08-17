@@ -5,6 +5,7 @@ import { FiHeart } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 
 const PostCard = ({ post }) => {
+  console.log({ post });
   const navigate = useNavigate();
   return (
     <StPostCard className="item" onClick={() => navigate(`detail/${post.id}`)}>
