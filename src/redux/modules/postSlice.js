@@ -15,31 +15,32 @@ const userToken = localStorage.getItem('userToken')
   }
 
 
-// 게시글 현재 내용
-export const __getPost = createAsyncThunk(
-  "GET_POST",
-  async (arg, thunkAPI) => {
-    try {
-      const { data } = await axios.get(`http://localhost:5001/posts/${arg}`);
-      return thunkAPI.fulfillWithValue(data);
-    } catch (e) {
-      return thunkAPI.rejectWithValue(e);
-    }
-  }
-);
-
-// // 게시글 현재 내용 백엔드쪽
+// // 게시글 현재 내용
 // export const __getPost = createAsyncThunk(
 //   "GET_POST",
 //   async (arg, thunkAPI) => {
 //     try {
-//       const { data } = await instance.get(`/api/posts/${arg}`);
+//       const { data } = await axios.get(`http://localhost:5001/posts/${arg}`);
 //       return thunkAPI.fulfillWithValue(data);
 //     } catch (e) {
 //       return thunkAPI.rejectWithValue(e);
 //     }
 //   }
 // );
+
+// 게시글 현재 내용 백엔드쪽
+export const __getPost = createAsyncThunk(
+  "GET_POST",
+  async (arg, thunkAPI) => {
+    try {
+      const { data } = await axios.get(`http://13.125.217.64/api/posts/${arg}`);
+      console.log(data);
+      return thunkAPI.fulfillWithValue(data.data);
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e);
+    }
+  }
+);
 
 
 
