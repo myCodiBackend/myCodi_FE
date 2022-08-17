@@ -34,24 +34,22 @@ function DetailPostCard() {
   const [updatedTitle, setUpdatedTitle] = useState("");
   const [updatedContent, setUpdatedContent] = useState("");
   const [updatedImg, setUpdatedImg] = useState();
+  const [prevImg, setPrevImg] = useState();
 
-  const postList = useSelector((state) => state.posts.data);
+  // const postList = useSelector((state) => state.posts.data);
 
-  const post = postList.find((cur) => cur.id == id);
-  console.log(post);
+  // const post = postList.find((cur) => cur.id == id);
+  // console.log(post);
 
   const { title } = useSelector((state) => state.post.data);
   const { content } = useSelector((state) => state.post.data);
   const { imageUrl } = useSelector((state) => state.post.data);
+  console.log(title);
 
-  const onChangeImg = (event) => {
-    const file = event.target.files[0];
-    setUpdatedImg(file);
+  const onChangeImg = (e) => {
+    setUpdatedImg(e.target.files[0]);
+    setPrevImg(URL.createObjectURL(e.target.files[0]));
   };
-  const showFileImage = (e) => {
-    setUpdatedImg(URL.createObjectURL(e.target.files[0]));
-  };
-  //위에 두 함수 중 뭘 쓸지 고민해야함
 
   const onChangeEditButtonHandler = () => {
     setIsEdit(true);
@@ -69,28 +67,30 @@ function DetailPostCard() {
     dispatch(clearPost());
   };
 
-  const onUpdateButtonHandler = async (e) => {
-    e.preventDefault();
-    const form = document.getElementById("form");
-    const formData = new FormData(form);
+  const onUpdateButtonHandler = async () => {
+    let req = {
+      title: title,
+      content: content,
+      imageUrl: imageUrl,
+    };
+    let json = JSON.stringify(req);
+    const updateform = new FormData();
 
-    await axios({
-      method: "post",
-      url: `/api/posts/${id}`,
-      data: formData,
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    }).then((res) => {});
-    // dispatch(
-    //   __updatePost({
-    //     id: id,
-    //     title:updatedTitle,
-    //     content:updatedContent,
-    //     imgUrl: updatedImg
+    const titleblob = new Blob([json], { type: "application/json" });
+    updateform.append("title", titleblob);
+    const contentblob = new Blob([json], { type: "application/json" });
+    updateform.append("content", contentblob);
+    updateform.append("imageUrl", imageUrl);
 
-    //   })
-    // );
+    dispatch(
+      __updatePost({
+        updateform,
+        id,
+      })
+    );
+    // setUpdatedTitle("");
+    // setUpdatedContent("");
+    // setUpdatedImg("")
     setIsEdit(false);
   };
 
@@ -104,7 +104,6 @@ function DetailPostCard() {
     }
   };
 
-  // console.log(isEdit);
   const [commentUp, setCommentUp] = useState(false);
   const onToggle = () => {
     setCommentUp(!commentUp);
@@ -134,11 +133,10 @@ function DetailPostCard() {
               className="imageInputBox"
               type="file"
               accept="image/*"
-              value={updatedImg}
               onChange={onChangeImg}
             />
             <div className="imgbox">
-              <img className="img" src={updatedImg} alt="" />
+              <img className="img" src={prevImg} alt="" />
             </div>
           </div>
 
@@ -165,15 +163,15 @@ function DetailPostCard() {
       ) : (
         <Wrap className="wrap">
           <div className="title">
-            <span>{post.title}</span>
+            <span>{title}</span>
             <button>좋아요</button>
             <div className="iconbox">
               <FaEdit
-                className="icon"
+                className="editButton"
                 onClick={onChangeEditButtonHandler}
               ></FaEdit>
               <FaTrashAlt
-                className="icon"
+                className="deleteButton"
                 onClick={onDeleteButtonHandler}
               ></FaTrashAlt>
               <FaCommentAlt className="icon" onClick={onToggle}></FaCommentAlt>
@@ -183,12 +181,12 @@ function DetailPostCard() {
           <div
             className="imagebox"
             style={{
-              backgroundImage: `url(${post.imageUrl})`,
+              backgroundImage: `url(${imageUrl})`,
             }}
           ></div>
 
           <div className="descbox">
-            <div className="desc">{post.content}</div>
+            <div className="desc">{content}</div>
           </div>
         </Wrap>
       )}

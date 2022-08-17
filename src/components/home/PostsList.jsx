@@ -3,7 +3,7 @@ import PostCard from "./PostCard";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { __getPostList } from "../../redux/modules/postsSlice";
 
@@ -20,10 +20,6 @@ const PostsList = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const posts = useSelector((state) => state.posts.data);
-  // useEffect(() => {
-  //   dispatch(__getPostList(), __addPost());
-  // }, [dispatch]);
-
   useEffect(() => {
     dispatch(__getPostList());
   }, [dispatch]);

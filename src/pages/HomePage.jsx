@@ -5,6 +5,8 @@ import PostsList from "../components/home/PostsList";
 import GlobalLayout from "../global/GlobalLayout";
 
 const HomePage = () => {
+  const posts = useSelector((state) => state.posts.data);
+  console.log(posts);
   return (
     <GlobalLayout>
       <StContainer>

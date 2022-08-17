@@ -11,10 +11,6 @@ import { useNavigate } from "react-router-dom";
 import { __addPost } from "../../redux/modules/postsSlice";
 
 const Addform = () => {
-  const accesstoken = localStorage.getItem("Authorization");
-  const refreshtoken = localStorage.getItem("RefreshToken");
-
-  const userToken = localStorage.getItem("userToken");
   const dispatch = useDispatch();
 
   const [title, setTitle] = useState("");
@@ -58,37 +54,33 @@ const Addform = () => {
     navigate(-1);
   };
 
-  // useEffect(() => {
-  //   dispatch(__addPost());
-  // }, []);
-
   const [fileImage, setFileImage] = useState("");
 
   // const showFileImage = (e) => {
-  //   setFileImage(URL.createObjectURL(e.target.files[0]));
+  // setImageUrl(URL.createObjectURL(e.target.files[0]));
   // };
 
   const onChangeImg = (e) => {
     console.log(e.target.files);
-    setFileImage(URL.createObjectURL(e.target.files[0]));
     setImageUrl(e.target.files[0]);
+    setFileImage(URL.createObjectURL(e.target.files[0]));
   };
   console.log(imageUrl);
   //위 두 함수 중 골라서 고민해봐야됨
 
   //이미지 미리보기
-  // const [imageSrc, setImageSrc] = useState("");
-  // const encodeFileToBase64 = (fileBlob) => {
-  //   const reader = new FileReader();
-  //   reader.readAsDataURL(fileBlob);
-  //   return new Promise((resolve) => {
-  //     reader.onload = () => {
-  //       setImageSrc(reader.result);
-  //       resolve();
-  //     };
-  //   });
-  // };
-  // console.log(imageSrc);
+  //   const [imageSrc, setImageSrc] = useState('');
+  //   const encodeFileToBase64 = (fileBlob) => {
+  //     const reader = new FileReader();
+  //     reader.readAsDataURL(fileBlob);
+  //     return new Promise((resolve) => {
+  //       reader.onload = () => {
+  //         setImageSrc(reader.result);
+  //         resolve();
+  //       };
+  //     });
+  //   };
+  // console.log(imageSrc)
 
   return (
     <FormWrap id="addform" enctype="multipart/form-data">

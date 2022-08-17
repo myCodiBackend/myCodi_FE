@@ -97,38 +97,39 @@ export const __deletePost = createAsyncThunk("DELETE_POST", async (postId) => {
 //   return postId;
 // });
 
-//게시글 수정
+// //게시글 수정
 // export const __updatePost = createAsyncThunk(
 //   "UPDATE_POST",
 //   async ({ id, title, content }) => {
-//     await axios.put(
-//       ` http://localhost:5001/posts/${id}`,
-//       {
-//         id: id,
-//         title: title,
-//         content: content,
-//       },
-//       config
-//     );
+//     await axios.put(` http://localhost:5001/posts/${id}`,
+//      {
+//       id: id,
+//       title: title,
+//       content: content,
+//     },
+//     config);
 
 //     return { id, title, content };
 //   }
 // );
 
-// //게시글 수정 백엔드쪽
+//게시글 수정 백엔드쪽
 export const __updatePost = createAsyncThunk(
   "UPDATE_POST",
-  async ({ id, formdata, title, content }) => {
-    await axios.put(`http://13.125.217.64/api/posts/${id}`, formdata, {
-      headers: {
-        Authorization: accesstoken,
-
-        RefreshToken: refreshtoken,
-        "Content-Type": "multipart/form-data",
-      },
-    });
-    console.log(id, title, content, formdata);
-    return { id, title, content };
+  async ({ id, formdata }) => {
+    const res = await axios.patch(
+      `http://13.125.217.64/api/posts/${id}`,
+      formdata,
+      {
+        headers: {
+          Authorization: accesstoken,
+          RefreshToken: refreshtoken,
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    console.log(res);
+    return res.data;
   }
 );
 
