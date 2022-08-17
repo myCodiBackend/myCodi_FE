@@ -1,24 +1,23 @@
-
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import LoginPage from "../pages/LoginPage";
-import  {logout} from "../redux/modules/userSlice";
-import { getUserDetails } from '../redux/modules/userActions';
+import { logout } from "../redux/modules/userSlice";
+import { getUserDetails } from "../redux/modules/userActions";
 
 const Header = (props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const {  userToken } = useSelector((state) => state.user)
+  const { userToken } = useSelector((state) => state.user);
 
-  const userInfo = localStorage.getItem('userInfo')
-  console.log(userInfo);
+  const userInfo = localStorage.getItem("userInfo");
+  // console.log(userInfo);
   useEffect(() => {
     if (userToken) {
-      dispatch(getUserDetails())
+      dispatch(getUserDetails());
     }
-  }, [userToken, dispatch])
+  }, [userToken, dispatch]);
 
   // 모달
   const [IsModalOpen, setIsModalOpen] = useState(false);
@@ -31,22 +30,21 @@ const Header = (props) => {
       <h1 onClick={() => navigate("/")}>MY CODY</h1>
       <button onClick={() => navigate("/add")}>내 거 등록하기</button>
       <div className="loginFlexBox">
-      {userInfo ? (<>
-          <p>환영합니다! {userInfo}님</p>
-            <p className='sign' onClick={() => dispatch(logout())}>
+        {userInfo ? (
+          <>
+            <p>환영합니다! {userInfo}님</p>
+            <p className="sign" onClick={() => dispatch(logout())}>
               로그아웃
-            </p></>
-          
-          ) : (
-           <p className="sign" onClick={showModal}>
-          로그인 / 회원가입
-        </p>
-          )}
-        
-        {IsModalOpen && <LoginPage showModal={showModal} />}
+            </p>
+          </>
+        ) : (
+          <p className="sign" onClick={showModal}>
+            로그인 / 회원가입
+          </p>
+        )}
 
+        {IsModalOpen && <LoginPage showModal={showModal} />}
       </div>
- 
     </StHeaderWrap>
   );
 };

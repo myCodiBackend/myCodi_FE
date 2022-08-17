@@ -13,15 +13,12 @@ const Addform = () => {
   const accesstoken = localStorage.getItem("Authorization");
   const refreshtoken = localStorage.getItem("RefreshToken");
 
-  const accesstoken = localStorage.getItem('Authorization')
-  const refreshtoken = localStorage.getItem('RefreshToken')
-
   const userToken = localStorage.getItem("userToken");
   const dispatch = useDispatch();
 
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
- const [imageUrl, setImageUrl]=useState();
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [imageUrl, setImageUrl] = useState();
 
   const navigate = useNavigate();
 
@@ -33,23 +30,23 @@ const Addform = () => {
     setContent(e.target.value);
   };
 
-  const onAddPosttButtonHandler = async async (e) => {
+  const onAddPosttButtonHandler = async (e) => {
     e.preventDefault();
     const form = document.getElementById("addform");
-       const formData = new FormData(form);
-      
-        console.log([...formData])
-        const res = await axios.post(
-          "http://13.125.217.64/api/posts",
-        
-          formData,
-          {
-            headers: {
-              Authorization: accesstoken,
-              RefreshToken : refreshtoken
-            }
-          }
-        );
+    const formData = new FormData(form);
+
+    console.log([...formData]);
+    const res = await axios.post(
+      "http://13.125.217.64/api/posts",
+
+      formData,
+      {
+        headers: {
+          Authorization: accesstoken,
+          RefreshToken: refreshtoken,
+        },
+      }
+    );
 
     // dispatch(
     //   __addPost(
@@ -66,17 +63,16 @@ const Addform = () => {
 
   // const [fileImage, setFileImage] = useState("");
 
-  
   // const showFileImage = (e) => {
   //   setImageUrl(URL.createObjectURL(e.target.files[0]));
   // };
 
   const onChangeImg = (e) => {
     console.log(e.target.files);
-      setImageUrl(e.target.files[0]);
-  }
- 
-//위 두 함수 중 골라서 고민해봐야됨
+    setImageUrl(e.target.files[0]);
+  };
+
+  //위 두 함수 중 골라서 고민해봐야됨
 
   //이미지 미리보기
   // const [imageSrc, setImageSrc] = useState("");
@@ -93,7 +89,11 @@ const Addform = () => {
   // console.log(imageSrc);
 
   return (
-    <FormWrap id="addform" onSubmit={onAddPosttButtonHandler} enctype="multipart/form-data">
+    <FormWrap
+      id="addform"
+      onSubmit={onAddPosttButtonHandler}
+      enctype="multipart/form-data"
+    >
       <label>제목</label>
       <input
         type="text"
@@ -122,7 +122,7 @@ const Addform = () => {
         value={content}
         onChange={onChangeContent}
       />
-      <button >게시하기</button>
+      <button>게시하기</button>
       <BsArrowLeftCircleFill className="icon" onClick={goBack} />
     </FormWrap>
   );

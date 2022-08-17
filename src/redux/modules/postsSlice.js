@@ -30,19 +30,15 @@ let config = {
 export const __getPostList = createAsyncThunk("GET_POSTS", async () => {
   const res = await axios.get("http://13.125.217.64/api/posts");
   // 전체 포스트 리스트
-console.log( res)
+  console.log(res);
   return res.data.data;
 });
-
 
 // //게시글 단건 조회 백엔드쪽
 // export const __getPost =createAsyncThunk("GET_POST", async (postId)=> {
 //   const response = await instance.get(`/api/posts/${postId}`);
 //   return response.data;
 // });
-
-
-
 
 // //게시글 등록
 // export const __addPost = createAsyncThunk("ADD_POST", async (new_post_list) => {
@@ -56,23 +52,15 @@ console.log( res)
 
 // 게시글 등록 백엔드쪽
 export const __addPost = createAsyncThunk("ADD_POST", async (data) => {
-  const res = await axios.post(
-    "http://13.125.217.64/api/posts",
-    data,
-    {
-      headers: {
-         "Content-Type": "multipart/form-data",
-        Authorization: accesstoken,
-        RefreshToken : refreshtoken
-      }
-    }
-  );
+  const res = await axios.post("http://13.125.217.64/api/posts", data, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+      Authorization: accesstoken,
+      RefreshToken: refreshtoken,
+    },
+  });
   return res.data;
 });
->>>>>>> 35125ae0d0dc49b2fe660d6776107732503c453a
-
-
-
 
 // 게시글 삭제
 export const __deletePost = createAsyncThunk("DELETE_POST", async (postId) => {
@@ -82,7 +70,6 @@ export const __deletePost = createAsyncThunk("DELETE_POST", async (postId) => {
   return postId;
 });
 
-
 // // 게시글 삭제 백엔드쪽
 // export const __deletePost = createAsyncThunk("DELETE_POST", async (postId) => {
 //   await axios.delete(`http://13.125.217.64/api/posts/${postId}`);
@@ -90,46 +77,40 @@ export const __deletePost = createAsyncThunk("DELETE_POST", async (postId) => {
 //   return postId;
 // });
 
-
-
 //게시글 수정
-export const __updatePost = createAsyncThunk(
-  "UPDATE_POST",
-  async ({ id, title, content }) => {
-    await axios.put(` http://localhost:5001/posts/${id}`,
-     {
-      id: id,
-      title: title,
-      content: content,
-    },
-    config);
-
-    return { id, title, content };
-  }
-);
-
-
-
-// //게시글 수정 백엔드쪽
 // export const __updatePost = createAsyncThunk(
 //   "UPDATE_POST",
-//   async ({id,formdata}) => {
-//     await axios.put(`http://13.125.217.64/api/posts/${id}`,
-//     formdata,
-//     {
-//       headers: {
-//           "Authorization": userToken,
-//           "Content-Type": "multipart/form-data"
-//       }
-//     });
+//   async ({ id, title, content }) => {
+//     await axios.put(
+//       ` http://localhost:5001/posts/${id}`,
+//       {
+//         id: id,
+//         title: title,
+//         content: content,
+//       },
+//       config
+//     );
 
 //     return { id, title, content };
 //   }
 // );
 
+// //게시글 수정 백엔드쪽
+export const __updatePost = createAsyncThunk(
+  "UPDATE_POST",
+  async ({ id, formdata, title, content }) => {
+    await axios.put(`http://13.125.217.64/api/posts/${id}`, formdata, {
+      headers: {
+        Authorization: accesstoken,
 
-
-
+        RefreshToken: refreshtoken,
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    console.log(id, title, content, formdata);
+    return { id, title, content };
+  }
+);
 
 // slice
 const postsSlice = createSlice({
