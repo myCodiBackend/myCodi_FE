@@ -4,9 +4,6 @@ import axios from "axios";
 const accesstoken = localStorage.getItem('Authorization')
   const refreshtoken = localStorage.getItem('RefreshToken')
 
-
-
-
   let config = {
     headers: {
         "Authorization": accesstoken
@@ -63,7 +60,6 @@ const accesstoken = localStorage.getItem('Authorization')
 // 게시글 리스트 조회 백서버쪽
 export const __getPostList = createAsyncThunk("GET_POSTS", async () => {
   const res = await axios.get("http://13.125.217.64/api/posts");
-  // 전체 포스트 리스트
 
   return res.data.data;
 });
@@ -125,40 +121,41 @@ export const __deletePost = createAsyncThunk("DELETE_POST", async (postId) => {
 
 
 
-//게시글 수정
-export const __updatePost = createAsyncThunk(
-  "UPDATE_POST",
-  async ({ id, title, content }) => {
-    await axios.put(` http://localhost:5001/posts/${id}`,
-     {
-      id: id,
-      title: title,
-      content: content,
-    },
-    config);
-
-    return { id, title, content };
-  }
-);
-
-
-
-// //게시글 수정 백엔드쪽
+// //게시글 수정
 // export const __updatePost = createAsyncThunk(
 //   "UPDATE_POST",
-//   async ({id,formdata}) => {
-//     await axios.put(`http://13.125.217.64/api/posts/${id}`,
-//     formdata,
-//     {
-//       headers: {
-//           "Authorization": userToken,
-//           "Content-Type": "multipart/form-data"
-//       }
-//     });
+//   async ({ id, title, content }) => {
+//     await axios.put(` http://localhost:5001/posts/${id}`,
+//      {
+//       id: id,
+//       title: title,
+//       content: content,
+//     },
+//     config);
 
 //     return { id, title, content };
 //   }
 // );
+
+
+
+//게시글 수정 백엔드쪽
+export const __updatePost = createAsyncThunk(
+  "UPDATE_POST",
+  async ({id, formdata}) => {
+    const res = await axios.patch(`http://13.125.217.64/api/posts/${id}`,
+    formdata,
+    {
+      headers: {
+          Authorization: accesstoken,
+          RefreshToken : refreshtoken,
+          "Content-Type": "multipart/form-data"
+      }
+    });
+    console.log(res)
+    return res.data ;
+  }
+);
 
 
 

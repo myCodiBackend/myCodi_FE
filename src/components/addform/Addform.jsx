@@ -14,10 +14,6 @@ import { __addPost } from '../../redux/modules/postsSlice';
 
 
 const Addform = () => {
-  const accesstoken = localStorage.getItem('Authorization')
-  const refreshtoken = localStorage.getItem('RefreshToken')
-
-  const userToken = localStorage.getItem('userToken')
   const dispatch = useDispatch();
 
   const [title, setTitle] = useState('');
@@ -65,16 +61,17 @@ const Addform = () => {
     navigate(-1);
   };
 
-  // const [fileImage, setFileImage] = useState("");
+  const [fileImage, setFileImage] = useState("");
 
   
   // const showFileImage = (e) => {
-  //   setImageUrl(URL.createObjectURL(e.target.files[0]));
+  // setImageUrl(URL.createObjectURL(e.target.files[0]));
   // };
 
   const onChangeImg = (e) => {
     console.log(e.target.files);
       setImageUrl(e.target.files[0]);
+      setFileImage(URL.createObjectURL(e.target.files[0]));
   }
  console.log(imageUrl);
 //위 두 함수 중 골라서 고민해봐야됨
@@ -115,7 +112,7 @@ const Addform = () => {
         // onChange={showFileImage}
         onChange={onChangeImg}
       />
-      <img className="img" alt="" src={imageUrl}></img>
+      <img className="img" alt="" src={fileImage}></img>
 
       <label>내용</label>
       <input

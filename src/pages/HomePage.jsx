@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 const HomePage = () => {
 
   const posts = useSelector((state) => state.posts.data);
-
+  console.log(posts)
   return (
     <GlobalLayout>
       <StContainer>
