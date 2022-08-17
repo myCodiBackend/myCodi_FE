@@ -3,10 +3,10 @@ import React, { useEffect, useState } from "react";
 // import TextField from '@mui/material/TextField';
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { Wrapper2 } from "../../elements/Wrapper";
+// import { Wrapper2 } from "../../elements/Wrapper";
 import { __getPostList } from "../../redux/modules/postsSlice";
 import { __getPost, clearPost } from "../../redux/modules/postSlice";
-import axios from "axios";
+// import axios from "axios";
 import { __deletePost, __updatePost } from "../../redux/modules/postsSlice";
 
 import styled, { css } from "styled-components";
@@ -29,8 +29,8 @@ function DetailPostCard() {
 
   const { id } = useParams();
   const [isEdit, setIsEdit] = useState(false);
-  const [updatedTitle, setUpdatedTitle] = useState();
-  const [updatedContent, setUpdatedContent] = useState();
+  const [updatedTitle, setUpdatedTitle] = useState("");
+  const [updatedContent, setUpdatedContent] = useState("");
   const [updatedImg, setUpdatedImg] = useState();
 
   const postList = useSelector((state) => state.posts.data);
@@ -70,7 +70,7 @@ function DetailPostCard() {
     dispatch(clearPost());
   };
 
-  const onUpdateButtonHandler = async () => {
+  const onUpdateButtonHandler = () => {
     // const formData = new FormData();
     // formData.append("imgUrl", updatedImg);
     // formData.append("title", updatedTitle);
@@ -87,9 +87,10 @@ function DetailPostCard() {
     // });
     dispatch(
       __updatePost({
-        id,
+        id: id,
         title: updatedTitle,
         content: updatedContent,
+        imgUrl: updatedImg,
         // formData
       })
     );
@@ -135,6 +136,7 @@ function DetailPostCard() {
               className="imageInputBox"
               type="file"
               accept="image/*"
+              value={updatedImg}
               onChange={showFileImage}
             />
             <div className="imgbox">

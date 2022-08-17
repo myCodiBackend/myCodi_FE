@@ -19,21 +19,18 @@ const AddCommentForm = () => {
     formState: { isDirty, errors },
   } = useForm();
 
-  const onAddCommentButtonHandler = (data) => {
+  const [content, setContent, onChangeContentHandler] = useInput();
+
+  const onAddCommentButtonHandler = () => {
     dispatch(
       __addComment({
         postId: Number(id),
-        content: data.content,
+        content: content,
       })
     );
     setContent("");
   };
 
-  const [content, setContent, onChangeContentHandler] = useInput();
-
-  const check = () => {
-    console.log("눌림");
-  };
   return (
     <CommentForm onSubmit={handleSubmit(onAddCommentButtonHandler)}>
       <TextField
@@ -55,9 +52,11 @@ const AddCommentForm = () => {
         onChange={onChangeContentHandler}
       />
       {errors.content && <small role="alert">{errors.content.message}</small>}
-      <FaPlusSquare className="icon" type="submit" onClick={check}>
-        추가하기
-      </FaPlusSquare>
+      <FaPlusSquare
+        onClick={onAddCommentButtonHandler}
+        className="icon"
+        type="submit"
+      ></FaPlusSquare>
     </CommentForm>
   );
 };
