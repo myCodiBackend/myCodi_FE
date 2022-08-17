@@ -1,35 +1,34 @@
 import styled from "styled-components";
-import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { userLogin } from '../../redux/modules/userActions';
-import { useEffect } from 'react';
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { userLogin } from "../../redux/modules/userActions";
+import { useEffect } from "react";
 import Error from "../../components/Error";
 
 function LoginPage({ loginToggle, goRegister }) {
-  const { loading, userInfo, error } = useSelector((state) => state.user)
-  const dispatch = useDispatch()
+  const { loading, userInfo, error } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
 
-  const { register, handleSubmit } = useForm()
+  const { register, handleSubmit } = useForm();
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   // redirect authenticated user to profile screen
   useEffect(() => {
     if (userInfo) {
-      navigate('/')
+      navigate("/");
     }
-  }, [navigate, userInfo])
+  }, [navigate, userInfo]);
 
   const submitForm = (data) => {
-    dispatch(userLogin(data))
-  }
-
-
+    dispatch(userLogin(data));
+    console.log(data.username);
+  };
 
   return (
     <StLoginFormBox className="login" onSubmit={handleSubmit(submitForm)}>
-         {error && <Error>{error}</Error>}
+      {error && <Error>{error}</Error>}
       <div className="signBox">
         {goRegister === false ? (
           <span
@@ -47,20 +46,15 @@ function LoginPage({ loginToggle, goRegister }) {
       </div>
       <div className="inputbox">
         <p>아이디</p>
-        <input 
-          type="text"
-          {...register('username')}
-          required
-          />
+        <input type="text" {...register("username")} required />
       </div>
       <div className="inputbox">
         <p>비밀번호</p>
-        <input type="password"
-         {...register('password')}
-         required
-        />
+        <input type="password" {...register("password")} required />
       </div>
-      <button type='submit' disabled={loading}>로그인</button>
+      <button type="submit" disabled={loading}>
+        로그인
+      </button>
     </StLoginFormBox>
   );
 }
