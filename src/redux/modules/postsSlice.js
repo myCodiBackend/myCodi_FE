@@ -51,7 +51,7 @@ export const __getPost = createAsyncThunk("GET_POST", async (arg, thunkAPI) => {
 
 // 게시글 등록 백엔드쪽
 export const __addPost = createAsyncThunk("ADD_POST", async (form) => {
-  const res = await axios.post("http://13.125.217.64/api/posts", form, {
+  const res = await axios.post(`${URI}/api/posts`, form, {
     headers: {
       "Content-Type": "multipart/form-data",
       Authorization: accesstoken,
@@ -71,10 +71,7 @@ export const __addPost = createAsyncThunk("ADD_POST", async (form) => {
 
 // 게시글 삭제 백엔드쪽
 export const __deletePost = createAsyncThunk("DELETE_POST", async (postId) => {
-  const res = await axios.delete(
-    `http://13.125.217.64/api/posts/${postId}`,
-    config
-  );
+  const res = await axios.delete(`${URI}/api/posts/${postId}`, config);
   console.log(res);
   return postId;
 });
@@ -101,7 +98,7 @@ export const __updatePost = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const res = await axios.put(
-        `http://13.125.217.64/api/posts/${data.id}`,
+        `${URI}/api/posts/${data.id}`,
         data.updateform,
         {
           headers: {
@@ -122,7 +119,7 @@ export const __updatePost = createAsyncThunk(
 
 //게시글 좋아요
 export const __likePost = createAsyncThunk("LIKE_POST", async (postId) => {
-  await axios.post(`http://13.125.217.64/api/like/posts/${postId}`, config);
+  await axios.post(`${URI}/api/like/posts/${postId}`, config);
   return postId;
 });
 
