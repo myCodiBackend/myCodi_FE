@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import instance from "../../shared/Request";
-const accesstoken = localStorage.getItem('Authorization')
-  const refreshtoken = localStorage.getItem('RefreshToken')
+// import instance from "../../shared/Request";
+// const accesstoken = localStorage.getItem('Authorization')
+//   const refreshtoken = localStorage.getItem('RefreshToken')
 
 
 
@@ -41,29 +41,29 @@ export const __getPost = createAsyncThunk(
 );
 
 
-//게시글 수정 백엔드쪽
-export const __updatePost = createAsyncThunk(
-  "UPDATE_POST",
-  async (data, thunkAPI) => {
-    try {
-    const res = await axios.put(
-      `http://13.125.217.64/api/posts/${data.id}`,
-    data.updateform,
-    {
-      headers: {
-        "Content-Type": "multipart/form-data",
-          Authorization: accesstoken,
-          RefreshToken: refreshtoken
-      }
-    });
-    console.log(res.data.data)
-    return thunkAPI.fulfillWithValue(res.data.data);
-  } catch (e) {
-    console.log("캐치입니다")
-    return thunkAPI.rejectWithValue(e);
-  }
-}
-);
+// //게시글 수정 백엔드쪽
+// export const __updatePost = createAsyncThunk(
+//   "UPDATE_POST",
+//   async (data, thunkAPI) => {
+//     try {
+//     const res = await axios.put(
+//       `http://13.125.217.64/api/posts/${data.id}`,
+//     data.updateform,
+//     {
+//       headers: {
+//         "Content-Type": "multipart/form-data",
+//           Authorization: accesstoken,
+//           RefreshToken: refreshtoken
+//       }
+//     });
+//     console.log(res.data.data)
+//     return thunkAPI.fulfillWithValue(res.data.data);
+//   } catch (e) {
+//     console.log("캐치입니다")
+//     return thunkAPI.rejectWithValue(e);
+//   }
+// }
+// );
 
 
 
@@ -102,24 +102,24 @@ export const PostSlice = createSlice({
       state.data.isLoading = false;
       state.data.error = action.payload;
     },
-     // 게시글 수정(U)
-    [__updatePost.pending]: (state, action) => {
-      state.loading = true;
-    },
-    [__updatePost.fulfilled]: (state, action) => {
-      const target = state.data.findIndex(
-        (post) => {
-          return post.id == action.payload.id
-        }
-      );
-      console.log(target)
-      state.data.splice(target, 1, action.payload);
+    //  // 게시글 수정(U)
+    // [__updatePost.pending]: (state, action) => {
+    //   state.loading = true;
+    // },
+    // [__updatePost.fulfilled]: (state, action) => {
+    //   const target = state.data.findIndex(
+    //     (post) => {
+    //       return post.id == action.payload.id
+    //     }
+    //   );
+    //   console.log(target)
+    //   state.data.splice(target, 1, action.payload);
        
-    },
-    [__updatePost.rejected]: (state, action) => {
-      state.loading = false;
-      state.error = action.payload;
-    },
+    // },
+    // [__updatePost.rejected]: (state, action) => {
+    //   state.loading = false;
+    //   state.error = action.payload;
+    // },
   },
 });
 

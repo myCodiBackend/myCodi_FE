@@ -24,24 +24,24 @@ const accesstoken = localStorage.getItem('Authorization')
 
 // 게시글 리스트 조회 백서버쪽
 export const __getPostList = createAsyncThunk("GET_POSTS", async () => {
-  const res = await axios.get(`${URI}/api/posts`);
+  const res = await axios.get("http://13.125.217.64/api/posts");
   return res.data.data;
 });
 
 
-// //게시글 단건 조회 백엔드쪽
-export const __getPost = createAsyncThunk(
-  "GET_POST",
-  async (arg, thunkAPI) => {
-    try {
-      const { data } = await axios.get(`${URI}/api/posts/${arg}`);
-      console.log(data);
-      return thunkAPI.fulfillWithValue(data.data);
-    } catch (e) {
-      return thunkAPI.rejectWithValue(e);
-    }
-  }
-);
+// // //게시글 단건 조회 백엔드쪽
+// export const __getPost = createAsyncThunk(
+//   "GET_POST",
+//   async (arg, thunkAPI) => {
+//     try {
+//       const { data } = await axios.get(`http://13.125.217.64/api/posts/${arg}`);
+//       console.log(data);
+//       return thunkAPI.fulfillWithValue(data.data);
+//     } catch (e) {
+//       return thunkAPI.rejectWithValue(e);
+//     }
+//   }
+// );
 
 
 
@@ -169,24 +169,6 @@ const postsSlice = createSlice({
         state.success = true;
       })
       .addCase(__getPostList.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
-      })
-      //게시글 단건조회
-      .addCase(__getPost.pending, (state, action) => {
-        state.loading = true;
-      })
-      .addCase(__getPost.fulfilled, (state, action) => {
-        state.loading = false;
-        const target = state.data.findIndex(
-          (post) => {
-            return post.id == action.payload.id
-          }
-        );
-        state.data.splice(target, 1, action.payload)
-        state.success = true;
-      })
-      .addCase(__getPost.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })

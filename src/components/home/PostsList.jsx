@@ -24,7 +24,7 @@ const PostsList = () => {
 
   const posts = useSelector((state) => state.posts.data);
  
- 
+  
 
   return (
     <StPostsList>

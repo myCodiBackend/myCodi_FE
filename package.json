@@ -30,6 +30,7 @@
     "web-vitals": "^2.1.0"
   },
   "scripts": {
+    "deploy": "aws s3 sync ./build s3://mycody987 --profile=mycody",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

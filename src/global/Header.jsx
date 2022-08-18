@@ -29,7 +29,7 @@ const Header = (props) => {
   return (
     <StHeaderWrap className="header">
       <h1 onClick={() => navigate("/")}>MY CODY</h1>
-      <button onClick={() => navigate("/add")}>내 거 등록하기</button>
+      <button onClick={() => navigate("/add")}>등록하기</button>
       <div className="loginFlexBox">
       {userInfo ? (<>
           <p>환영합니다! {userInfo}님</p>
