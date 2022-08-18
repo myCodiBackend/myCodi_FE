@@ -1,6 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
-import axios from 'axios';
-
+import React, { useState, useRef, useEffect } from "react";
+import axios from "axios";
 
 // import GlobalLayout from "../../global/GlobalLayout";
 import styled from "styled-components";
@@ -8,18 +7,16 @@ import { useDispatch } from "react-redux";
 import { BsArrowLeftCircleFill } from "react-icons/bs";
 // import { diaryApi } from '../../redux/modules/postsSlice';
 
-import {  useNavigate } from 'react-router-dom';
-import { __addPost } from '../../redux/modules/postsSlice';
-
-
+import { useNavigate } from "react-router-dom";
+import { __addPost } from "../../redux/modules/postsSlice";
 
 const Addform = () => {
   const dispatch = useDispatch();
 
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
- const [imageUrl, setImageUrl]=useState();
- const [fileImage, setFileImage] = useState("");
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [imageUrl, setImageUrl] = useState();
+  const [fileImage, setFileImage] = useState("");
   const navigate = useNavigate();
 
   const onChangeTitle = (e) => {
@@ -32,32 +29,27 @@ const Addform = () => {
 
   const onChangeImg = (e) => {
     console.log(e.target.files);
-      setImageUrl(e.target.files[0]);
-      setFileImage(URL.createObjectURL(e.target.files[0]));
-  }
-
+    setImageUrl(e.target.files[0]);
+    setFileImage(URL.createObjectURL(e.target.files[0]));
+  };
 
   const onAddPosttButtonHandler = async () => {
     let req = {
-      title:title,
-      content: content
-       };
-     let json = JSON.stringify(req); 
-       const form = new FormData();
-       //콘솔 추가
+      title: title,
+      content: content,
+    };
+    let json = JSON.stringify(req);
+    const form = new FormData();
+    //콘솔 추가
 
-        const titleblob = new Blob([json], { type: "application/json" });
-        form.append("title", titleblob);
-        console.log(titleblob)
-        const contentblob = new Blob([json], { type: "application/json" });
-        form.append("content", contentblob);
-        form.append("imageUrl", imageUrl);
-      
-    dispatch(
-      __addPost(
-       form
-      )
-    );
+    const titleblob = new Blob([json], { type: "application/json" });
+    form.append("title", titleblob);
+    console.log(titleblob);
+    const contentblob = new Blob([json], { type: "application/json" });
+    form.append("content", contentblob);
+    form.append("imageUrl", imageUrl);
+
+    dispatch(__addPost(form));
     setTitle("");
     setContent("");
     navigate("/");
@@ -66,11 +58,8 @@ const Addform = () => {
     navigate(-1);
   };
 
-  
-
-
   return (
-    <FormWrap id="addform" >
+    <FormWrap id="addform">
       <label>제목</label>
       <input
         type="text"
@@ -99,7 +88,7 @@ const Addform = () => {
         value={content}
         onChange={onChangeContent}
       />
-      <button onClick={onAddPosttButtonHandler} >게시하기</button>
+      <button onClick={onAddPosttButtonHandler}>게시하기</button>
       <BsArrowLeftCircleFill className="icon" onClick={goBack} />
     </FormWrap>
   );

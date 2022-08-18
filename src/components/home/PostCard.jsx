@@ -5,13 +5,15 @@ import { FiHeart } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 
 const PostCard = ({ post }) => {
-  console.log({post})
+  // console.log({ post });/
   const navigate = useNavigate();
   return (
     <StPostCard className="item" onClick={() => navigate(`detail/${post.id}`)}>
       <div className="itembox">
-        <div className="img" style={{ backgroundImage: `url(${post.imageUrl})` }}>
-        
+        <div
+          className="img"
+          style={{ backgroundImage: `url(${post.imageUrl})` }}
+        >
           <FiHeart className="icon" />
           {/* <div className="number">51</div> */}
         </div>

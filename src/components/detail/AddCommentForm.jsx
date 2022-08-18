@@ -25,13 +25,11 @@ const AddCommentForm = () => {
     dispatch(
       __addComment({
         postId: Number(id),
-        content: content
+        content: content,
       })
     );
     setContent("");
   };
-
-  
 
   return (
     <CommentForm onSubmit={handleSubmit(onAddCommentButtonHandler)}>
@@ -54,9 +52,12 @@ const AddCommentForm = () => {
         onChange={onChangeContentHandler}
       />
       {errors.content && <small role="alert">{errors.content.message}</small>}
-      
-      <FaPlusSquare onClick={onAddCommentButtonHandler} className="icon" type="submit">
-      </FaPlusSquare>
+
+      <FaPlusSquare
+        onClick={onAddCommentButtonHandler}
+        className="icon"
+        type="submit"
+      ></FaPlusSquare>
     </CommentForm>
   );
 };

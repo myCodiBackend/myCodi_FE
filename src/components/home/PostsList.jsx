@@ -13,6 +13,8 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "./swiperstyles.css";
 import { Pagination } from "swiper";
+// import { __addPost } from "../../redux/modules/postsSlice.js";
+// import { useSelector } from "react-redux";
 // --------------------------------
 const PostsList = () => {
   const navigate = useNavigate();
@@ -21,10 +23,7 @@ const PostsList = () => {
     dispatch(__getPostList());
   }, []);
 
-
   const posts = useSelector((state) => state.posts.data);
- 
- 
 
   return (
     <StPostsList>
@@ -65,5 +64,4 @@ const StPostsList = styled.div`
     gap: 40px;
     margin-bottom: 40px;
   }
-  
 `;
