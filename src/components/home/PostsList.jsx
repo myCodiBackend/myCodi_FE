@@ -15,13 +15,16 @@ import "./swiperstyles.css";
 import { Pagination } from "swiper";
 // --------------------------------
 const PostsList = () => {
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const posts = useSelector((state) => state.posts.data);
   useEffect(() => {
     dispatch(__getPostList());
   }, [dispatch]);
+
+
+  const posts = useSelector((state) => state.posts.data);
+ 
+ 
 
   return (
     <StPostsList>

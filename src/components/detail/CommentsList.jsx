@@ -17,26 +17,26 @@ function CommentsList() {
   const { id } = useParams();
   const dispatch = useDispatch();
 
- 
+  useEffect(() => {
+    dispatch(__getCommnetsByPostId(id));
+   
+    // return () => dispatch(__getCommnetsByPostId('a'));
+  }, []);
 
 
-const { data } = useSelector((state) => state.comments.commentsByPostId);
-useEffect(() => {
-  dispatch(__getCommnetsByPostId(id));
- 
-  // return () => dispatch(__getCommnetsByPostId('a'));
-}, []);
+const commentList = useSelector((state) => state.comments.commentsByPostId.data);
+console.log(commentList)
 
 
 
     return (
       <StCommentsList className="StCommentsList">
-            {data.slice(offset, offset + limit).map((comment) => (
-            <Comment key={comment.id} comment={comment} />
+            {commentList.slice(offset, offset + limit).map((comment,i) => (
+            <Comment key={i} comment={comment} />
           ))}
           <footer>
             <Pagination
-              total={data.length}
+              total={commentList.length}
               limit={limit}
               page={page}
               setPage={setPage}

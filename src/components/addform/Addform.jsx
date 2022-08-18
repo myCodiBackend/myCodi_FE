@@ -36,14 +36,15 @@ const Addform = () => {
   const onAddPosttButtonHandler = async () => {
     let req = {
       title:title,
-      content: content,
-      imageUrl: imageUrl
+      content: content
   };
      let json = JSON.stringify(req); 
        const form = new FormData();
+       //콘솔 추가
 
         const titleblob = new Blob([json], { type: "application/json" });
         form.append("title", titleblob);
+        console.log(titleblob)
         const contentblob = new Blob([json], { type: "application/json" });
         form.append("content", contentblob);
         form.append("imageUrl", imageUrl);
@@ -93,7 +94,7 @@ const Addform = () => {
 
 
   return (
-    <FormWrap id="addform" enctype="multipart/form-data">
+    <FormWrap id="addform" >
       <label>제목</label>
       <input
         type="text"

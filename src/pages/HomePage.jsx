@@ -7,8 +7,7 @@ import { useSelector } from "react-redux";
 
 const HomePage = () => {
 
-  const posts = useSelector((state) => state.posts.data);
-  console.log(posts)
+  
   return (
     <GlobalLayout>
       <StContainer>
@@ -21,7 +20,7 @@ const HomePage = () => {
         ) : (
           <PostsList posts={posts} />
         )} */}
-        <PostsList posts={posts} />
+        <PostsList />
       </StContainer>
       <hr style={{ borderColor: "#094067" }} />
       <StContainer>
