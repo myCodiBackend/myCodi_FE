@@ -7,11 +7,9 @@ import RegisterForm from "../login/RegisterForm";
 const LoginBox = ({ showModal }) => {
   // 모달 닫는
   const [goRegister, setGoRegister] = useState(false);
-  // console.log("goRegister", goRegister);
   //로그인 회원가입 toggle
   const loginToggle = () => {
     setGoRegister(!goRegister);
-    // console.log("눌려써요!!!goRegister :", goRegister);
   };
   return (
     <StLoginBox>
@@ -40,7 +38,6 @@ const StLoginBox = styled.div`
   width: 700px;
   background-color: rgba(0, 0, 0, 0.2);
   box-shadow: rgb(225 225 255 / 13%) 0px 6px 15px 7px;
-  /* , rgb(0 0 0 / 8%) 0px 0px 0px 1px */
   border-radius: 30px;
   z-index: 6;
   padding: 60px 100px;

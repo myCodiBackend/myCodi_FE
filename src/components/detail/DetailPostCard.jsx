@@ -23,10 +23,6 @@ import CommentsList from "./CommentsList";
 import AddCommentForm from "./AddCommentForm";
 import { __getCommnetsByPostId } from "../../redux/modules/commentsSlice";
 
-
-
-
-
 function DetailPostCard() {
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -41,21 +37,21 @@ function DetailPostCard() {
   const data = useSelector((state) => state.post.data);
 
   const postlist = useSelector((state) => state.posts.data);
-  const post = postlist.find((cur)=>cur.id === Number(id))
-  console.log(post)
+  const post = postlist.find((cur) => cur.id === Number(id));
+  console.log(post);
   useEffect(() => {
     setUpdatedTitle(post.title);
     setUpdatedContent(post.content);
     setUpdatedImg(post.imageUrl);
   }, [post]);
-  
-  
+
   const [isEdit, setIsEdit] = useState(false);
   const [updatedTitle, setUpdatedTitle] = useState("");
   const [updatedContent, setUpdatedContent] = useState("");
   const [updatedImg, setUpdatedImg] = useState();
   const [prevImg, setPrevImg] = useState();
 
+<<<<<<< HEAD
 
 
 
@@ -64,17 +60,29 @@ function DetailPostCard() {
     dispatch(__likePost(id));
   }
 
+=======
+  // const postList = useSelector((state) => state.posts.data);
+
+  // const post = postList.find((cur) => cur.id == id);
+  // console.log(post);
+
+  const userInfo = localStorage.getItem("userInfo");
+  // const { title } = useSelector((state) => state.post.data);
+  // const { content } = useSelector((state) => state.post.data);
+  // const { imageUrl } = useSelector((state) => state.post.data);
+
+>>>>>>> 2372b1e96cfbecfc47aacb632854b9eb0a023c7c
   const onChangeImg = (e) => {
     setUpdatedImg(e.target.files[0]);
     setPrevImg(URL.createObjectURL(e.target.files[0]));
   };
-
 
   const onChangeEditButtonHandler = () => {
     setIsEdit(true);
     dispatch(__getPost(id));
   };
 
+<<<<<<< HEAD
   const onDeleteButtonHandler = () => {
     const result = window.confirm("삭제하시겠습니까?");
     if (result) {
@@ -85,16 +93,17 @@ function DetailPostCard() {
     }
   };
 
+=======
+>>>>>>> 2372b1e96cfbecfc47aacb632854b9eb0a023c7c
   const onCancelButtonHandler = () => {
     setIsEdit(false);
     dispatch(clearPost());
   };
 
   const onUpdateButtonHandler = async () => {
-
     let req = {
       title: updatedTitle,
-      content: updatedContent
+      content: updatedContent,
     };
     let json = JSON.stringify(req);
     const updateform = new FormData();
@@ -105,11 +114,7 @@ function DetailPostCard() {
     updateform.append("content", ucontentblob);
     updateform.append("imageUrl", updatedImg);
 
-    dispatch(
-      __updatePost(
-          {updateform, id
-           })
-    );
+    dispatch(__updatePost({ updateform, id }));
     // setUpdatedTitle("");
     // setUpdatedContent("");
     // setUpdatedImg("")
@@ -117,15 +122,26 @@ function DetailPostCard() {
   };
 
 
+<<<<<<< HEAD
 
 
+=======
+  const onLikeButtonHamdler = () => {
+    dispatch(__likePost(id));
+  };
+>>>>>>> 2372b1e96cfbecfc47aacb632854b9eb0a023c7c
 
   const [commentUp, setCommentUp] = useState(false);
   const onToggle = () => {
     setCommentUp(!commentUp);
-    dispatch(__getCommnetsByPostId(id))
+    dispatch(__getCommnetsByPostId(id));
   };
 
+<<<<<<< HEAD
+=======
+  // const [updatedtitle,setUpdated]
+
+>>>>>>> 2372b1e96cfbecfc47aacb632854b9eb0a023c7c
   return (
     <StDetailPostCard id="form" className="postcard">
       {isEdit ? (
@@ -150,7 +166,6 @@ function DetailPostCard() {
               className="imageInputBox"
               type="file"
               accept="image/*"
-
               onChange={onChangeImg}
             />
             <div className="imgbox">
@@ -184,23 +199,23 @@ function DetailPostCard() {
             <span>{post.title}</span>
            
             <div className="iconbox">
-          {userInfo == post.author?(
-          <>
-            <FaEdit
-             className="editButton"
-             onClick={onChangeEditButtonHandler}
-           />
-           <FaTrashAlt
-             className="deleteButton"
-             onClick={onDeleteButtonHandler}
-          />
-          </>
-          ):(
-            null
-          )}
-             
-             
-              <FaCommentAlt className="commentbutton" onClick={onToggle}></FaCommentAlt>
+              {userInfo == post.author ? (
+                <>
+                  <FaEdit
+                    className="editButton"
+                    onClick={onChangeEditButtonHandler}
+                  />
+                  <FaTrashAlt
+                    className="deleteButton"
+                    onClick={onDeleteButtonHandler}
+                  />
+                </>
+              ) : null}
+
+              <FaCommentAlt
+                className="commentbutton"
+                onClick={onToggle}
+              ></FaCommentAlt>
             </div>
           </div>
 
@@ -214,7 +229,6 @@ function DetailPostCard() {
 
           <div className="descbox">
             <div className="desc">{post.content}</div>
-
           </div>
         </Wrap>
       )}
@@ -253,7 +267,7 @@ const StDetailPostCard = styled.div`
   }
 `;
 
-const Wrap = styled.div`
+const Wrap = styled.form`
   position: relative;
   width: 90%;
   margin: 0 auto;
