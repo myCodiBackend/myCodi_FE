@@ -4,14 +4,14 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import useInput from "../hooks/useinput";
-// import { Wrapper2 } from "../../elements/Wrapper";
+
 import { __getPostList, __likePost } from "../../redux/modules/postsSlice";
 import { __getPost, clearPost } from "../../redux/modules/postSlice";
-// import axios from "axios";
+
 import { __deletePost, __updatePost } from "../../redux/modules/postsSlice";
-import axios from "axios";
+
 import styled, { css } from "styled-components";
-import {
+import { 
   FaEdit,
   FaTrashAlt,
   FaCommentAlt,
@@ -26,6 +26,7 @@ import { __getCommnetsByPostId } from "../../redux/modules/commentsSlice";
 function DetailPostCard() {
   const { id } = useParams();
   const dispatch = useDispatch();
+  const userInfo = localStorage.getItem('userInfo')
 
   useEffect(() => {
     dispatch(__getPostList());
@@ -50,6 +51,16 @@ function DetailPostCard() {
   const [updatedImg, setUpdatedImg] = useState();
   const [prevImg, setPrevImg] = useState();
 
+<<<<<<< HEAD
+
+
+
+
+  const onLikeButtonHamdler =()=> {
+    dispatch(__likePost(id));
+  }
+
+=======
   // const postList = useSelector((state) => state.posts.data);
 
   // const post = postList.find((cur) => cur.id == id);
@@ -60,6 +71,7 @@ function DetailPostCard() {
   // const { content } = useSelector((state) => state.post.data);
   // const { imageUrl } = useSelector((state) => state.post.data);
 
+>>>>>>> 2372b1e96cfbecfc47aacb632854b9eb0a023c7c
   const onChangeImg = (e) => {
     setUpdatedImg(e.target.files[0]);
     setPrevImg(URL.createObjectURL(e.target.files[0]));
@@ -70,6 +82,19 @@ function DetailPostCard() {
     dispatch(__getPost(id));
   };
 
+<<<<<<< HEAD
+  const onDeleteButtonHandler = () => {
+    const result = window.confirm("삭제하시겠습니까?");
+    if (result) {
+      dispatch(__deletePost(id));
+      navigate("/");
+    } else {
+      return;
+    }
+  };
+
+=======
+>>>>>>> 2372b1e96cfbecfc47aacb632854b9eb0a023c7c
   const onCancelButtonHandler = () => {
     setIsEdit(false);
     dispatch(clearPost());
@@ -96,19 +121,15 @@ function DetailPostCard() {
     setIsEdit(false);
   };
 
-  const onDeleteButtonHandler = () => {
-    const result = window.confirm("삭제하시겠습니까?");
-    if (result) {
-      dispatch(__deletePost(id));
-      navigate("/");
-    } else {
-      return;
-    }
-  };
 
+<<<<<<< HEAD
+
+
+=======
   const onLikeButtonHamdler = () => {
     dispatch(__likePost(id));
   };
+>>>>>>> 2372b1e96cfbecfc47aacb632854b9eb0a023c7c
 
   const [commentUp, setCommentUp] = useState(false);
   const onToggle = () => {
@@ -116,8 +137,11 @@ function DetailPostCard() {
     dispatch(__getCommnetsByPostId(id));
   };
 
+<<<<<<< HEAD
+=======
   // const [updatedtitle,setUpdated]
 
+>>>>>>> 2372b1e96cfbecfc47aacb632854b9eb0a023c7c
   return (
     <StDetailPostCard id="form" className="postcard">
       {isEdit ? (
@@ -173,7 +197,7 @@ function DetailPostCard() {
         <Wrap className="wrap">
           <div className="title">
             <span>{post.title}</span>
-            <button onClick={onLikeButtonHamdler}>좋아요</button>
+           
             <div className="iconbox">
               {userInfo == post.author ? (
                 <>
@@ -199,6 +223,7 @@ function DetailPostCard() {
             className="imagebox"
             style={{
               backgroundImage: `url(${post.imageUrl})`,
+              
             }}
           ></div>
 
@@ -297,8 +322,9 @@ const Wrap = styled.form`
     height: 500px;
     border-radius: 12px;
     background-position: center;
-    background-size: cover;
+    background-size: contain;
     margin-bottom: 20px;
+    background-repeat: no-repeat;
   }
   .descbox {
     width: 100%;

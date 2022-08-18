@@ -24,10 +24,29 @@ let config = {
 
 // 게시글 리스트 조회 백서버쪽
 export const __getPostList = createAsyncThunk("GET_POSTS", async () => {
-  const res = await axios.get(`${URI}/api/posts`);
+  const res = await axios.get("http://13.125.217.64/api/posts");
   return res.data.data;
 });
 
+<<<<<<< HEAD
+
+// // //게시글 단건 조회 백엔드쪽
+// export const __getPost = createAsyncThunk(
+//   "GET_POST",
+//   async (arg, thunkAPI) => {
+//     try {
+//       const { data } = await axios.get(`http://13.125.217.64/api/posts/${arg}`);
+//       console.log(data);
+//       return thunkAPI.fulfillWithValue(data.data);
+//     } catch (e) {
+//       return thunkAPI.rejectWithValue(e);
+//     }
+//   }
+// );
+
+
+
+=======
 // //게시글 단건 조회 백엔드쪽
 export const __getPost = createAsyncThunk("GET_POST", async (arg, thunkAPI) => {
   try {
@@ -38,6 +57,7 @@ export const __getPost = createAsyncThunk("GET_POST", async (arg, thunkAPI) => {
     return thunkAPI.rejectWithValue(e);
   }
 });
+>>>>>>> 2372b1e96cfbecfc47aacb632854b9eb0a023c7c
 
 // //게시글 등록
 // export const __addPost = createAsyncThunk("ADD_POST", async (new_post_list) => {
@@ -148,6 +168,8 @@ const postsSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
+<<<<<<< HEAD
+=======
       //게시글 단건조회
       .addCase(__getPost.pending, (state, action) => {
         state.loading = true;
@@ -164,6 +186,7 @@ const postsSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
+>>>>>>> 2372b1e96cfbecfc47aacb632854b9eb0a023c7c
 
       // 게시글 등록(C)
       .addCase(__addPost.pending, (state, action) => {

@@ -24,6 +24,11 @@ const PostsList = () => {
   }, []);
 
   const posts = useSelector((state) => state.posts.data);
+<<<<<<< HEAD
+ 
+  
+=======
+>>>>>>> 2372b1e96cfbecfc47aacb632854b9eb0a023c7c
 
   return (
     <StPostsList>
