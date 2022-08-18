@@ -44,7 +44,7 @@ function DetailPostCard() {
   const { title } = useSelector((state) => state.post.data);
   const { content } = useSelector((state) => state.post.data);
   const { imageUrl } = useSelector((state) => state.post.data);
-  console.log(title);
+  console.log(title, content, imageUrl);
 
   const onChangeImg = (e) => {
     setUpdatedImg(e.target.files[0]);
@@ -225,7 +225,7 @@ const StDetailPostCard = styled.div`
   }
 `;
 
-const Wrap = styled.div`
+const Wrap = styled.form`
   position: relative;
   width: 90%;
   margin: 0 auto;
