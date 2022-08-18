@@ -26,14 +26,29 @@ import { __getCommnetsByPostId } from "../../redux/modules/commentsSlice";
 
 
 
+
 function DetailPostCard() {
+  const { id } = useParams();
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+
   useEffect(() => {
     dispatch(__getPostList());
     dispatch(__getPost(id));
-  }, []);
-  const { id } = useParams();
+  }, [dispatch]);
+
+  const navigate = useNavigate();
+  const data = useSelector((state) => state.post.data);
+
+  const postlist = useSelector((state) => state.posts.data);
+  const post = postlist.find((cur)=>cur.id === Number(id))
+  console.log(post)
+  useEffect(() => {
+    setUpdatedTitle(post.title);
+    setUpdatedContent(post.content);
+    setUpdatedImg(post.imageUrl);
+  }, [post]);
+  
+  
   const [isEdit, setIsEdit] = useState(false);
   const [updatedTitle, setUpdatedTitle] = useState("");
   const [updatedContent, setUpdatedContent] = useState("");
@@ -47,8 +62,6 @@ function DetailPostCard() {
   // console.log(post);
 
   const userInfo = localStorage.getItem('userInfo')
-  const data = useSelector((state) => state.post.data);
-  console.log(data)
   // const { title } = useSelector((state) => state.post.data);
   // const { content } = useSelector((state) => state.post.data);
   // const { imageUrl } = useSelector((state) => state.post.data);
@@ -66,11 +79,7 @@ function DetailPostCard() {
     dispatch(__getPost(id));
   };
 
-  useEffect(() => {
-    setUpdatedTitle(data.title);
-    setUpdatedContent(data.content);
-    setUpdatedImg(data.imageUrl);
-  }, [data]);
+ 
 
   const onCancelButtonHandler = () => {
     setIsEdit(false);
@@ -180,18 +189,24 @@ function DetailPostCard() {
       ) : (
         <Wrap className="wrap">
           <div className="title">
-            <span>{data.title}</span>
+            <span>{post.title}</span>
             <button onClick={onLikeButtonHamdler}>좋아요</button>
             <div className="iconbox">
-          
-               <FaEdit
+          {userInfo == post.author?(
+          <>
+            <FaEdit
              className="editButton"
              onClick={onChangeEditButtonHandler}
-           ></FaEdit>
+           />
            <FaTrashAlt
              className="deleteButton"
              onClick={onDeleteButtonHandler}
-           ></FaTrashAlt>
+          />
+          </>
+          ):(
+            null
+          )}
+             
              
               <FaCommentAlt className="commentbutton" onClick={onToggle}></FaCommentAlt>
             </div>
@@ -200,12 +215,12 @@ function DetailPostCard() {
           <div
             className="imagebox"
             style={{
-              backgroundImage: `url(${data.imageUrl})`,
+              backgroundImage: `url(${post.imageUrl})`,
             }}
           ></div>
 
           <div className="descbox">
-            <div className="desc">{data.content}</div>
+            <div className="desc">{post.content}</div>
 
           </div>
         </Wrap>
