@@ -19,14 +19,12 @@ import { Pagination } from "swiper";
 const PostsList = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
   useEffect(() => {
     dispatch(__getPostList());
     dispatch(__getPostList());
   }, [dispatch]);
 
   const posts = useSelector((state) => state.posts.data);
-  console.log("posts :", posts);
 
   return (
     <StPostsList>

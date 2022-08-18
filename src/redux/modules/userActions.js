@@ -1,6 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
+const accesstoken = localStorage.getItem("Authorization");
+const refreshtoken = localStorage.getItem("RefreshToken");
+
 export const userLogin = createAsyncThunk(
   "user/login",
   async ({ username, password }, { rejectWithValue }) => {
@@ -72,7 +75,8 @@ export const getUserDetails = createAsyncThunk(
       // configure authorization header with user's token
       const config = {
         headers: {
-          Authorization: `Bearer ${user.userToken}`,
+          Authorization: accesstoken,
+          RefreshToken: refreshtoken,
         },
       };
       const { data } = await axios.get(

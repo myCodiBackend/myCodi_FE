@@ -52,6 +52,7 @@ const AddCommentForm = () => {
         onChange={onChangeContentHandler}
       />
       {errors.content && <small role="alert">{errors.content.message}</small>}
+
       <FaPlusSquare
         onClick={onAddCommentButtonHandler}
         className="icon"

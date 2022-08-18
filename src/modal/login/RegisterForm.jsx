@@ -22,9 +22,9 @@ function RegisterForm({ loginToggle, goRegister }) {
 
   useEffect(() => {
     // redirect authenticated user to profile screen
-    if (userInfo) navigate('/user-profile')
+    // if (userInfo) navigate('/user-profile')
     // redirect user to login page if registration was successful
-    if (success) navigate('/login')
+    // if (success) navigate('/login')
   }, [navigate, userInfo, success])
 
   const submitForm = (data) => {
