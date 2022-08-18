@@ -7,6 +7,7 @@ import TextField from "@mui/material/TextField";
 
 import {
   __deleteComment,
+  __getCommnetsByPostId,
   __updateComment,
 } from "../../redux/modules/commentsSlice";
 import { clearComment, __getComment } from "../../redux/modules/commentSlice";
@@ -14,6 +15,7 @@ import { clearComment, __getComment } from "../../redux/modules/commentSlice";
 // import Button from "../../elements/Button";
 
 const Comment = ({ comment }) => {
+  const userInfo = localStorage.getItem('userInfo')
   const { id } = useParams();
   const dispatch = useDispatch();
   const [isEdit, setIsEdit] = useState(false);
@@ -52,6 +54,8 @@ const Comment = ({ comment }) => {
 
   useEffect(() => {
     setUpdatedComment(content);
+    // dispatch(__getCommnetsByPostId(id));
+    dispatch(__getComment(id));
   }, [content]);
 
   return (
@@ -89,11 +93,14 @@ const Comment = ({ comment }) => {
               <p>내용 : {comment.content}</p>
               <p>{comment.modifiedAt}</p>
             </div>
-
-            <div className="buttonbox">
+          {userInfo == comment.author? (<>
+           <div className="buttonbox">
               <button onClick={onChangeEditButtonHandler}>수정</button>
               <button onClick={onDeleteButtonHandler}>삭제</button>
             </div>
+          </>):(
+            null)}
+           
           </StComment>
         </>
       )}

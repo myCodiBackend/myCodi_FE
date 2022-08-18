@@ -21,8 +21,7 @@ const PostsList = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(__getPostList());
-    dispatch(__getPostList());
-  }, [dispatch]);
+  }, []);
 
   const posts = useSelector((state) => state.posts.data);
 

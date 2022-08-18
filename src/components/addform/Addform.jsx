@@ -16,7 +16,7 @@ const Addform = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [imageUrl, setImageUrl] = useState();
-
+  const [fileImage, setFileImage] = useState("");
   const navigate = useNavigate();
 
   const onChangeTitle = (e) => {
@@ -25,6 +25,12 @@ const Addform = () => {
 
   const onChangeContent = (e) => {
     setContent(e.target.value);
+  };
+
+  const onChangeImg = (e) => {
+    console.log(e.target.files);
+    setImageUrl(e.target.files[0]);
+    setFileImage(URL.createObjectURL(e.target.files[0]));
   };
 
   const onAddPosttButtonHandler = async () => {
@@ -51,34 +57,6 @@ const Addform = () => {
   const goBack = () => {
     navigate(-1);
   };
-
-  const [fileImage, setFileImage] = useState("");
-
-  // const showFileImage = (e) => {
-  // setImageUrl(URL.createObjectURL(e.target.files[0]));
-  // };
-
-  const onChangeImg = (e) => {
-    console.log(e.target.files);
-    setImageUrl(e.target.files[0]);
-    setFileImage(URL.createObjectURL(e.target.files[0]));
-  };
-  console.log(imageUrl);
-  //위 두 함수 중 골라서 고민해봐야됨
-
-  //이미지 미리보기
-  //   const [imageSrc, setImageSrc] = useState('');
-  //   const encodeFileToBase64 = (fileBlob) => {
-  //     const reader = new FileReader();
-  //     reader.readAsDataURL(fileBlob);
-  //     return new Promise((resolve) => {
-  //       reader.onload = () => {
-  //         setImageSrc(reader.result);
-  //         resolve();
-  //       };
-  //     });
-  //   };
-  // console.log(imageSrc)
 
   return (
     <FormWrap id="addform">

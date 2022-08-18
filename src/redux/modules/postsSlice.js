@@ -4,40 +4,14 @@ import axios from "axios";
 const accesstoken = localStorage.getItem("Authorization");
 const refreshtoken = localStorage.getItem("RefreshToken");
 
+const URI = process.env.REACT_APP_BASE;
+
 let config = {
   headers: {
     Authorization: accesstoken,
     RefreshToken: refreshtoken,
   },
 };
-
-// export const diaryApi = {
-//   createPost: async (title, content, imageUrl) => {
-//       let req = {
-//           title: title,
-//           content: content,
-//           imageUrl: imageUrl,
-//       };
-//       let json = JSON.stringify(req);
-//       const form = new FormData();
-//       // 블롭 생성. Blob 객체는 파일류의 불변하는 미가공 데이터를 나타냄.
-//       const title = new Blob([json], { type: "application/json" });
-//       form.append("requestDto", title);
-//         const content = new Blob([json], { type: "application/json" });
-//       form.append("requestDto", content);
-//      form.append("file", imageUrl);
-//       let headerConfig = {
-//           headers: {
-//               "Content-Type": "multipart/form-data",
-//               Authorization: accesstoken,
-//             RefreshToken : refreshtoken
-//           },
-//       };
-//       const data = await axios.post("http://13.125.217.64/api/posts", form, headerConfig);
-//       return data;
-//   },
-
-// }
 
 // // 게시글 리스트
 // export const __getPostList = createAsyncThunk("GET_POSTS", async () => {
@@ -50,16 +24,20 @@ let config = {
 
 // 게시글 리스트 조회 백서버쪽
 export const __getPostList = createAsyncThunk("GET_POSTS", async () => {
-  const res = await axios.get("http://13.125.217.64/api/posts");
-
+  const res = await axios.get(`${URI}/api/posts`);
   return res.data.data;
 });
 
 // //게시글 단건 조회 백엔드쪽
-// export const __getPost =createAsyncThunk("GET_POST", async (postId)=> {
-//   const response = await instance.get(`/api/posts/${postId}`);
-//   return response.data;
-// });
+export const __getPost = createAsyncThunk("GET_POST", async (arg, thunkAPI) => {
+  try {
+    const { data } = await axios.get(`${URI}/api/posts/${arg}`);
+    console.log(data);
+    return thunkAPI.fulfillWithValue(data.data);
+  } catch (e) {
+    return thunkAPI.rejectWithValue(e);
+  }
+});
 
 // //게시글 등록
 // export const __addPost = createAsyncThunk("ADD_POST", async (new_post_list) => {
@@ -133,7 +111,7 @@ export const __updatePost = createAsyncThunk(
           },
         }
       );
-      console.log(res);
+      console.log(res.data.data);
       return thunkAPI.fulfillWithValue(res.data.data);
     } catch (e) {
       console.log("캐치입니다");
@@ -166,7 +144,6 @@ const postsSlice = createSlice({
       })
       .addCase(__getPostList.fulfilled, (state, action) => {
         state.loading = false;
-        // 리스트 전체 저장
         state.data = action.payload;
         state.success = true;
       })
@@ -174,6 +151,23 @@ const postsSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
+      //게시글 단건조회
+      .addCase(__getPost.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(__getPost.fulfilled, (state, action) => {
+        state.loading = false;
+        const target = state.data.findIndex((post) => {
+          return post.id == action.payload.id;
+        });
+        state.data.splice(target, 1, action.payload);
+        state.success = true;
+      })
+      .addCase(__getPost.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
       // 게시글 등록(C)
       .addCase(__addPost.pending, (state, action) => {
         state.loading = true;
@@ -205,8 +199,9 @@ const postsSlice = createSlice({
       })
       .addCase(__updatePost.fulfilled, (state, action) => {
         const target = state.data.findIndex((post) => {
-          return post.id === Number(action.payload.id);
+          return post.id == action.payload.id;
         });
+        console.log(target);
         state.data.splice(target, 1, action.payload);
       })
       .addCase(__updatePost.rejected, (state, action) => {
