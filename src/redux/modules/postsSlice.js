@@ -6,7 +6,8 @@ const accesstoken = localStorage.getItem('Authorization')
 
   let config = {
     headers: {
-        "Authorization": accesstoken
+        Authorization: accesstoken,
+        RefreshToken : refreshtoken
     }
   }
 
@@ -116,7 +117,8 @@ async (form) => {
 // 게시글 삭제 백엔드쪽
 export const __deletePost = createAsyncThunk("DELETE_POST", 
 async (postId) => {
-  await axios.delete(`http://13.125.217.64/api/posts/${postId}`);
+  const res = await axios.delete(`http://13.125.217.64/api/posts/${postId}`, config);
+  console.log(res)
   return postId;
 });
 
@@ -143,23 +145,34 @@ async (postId) => {
 //게시글 수정 백엔드쪽
 export const __updatePost = createAsyncThunk(
   "UPDATE_POST",
-  async (data) => {
-    const res = await axios.patch(
+  async (data, thunkAPI) => {
+    try {
+    const res = await axios.put(
       `http://13.125.217.64/api/posts/${data.id}`,
     data.updateform,
     {
       headers: {
         "Content-Type": "multipart/form-data",
           Authorization: accesstoken,
-          RefreshToken : refreshtoken
+          RefreshToken: refreshtoken
       }
     });
     console.log(res)
-    return res.data ;
+    return thunkAPI.fulfillWithValue(res.data.data);
+  } catch (e) {
+    console.log("캐치입니다")
+    return thunkAPI.rejectWithValue(e);
   }
+}
 );
 
 
+//게시글 좋아요
+export const __likePost = createAsyncThunk("LIKE_POST", 
+async (postId) => {
+  await axios.post(`http://13.125.217.64/api/like/posts/${postId}`,config);
+  return postId;
+});
 
 
 

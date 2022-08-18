@@ -3,7 +3,7 @@ import axios from "axios";
 // import instance from "../../shared/Request";
 
   const accessToken = localStorage.getItem("Authorization")
-  ? localStorage.getItem('userToken')
+  ? localStorage.getItem('Authorization')
   : null;
   const refreshToken = localStorage.getItem("RefreshToken")
 
@@ -13,6 +13,7 @@ import axios from "axios";
         RefreshToken: refreshToken
     }
   }
+  console.log(accessToken)
 
 // //댓글리스트 조회
 // export const __getCommnetsByPostId = createAsyncThunk(
@@ -32,8 +33,9 @@ export const __getCommnetsByPostId = createAsyncThunk(
   "GET_COMMENT_BY_TODO_ID",
   async (arg, thunkAPI) => {
     try {
-      const { data } = await axios.get(`http://13.125.217.64/api/comments?postId=${arg}`);
-      return thunkAPI.fulfillWithValue(data);
+      const { data } = await axios.get(`http://13.125.217.64/api/comments/${arg}`);
+      console.log(data)
+      return thunkAPI.fulfillWithValue(data.data);
     } catch (e) {
       return thunkAPI.rejectWithValue(e.code);
     }
@@ -60,8 +62,12 @@ export const __addComment = createAsyncThunk(
   "ADD_COMMENT",
   async (arg, thunkAPI) => {
     try {
-      const { data } = await axios.post(`http://13.125.217.64/api/comments`, arg, config);
-      return thunkAPI.fulfillWithValue(data);
+      const { data } = await axios.post(`http://13.125.217.64/api/comments`, 
+      arg, 
+      config
+      );
+      console.log(data.data)
+      return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -69,26 +75,12 @@ export const __addComment = createAsyncThunk(
 );
 
 
-//댓글 삭제
-export const __deleteComment = createAsyncThunk(
-  "DELETE_COMMENT",
-  async (arg, thunkAPI) => {
-    try {
-      await axios.delete(`http://localhost:5001/comments/${arg}`);
-      return thunkAPI.fulfillWithValue(arg);
-    } catch (e) {
-      return thunkAPI.rejectWithValue(e.code);
-    }
-  }
-);
-
-
-// //댓글 삭제 백엔드쪽
+// //댓글 삭제
 // export const __deleteComment = createAsyncThunk(
 //   "DELETE_COMMENT",
 //   async (arg, thunkAPI) => {
 //     try {
-//       await axios.delete(`http://13.125.217.64/api/comments/${arg}`, config);
+//       await axios.delete(`http://localhost:5001/comments/${arg}`);
 //       return thunkAPI.fulfillWithValue(arg);
 //     } catch (e) {
 //       return thunkAPI.rejectWithValue(e.code);
@@ -96,33 +88,49 @@ export const __deleteComment = createAsyncThunk(
 //   }
 // );
 
-//댓글 수정
-export const __updateComment = createAsyncThunk(
-  "UPDATE_COMMENT",
+
+//댓글 삭제 백엔드쪽
+export const __deleteComment = createAsyncThunk(
+  "DELETE_COMMENT",
   async (arg, thunkAPI) => {
     try {
-      axios.patch(`http://localhost:5001/comments/${arg.id}`, arg);
+      await axios.delete(`http://13.125.217.64/api/comments/${arg}`, config);
       return thunkAPI.fulfillWithValue(arg);
     } catch (e) {
-      return thunkAPI.rejectWithValue(e);
+      return thunkAPI.rejectWithValue(e.code);
     }
   }
 );
 
-
-
-// //댓글 수정 백엔드쪽
+// //댓글 수정
 // export const __updateComment = createAsyncThunk(
 //   "UPDATE_COMMENT",
 //   async (arg, thunkAPI) => {
 //     try {
-//       axios.put(`http://13.125.217.64/api/comments/${arg.id}`, arg);
+//       axios.patch(`http://localhost:5001/comments/${arg.id}`, arg);
 //       return thunkAPI.fulfillWithValue(arg);
 //     } catch (e) {
 //       return thunkAPI.rejectWithValue(e);
 //     }
 //   }
 // );
+
+
+
+//댓글 수정 백엔드쪽
+export const __updateComment = createAsyncThunk(
+  "UPDATE_COMMENT",
+  async (arg, thunkAPI) => {
+    try {
+      const res = await axios.put(`http://13.125.217.64/api/comments/${arg.id}`,
+       arg, config);
+      console.log(res.data.data)
+      return thunkAPI.fulfillWithValue(res.data.data);
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e);
+    }
+  }
+);
 
 const initialState = {
   commentsByPostId: {

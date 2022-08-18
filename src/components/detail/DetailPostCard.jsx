@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import useInput from "../hooks/useinput";
 // import { Wrapper2 } from "../../elements/Wrapper";
-import { __getPostList } from "../../redux/modules/postsSlice";
+import { __getPostList, __likePost } from "../../redux/modules/postsSlice";
 import { __getPost, clearPost } from "../../redux/modules/postSlice";
 // import axios from "axios";
 import { __deletePost, __updatePost } from "../../redux/modules/postsSlice";
@@ -21,6 +21,7 @@ import { BiDownload } from "react-icons/bi";
 import { GoX } from "react-icons/go";
 import CommentsList from "./CommentsList";
 import AddCommentForm from "./AddCommentForm";
+import { __getCommnetsByPostId } from "../../redux/modules/commentsSlice";
 
 
 
@@ -45,11 +46,13 @@ function DetailPostCard() {
   // const post = postList.find((cur) => cur.id == id);
   // console.log(post);
 
+  const userInfo = localStorage.getItem('userInfo')
+  const data = useSelector((state) => state.post.data);
+  console.log(data)
+  // const { title } = useSelector((state) => state.post.data);
+  // const { content } = useSelector((state) => state.post.data);
+  // const { imageUrl } = useSelector((state) => state.post.data);
 
-  const { title } = useSelector((state) => state.post.data);
-  const { content } = useSelector((state) => state.post.data);
-  const { imageUrl } = useSelector((state) => state.post.data);
-  console.log(title)
 
 
   const onChangeImg = (e) => {
@@ -64,10 +67,10 @@ function DetailPostCard() {
   };
 
   useEffect(() => {
-    setUpdatedTitle(title);
-    setUpdatedContent(content);
-    setUpdatedImg(imageUrl);
-  }, [title, content, imageUrl]);
+    setUpdatedTitle(data.title);
+    setUpdatedContent(data.content);
+    setUpdatedImg(data.imageUrl);
+  }, [data]);
 
   const onCancelButtonHandler = () => {
     setIsEdit(false);
@@ -78,22 +81,21 @@ function DetailPostCard() {
 
     let req = {
       title: updatedTitle,
-      content: updatedContent,
-      imageUrl: updatedImg
+      content: updatedContent
     };
     let json = JSON.stringify(req);
     const updateform = new FormData();
 
-    const titleblob = new Blob([json], { type: "application/json" });
-    updateform.append("title", titleblob);
-    const contentblob = new Blob([json], { type: "application/json" });
-    updateform.append("content", contentblob);
-    updateform.append("imageUrl", imageUrl);
-console.log([...updateform], id)
+    const utitleblob = new Blob([json], { type: "application/json" });
+    updateform.append("title", utitleblob);
+    const ucontentblob = new Blob([json], { type: "application/json" });
+    updateform.append("content", ucontentblob);
+    updateform.append("imageUrl", updatedImg);
+
     dispatch(
       __updatePost(
           {updateform, id
-           } )
+           })
     );
     // setUpdatedTitle("");
     // setUpdatedContent("");
@@ -111,10 +113,14 @@ console.log([...updateform], id)
     }
   };
 
+  const onLikeButtonHamdler =()=> {
+    dispatch(__likePost(id));
+  }
 
   const [commentUp, setCommentUp] = useState(false);
   const onToggle = () => {
     setCommentUp(!commentUp);
+    dispatch(__getCommnetsByPostId(id))
   };
 
 // const [updatedtitle,setUpdated]
@@ -174,30 +180,32 @@ console.log([...updateform], id)
       ) : (
         <Wrap className="wrap">
           <div className="title">
-            <span>{title}</span>
-            <button>좋아요</button>
+            <span>{data.title}</span>
+            <button onClick={onLikeButtonHamdler}>좋아요</button>
             <div className="iconbox">
-              <FaEdit
-                className="editButton"
-                onClick={onChangeEditButtonHandler}
-              ></FaEdit>
-              <FaTrashAlt
-                className="deleteButton"
-                onClick={onDeleteButtonHandler}
-              ></FaTrashAlt>
-              <FaCommentAlt className="icon" onClick={onToggle}></FaCommentAlt>
+          
+               <FaEdit
+             className="editButton"
+             onClick={onChangeEditButtonHandler}
+           ></FaEdit>
+           <FaTrashAlt
+             className="deleteButton"
+             onClick={onDeleteButtonHandler}
+           ></FaTrashAlt>
+             
+              <FaCommentAlt className="commentbutton" onClick={onToggle}></FaCommentAlt>
             </div>
           </div>
 
           <div
             className="imagebox"
             style={{
-              backgroundImage: `url(${imageUrl})`,
+              backgroundImage: `url(${data.imageUrl})`,
             }}
           ></div>
 
           <div className="descbox">
-            <div className="desc">{content}</div>
+            <div className="desc">{data.content}</div>
 
           </div>
         </Wrap>

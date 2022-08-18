@@ -14,11 +14,11 @@ const Header = (props) => {
 
   const userInfo = localStorage.getItem('userInfo')
   console.log(userInfo);
-  useEffect(() => {
-    if (userToken) {
-      dispatch(getUserDetails())
-    }
-  }, [userToken, dispatch])
+  // useEffect(() => {
+  //   if (userToken) {
+  //     dispatch(getUserDetails())
+  //   }
+  // }, [userToken, dispatch])
 
   // 모달
   const [IsModalOpen, setIsModalOpen] = useState(false);
