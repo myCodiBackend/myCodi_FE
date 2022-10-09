@@ -18,7 +18,7 @@
 
 ## 3. 와이어 프레임
 
-![](wireFrame.png)
+![image](https://user-images.githubusercontent.com/97393364/194734449-1f258532-7128-444c-ba88-7231939dde61.png)
 ## 4. ERD
 ![](table.png)![](class.png)
 
